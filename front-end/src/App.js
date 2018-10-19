@@ -21,8 +21,8 @@ import './App.css';
 
 //Token and storing
 const tokenKey = 'userToken'
-const savedToken = localStorage.getItem(tokenKey)
-// const savedToken = null
+// const savedToken = localStorage.getItem(tokenKey)
+const savedToken = null
 setApiToken(savedToken)
 // injectTapEventPlugin()
 
@@ -34,7 +34,7 @@ class App extends Component {
     error: null,
     createAccount: true
   }
-  
+
   handleError = (error) => {
     // console.log(error)
     toast.error(error)
@@ -44,6 +44,7 @@ class App extends Component {
     authAPI.signIn({ email, password })
       .then(json => {
 
+        console.log('json')
         console.log(json)
         this.setToken(json.token)
       })
@@ -52,8 +53,8 @@ class App extends Component {
       })
   }
 
-  handleRegister = ({ email, password,firstName,lastName }) => {
-    authAPI.register({ email, password,firstName,lastName })
+  handleRegister = ({ email, password, firstName, lastName }) => {
+    authAPI.register({ email, password, firstName, lastName })
       .then(json => {
         this.setToken(json.token)
       })
@@ -69,7 +70,7 @@ class App extends Component {
   // setToken(null) === signOut()
   setToken = (token) => {
     if (token) {
-      localStorage.setItem(tokenKey,token)
+      localStorage.setItem(tokenKey, token)
     } else {
       localStorage.removeItem(tokenKey)
     }
@@ -77,60 +78,60 @@ class App extends Component {
     this.setState({ token: token })
   }
 
-  componentDidMount(){
+  componentDidMount() {
     authAPI.init(this.handleError)
   }
 
   render() {
     return (
       <div className="App">
-      <Router>
-        {/* apply app theme*/}
-        <MuiThemeProvider>
-          <main>
-            <ToastContainer
-              position="top-right"
-              hideProgressBar={ false }
-              newestOnTop={ false }
-              closeOnClick
-            />
-            <NavBar
-              signedIn={ !!this.state.token }
-              logOut={
-                () => {
-                  console.log('asdf')
-                  this.setToken(null)
+        <Router>
+          {/* apply app theme*/}
+          <MuiThemeProvider>
+            <main>
+              <ToastContainer
+                position="top-right"
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+              />
+              <NavBar
+                signedIn={!!this.state.token}
+                logOut={
+                  () => {
+                    console.log('asdf')
+                    this.setToken(null)
+                  }
                 }
-              }
-            />
-            <Switch>
-              { !!this.state.token ?
-                (
-                  <Route
-                    path='/'
-                    render={
-                      ({location}) => <HomePage
-                        pathname={location.pathname.substring(1)}
-                        handleError={ this.handleError }
-                      />
-                    }
-                  />
-                ) : (
-                  // <h1>"Login"</h1>
-                  <Route
-                    path='/'
-                    render={
-                      () => <LoginPage
-                        handleErrors={this.handleError}
-                        setToken={ this.setToken }
-                        onSignIn={ this.handleSignIn }
-                        onRegister={ this.handleRegister }
-                      />
-                    }
-                  />
-                )
-              }
-              {/* <Route
+              />
+              <Switch>
+                {!!this.state.token ?
+                  (
+                    <Route
+                      path='/'
+                      render={
+                        ({ location }) => <HomePage
+                          pathname={location.pathname.substring(1)}
+                          handleError={this.handleError}
+                        />
+                      }
+                    />
+                  ) : (
+                    // <h1>"Login"</h1>
+                    <Route
+                      path='/'
+                      render={
+                        () => <LoginPage
+                          handleErrors={this.handleError}
+                          setToken={this.setToken}
+                          onSignIn={this.handleSignIn}
+                          onRegister={this.handleRegister}
+                        />
+                      }
+                    />
+                  )
+                }
+                {/* <Route
                 exact path='/devices/:deviceId'
                 render={
                   ({ match }) => {
@@ -157,10 +158,10 @@ class App extends Component {
                   } not found</p>
                 }
               /> */}
-            </Switch>
-          </main>
-        </MuiThemeProvider>
-      </Router>
+              </Switch>
+            </main>
+          </MuiThemeProvider>
+        </Router>
       </div>
     );
   }

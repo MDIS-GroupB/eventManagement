@@ -32,23 +32,6 @@ server.get('/mdistesting', (request, response) => {
   response.send('Works')
 })
 
-
-
-server.use('/dbDrop', (res, req) => {
-  global.User.remove({}, function (err) {
-    console.log('collection removed')
-  })
-  global.Venue.remove({}, function (err) {
-    console.log('collection removed')
-  })
-  global.Event.remove({}, function (err) {
-    console.log('collection removed')
-  })
-  global.Personal.remove({}, function (err) {
-    console.log('collection removed')
-  })
-  res.json({ hm: 'bwah' })
-})
 server.use('/auth', authRouter)
 server.use('/test', testRouter)
 server.use('/event', eventRouter)

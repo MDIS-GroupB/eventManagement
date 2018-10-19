@@ -52,43 +52,45 @@ router
         await global.Personal.remove()
 
         console.log('Collections Dropped')
-        console.log(req.body)
         const user = new User({ email: 'js@gmail.com', admin: true })
         let admin = user
-        await User.register(user, 'asdf', async (error) => {
+        await User.register(user, 'asdfasdf', async (error) => {
             if (error) {
                 console.error(error)
                 next(error)
                 return
             }
             req.user = user
-            let bat = await global.Personal.create({
-                userID: user._id,
-                firstName: 'Josh',
-                lastName: 'Smith',
-            })
 
         })
 
         const newUser = new User({ email: 'finance@gmail.com', admin: false })
-        await User.register(newUser, 'asdf', async (error) => {
+        await User.register(newUser, 'asdfasdf', async (error) => {
             if (error) {
                 console.error(error)
                 next(error)
                 return
             }
             req.user = newUser
-            let bat = await global.Personal.create({
-                userID: newUser._id,
-                firstName: 'Josh',
-                lastName: 'Smith',
-            })
 
         })
-
-
-
         console.log('userCreated')
+        await global.Personal.create({
+            userID: newUser._id,
+            firstName: 'Josh',
+            lastName: 'Smith',
+        })
+        await global.Personal.create({
+            userID: admin._id,
+            firstName: 'Josh',
+            lastName: 'Smith',
+        })
+
+        console.log('Personal Profile Created')
+
+        // await global.Personal.insert({
+        //     userID: []
+        // })
         let newVenues = []
         for (let i = 0; i < venues.length; i++) {
             let newVenue;
@@ -107,7 +109,6 @@ router
             }
         }
         console.log('venues created')
-        console.log(newVenues)
         let newEvents = [
             {
                 name: 'Fun Times',
