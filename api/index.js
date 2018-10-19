@@ -12,6 +12,7 @@ const authRouter = require('./routes/auth')
 const eventRouter = require('./routes/event')
 const personalRouter = require('./routes/personal')
 const venueRouter = require('./routes/venue')
+const personalEventRouter = require('./routes/personalEvent')
 const testRouter = require('./routes/test')
 
 // Create server
@@ -37,6 +38,7 @@ server.use('/auth', authRouter)
 server.use('/test', testRouter)
 server.use('/event', eventRouter)
 server.use('/venue', venueRouter)
+server.use('/personalEvent', authMiddleware.authenticateJWT, personalEventRouter)
 server.use('/personal', authMiddleware.authenticateJWT, personalRouter)
 
 // Handle errors by returning JSON

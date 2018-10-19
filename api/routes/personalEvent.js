@@ -8,8 +8,13 @@ router
     .route('/')
     // Get logged in user’s details
     .get(async (req, res) => {
-        let events = await global.Event.find({})
-        res.json(events)
+        console.log(req)
+        let event = await global.Event.find({
+            eventProposer: req.user._id
+        })
+            .populate('venueId')
+        // console.log(event)
+        res.json(event)
     })
 
 

@@ -2,7 +2,8 @@ import React from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import TextField from '../atoms/TextField'
-import { createEvent, getVenues } from "../../api/event"
+import { getVenues } from "../../api/venue"
+import { createEvent } from "../../api/personalEvent"
 import { CircularProgress } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';

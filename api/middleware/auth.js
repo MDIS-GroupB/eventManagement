@@ -56,7 +56,7 @@ passport.use(
 
 function registerMiddleware(req, res, next) {
   console.log(req.body)
-  const user = new User({ email: req.body.email})
+  const user = new User({ email: req.body.email })
   User.register(user, req.body.password, async (error) => {
     if (error) {
       console.error(error)
@@ -90,5 +90,5 @@ module.exports = {
   authenticateSignIn: passport.authenticate('local', { session: false }),
   authenticateJWT: passport.authenticate('jwt', { session: false }),
   initialize: passport.initialize(),
-  register: registerMiddleware
+  register: registerMiddleware,
 }

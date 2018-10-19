@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { getUserDetails } from "./../api/user"
 import CircularProgress from 'material-ui/CircularProgress';
 import CreateEventDialog from '../components/organisms/CreateEventDialog';
-import ViewEventTabs from '../components/atoms/ViewEventTabs';
+import ViewEventTabs from '../components/molecules/ViewEventTabs';
 // import CreateEventDialog from '../components/atoms/Test';
 
 export default class LoginPage extends Component {
