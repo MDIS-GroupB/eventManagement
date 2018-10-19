@@ -1,0 +1,160 @@
+.naked-href {
+  text-decoration: none; }
+
+body {
+  width: 100vw;
+  height: 100vh;
+  text-align: center; }
+
+div.login-modal-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
+.google-oauth {
+  background-color: grey;
+  font-size: 12px;
+  padding: 0px; }
+
+.home-bg {
+  max-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+  position: fixed;
+  left: 0px;
+  top: 0px; }
+
+.login-background {
+  position: absolute;
+  max-width: 100vw;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("./imgs/background.jpg");
+  background-position: center; }
+
+.conctr-footer-box {
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto 5px;
+  flex-direction: column; }
+
+.conctr-footer-logo {
+  margin: auto;
+  max-width: 100px; }
+
+.conctr-footer-text {
+  color: white;
+  margin-bottom: 10px; }
+
+.login-text-fields {
+  margin: auto;
+  padding-bottom: 20px;
+  max-width: 85%; }
+
+.wimo-login-logo {
+  max-width: 85%;
+  padding-bottom: 20px; }
+
+.welcome-container {
+  position: absolute;
+  bottom: 120px;
+  left: 7.5vw;
+  height: 500px;
+  width: 390px;
+  max-width: 90%;
+  min-width: 300px;
+  margin: auto; }
+
+.welcome-container-create {
+  position: absolute;
+  left: 7.5vw;
+  height: 500px;
+  width: 390px;
+  max-width: 90%;
+  min-width: 300px;
+  margin: auto; }
+
+.login-dialog {
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  border-color: black;
+  border-style: solid;
+  border: 1px; }
+
+.login-button {
+  width: 50;
+  margin: 7px 0 7px;
+  min-width: 150px; }
+
+.register-modal-button {
+  width: 85%;
+  margin: auto; }
+
+.login-divider {
+  margin: auto;
+  margin: 15px 0 16px; }
+
+.login-text {
+  margin: 10px;
+  color: #c82d2d; }
+
+.modal-textfield {
+  margin: auto;
+  padding-bottom: 20px;
+  max-width: 85%; }
+
+.register-modal-content {
+  max-width: 500px; }
+
+.button-icon {
+  margin-bottom: 2px; }
+
+@media only screen and (max-width: 768px) {
+  .welcome-container {
+    position: relative;
+    left: auto;
+    top: 50%;
+    transform: translateY(-50%); } }
+
+.container {
+  display: block;
+  float: left;
+  right: 50%;
+  width: 100%;
+  height: 250px; }
+
+.battery {
+  display: block;
+  margin-left: 25%;
+  margin-right: 25%; }
+
+.innerpre {
+  width: 0px;
+  height: 90px;
+  background: #8fc800;
+  position: absolute;
+  margin: 117px 0px 0px 153px; }
+
+.inner {
+  width: 224px;
+  height: 90px;
+  background: #3D3D3D;
+  position: absolute;
+  margin: 93px 0px 0px 129px;
+  border: 24px solid #fff;
+  outline: 21px solid #3D3D3D; }
+
+.posi {
+  width: 34px;
+  height: 89px;
+  background: #3D3D3D;
+  position: absolute;
+  margin: 118px 0px 0px 433px; }
+
+.navbar-logo {
+  height: 75%;
+  margin-left: 2.5em; }

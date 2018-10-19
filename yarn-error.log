@@ -1,0 +1,31 @@
+Arguments: 
+  /usr/local/Cellar/node/10.11.0/bin/node /Users/williammarcos/.yarn/bin/yarn.js start
+
+PATH: 
+  /Users/williammarcos/.yarn/bin:/Users/williammarcos/.config/yarn/global/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Wireshark.app/Contents/MacOS:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin:/Users/williammarcos/.yarn/bin:/Users/williammarcos/.config/yarn/global/node_modules/.bin:/Users/williammarcos/.rvm/bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  10.11.0
+
+Platform: 
+  darwin x64
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Couldn't find a package.json file in "/Users/williammarcos/school/eventmanagment"
+      at new MessageError (/Users/williammarcos/.yarn/lib/cli.js:186:110)
+      at /Users/williammarcos/.yarn/lib/cli.js:40048:15
+      at Generator.next (<anonymous>)
+      at step (/Users/williammarcos/.yarn/lib/cli.js:98:30)
+      at /Users/williammarcos/.yarn/lib/cli.js:109:13
