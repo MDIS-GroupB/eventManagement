@@ -22,19 +22,19 @@ export default class ViewEventTabs extends React.Component {
       <div>
         <AppBar style={{ width: '80%', alignSelf: 'center' }} position="static">
           <Tabs value={this.state.tabNo} onChange={this.handleChange}>
-            <Tab label="Item One" />
-            <Tab label="Item Two" />
-            <Tab label="Item Three" />
+            <Tab label="Pending" />
+            <Tab label="Rejected" />
+            <Tab label="Accepted" />
           </Tabs>
         </AppBar>
         {this.state.tabNo === 0 &&
-          <Typography component="div" style={{ padding: 8 * 3 }}>Tab 1</Typography>
+          <Typography component="div">Pending</Typography>
         }
         {this.state.tabNo === 1 &&
-          <Typography component="div" style={{ padding: 8 * 3 }}>Tab 2</Typography>
+          <Typography component="div">Rejected</Typography>
         }
         {this.state.tabNo === 2 &&
-          <Typography component="div" style={{ padding: 8 * 3 }}>Tab 3</Typography>
+          <Typography component="div">Accepted</Typography>
         }
       </div>
     )

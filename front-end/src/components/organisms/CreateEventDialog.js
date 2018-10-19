@@ -7,8 +7,26 @@ import { CircularProgress } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import VenueTable from '../atoms/VenueTable';
+import CreateEventFields from '../molecules/CreateEventFields';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+
+const eventFields = [{
+  id: 'name',
+  label: 'Name',
+},
+{
+  id: 'noOfTickets',
+  label: 'Number Of Tickets',
+},
+{
+  id: 'description',
+  label: 'Description',
+},
+{
+  id: 'price',
+  label: 'Price',
+}]
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -28,7 +46,7 @@ function filterVenues(venues, searchText) {
 export default class CreateEventDialog extends React.Component {
 
   state = {
-    open: true,
+    open: false,
     name: "",
     searchText: "",
     theme: "",
@@ -80,6 +98,11 @@ export default class CreateEventDialog extends React.Component {
 
 
   render() {
+    const createEventTextFields = {
+      onInputChange: this.onInputChange,
+      onEnterKeyDown: this.createEvent,
+      fields: eventFields
+    }
 
     return (
       <div>
@@ -94,56 +117,9 @@ export default class CreateEventDialog extends React.Component {
           <DialogTitle>Create Event</DialogTitle>
           <div style={{ overflowY: 'scroll' }}>
             <br />
-            <TextField
-              onChange={this.onInputChange}
-              onEnterKeyDown={this.createEvent}
-              value={this.state.name}
-              label='name'
-              id='name'
-              hintText='name'
-              floatingLabelText='name'
-            />
-            <br />
-            <TextField
-              onChange={this.onInputChange}
-              onEnterKeyDown={this.createEvent}
-              value={this.state.theme}
-              label='theme'
-              id='theme'
-              hintText='theme'
-              floatingLabelText='theme'
-            />
-            <br />
-            <TextField
-              onChange={this.onInputChange}
-              onEnterKeyDown={this.createEvent}
-              value={this.state.noOfTickets}
-              label='noOfTickets'
-              id='noOfTickets'
-              hintText='noOfTickets'
-              floatingLabelText='noOfTickets'
-            />
-            <br />
-            <TextField
-              onChange={this.onInputChange}
-              onEnterKeyDown={this.createEvent}
-              value={this.state.price}
-              label='price'
-              id='price'
-              hintText='price'
-              floatingLabelText='price'
-            />
-            <br />
-            <TextField
-              onChange={this.onInputChange}
-              onEnterKeyDown={this.createEvent}
-              value={this.state.description}
-              label='description'
-              id='description'
-              hintText='description'
-              floatingLabelText='description'
-              multiline='true'
-              row='5'
+            <CreateEventFields
+              createEventTextFields={createEventTextFields}
+              state={this.state}
             />
 
             {this.state.venues ? (

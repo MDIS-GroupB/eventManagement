@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { getUserDetails } from "./../api/user"
 import CircularProgress from 'material-ui/CircularProgress';
-import CreateEventDialog from '../components/molecules/CreateEventDialog';
+import CreateEventDialog from '../components/organisms/CreateEventDialog';
 import ViewEventTabs from '../components/atoms/ViewEventTabs';
 // import CreateEventDialog from '../components/atoms/Test';
 
@@ -15,9 +15,7 @@ export default class LoginPage extends Component {
 
   async componentDidMount() {
     let details = await getUserDetails()
-    console.log("details", details)
     if (details) {
-      console.log(details[0])
       this.setState({
         details: details[0]
       })
