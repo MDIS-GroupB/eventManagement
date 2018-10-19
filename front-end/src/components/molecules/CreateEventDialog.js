@@ -1,41 +1,47 @@
 import React from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 
-import TextField from './TextField'
-import { createEvent, getVenues } from "./../../api/event"
+import TextField from '../atoms/TextField'
+import { createEvent, getVenues } from "../../api/event"
 import { CircularProgress } from '@material-ui/core';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
+import VenueTable from '../atoms/VenueTable';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
-function sortVenues(venues) {
-  let returnVenues = []
-  for (let i = 0; i < 10; i++) {
-    returnVenues.push(venues[i])
-  }
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
+}
+
+function filterVenues(venues, searchText) {
+  let returnVenues = [];
+  let reg = new RegExp(`${searchText}`, 'i');
+  venues.forEach((searchVenue, i) => {
+    if (searchVenue.name.match(reg)) {
+      returnVenues.push(searchVenue)
+    }
+  })
   return returnVenues
-
 }
 
 export default class CreateEventDialog extends React.Component {
 
   state = {
-    open: false,
+    open: true,
     name: "",
+    searchText: "",
     theme: "",
     noOfTickets: "",
     price: "",
     description: "",
+    selectedVenue: { _id: 'none' },
     venues: null,
     displayedVenues: null,
   }
   onInputChange = (e, newValue) => {
+    console.log(e.target.id)
+    console.log(newValue)
     this.setState({
       [e.target.id]: newValue
     })
@@ -65,7 +71,11 @@ export default class CreateEventDialog extends React.Component {
 
     let venues = await getVenues()
 
-    this.setState({ venues: venues });
+    this.setState({ venues });
+  }
+
+  onVenueSelect(selectedVenue) {
+    this.setState({ selectedVenue });
   }
 
 
@@ -75,15 +85,18 @@ export default class CreateEventDialog extends React.Component {
       <div>
         <RaisedButton onClick={this.handleClickOpen}>Create Event</RaisedButton>
         <Dialog
+          fullScreen
           open={this.state.open}
           onClose={this.handleClose}
           scroll="paper"
+          TransitionComponent={Transition}
         >
+          <DialogTitle>Create Event</DialogTitle>
           <div style={{ overflowY: 'scroll' }}>
             <br />
             <TextField
               onChange={this.onInputChange}
-              // onEnterKeyDown={this.createEvent}
+              onEnterKeyDown={this.createEvent}
               value={this.state.name}
               label='name'
               id='name'
@@ -93,7 +106,7 @@ export default class CreateEventDialog extends React.Component {
             <br />
             <TextField
               onChange={this.onInputChange}
-              // onEnterKeyDown={this.createEvent}
+              onEnterKeyDown={this.createEvent}
               value={this.state.theme}
               label='theme'
               id='theme'
@@ -103,7 +116,7 @@ export default class CreateEventDialog extends React.Component {
             <br />
             <TextField
               onChange={this.onInputChange}
-              // onEnterKeyDown={this.createEvent}
+              onEnterKeyDown={this.createEvent}
               value={this.state.noOfTickets}
               label='noOfTickets'
               id='noOfTickets'
@@ -113,7 +126,7 @@ export default class CreateEventDialog extends React.Component {
             <br />
             <TextField
               onChange={this.onInputChange}
-              // onEnterKeyDown={this.createEvent}
+              onEnterKeyDown={this.createEvent}
               value={this.state.price}
               label='price'
               id='price'
@@ -132,30 +145,29 @@ export default class CreateEventDialog extends React.Component {
               multiline='true'
               row='5'
             />
-            {this.state.venues ? (
-              <Paper>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Location</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {sortVenues(this.state.venues).map(venue => {
-                      return (
-                        <TableRow key={Math.random()}>
-                          <TableCell component="th" scope="row">
-                            {venue.name}
-                          </TableCell>
-                          <TableCell numeric>{venue.location}</TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
 
-              </Paper>
+            {this.state.venues ? (
+              <div>
+                <TextField
+                  onChange={this.onInputChange}
+                  onEnterKeyDown={this.createEvent}
+                  value={this.state.searchText}
+                  label='Search e.g. The Bar'
+                  id='searchText'
+                  hintText='Search'
+                  floatingLabelText='Search'
+                />
+                {!!this.state.searchText ?
+                  (
+                    <VenueTable
+                      selectedVenue={this.state.selectedVenue}
+                      onVenueSelect={(newVenue) => (this.onVenueSelect(newVenue))}
+                      venues={filterVenues(this.state.venues, this.state.searchText)}
+                    />
+                  ) : false
+                }
+              </div>
+
             ) : <div>
                 <CircularProgress />
               </div>
@@ -164,10 +176,10 @@ export default class CreateEventDialog extends React.Component {
 
           <DialogActions>
             <RaisedButton onClick={this.handleClose} color="primary">
-              Disagree
+              Cancel
             </RaisedButton>
             <RaisedButton onClick={this.handleClose} color="primary" autoFocus>
-              Agree
+              Create Event
             </RaisedButton>
           </DialogActions>
         </Dialog>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { getUserDetails } from "./../api/user"
 import CircularProgress from 'material-ui/CircularProgress';
-import CreateEventDialog from '../components/atoms/CreateEventDialog';
+import CreateEventDialog from '../components/molecules/CreateEventDialog';
 import ViewEventTabs from '../components/atoms/ViewEventTabs';
 // import CreateEventDialog from '../components/atoms/Test';
 
