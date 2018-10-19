@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import {getUserDetails} from "./../api/user"
+import { getUserDetails } from "./../api/user"
 import CircularProgress from 'material-ui/CircularProgress';
 import CreateEventDialog from '../components/atoms/CreateEventDialog';
+import ViewEventTabs from '../components/atoms/ViewEventTabs';
 // import CreateEventDialog from '../components/atoms/Test';
 
 export default class LoginPage extends Component {
 
-  state = {details: null};
+  state = { details: null };
 
   constructor(props) {
     super()
@@ -14,8 +15,8 @@ export default class LoginPage extends Component {
 
   async componentDidMount() {
     let details = await getUserDetails()
-    console.log("details",details)
-    if(details){
+    console.log("details", details)
+    if (details) {
       console.log(details[0])
       this.setState({
         details: details[0]
@@ -27,13 +28,14 @@ export default class LoginPage extends Component {
     return (
       <div>
         {this.state.details ? (
-        <div>
-          <h1>Haiiiiii {this.state.details.firstName}</h1>
-          <CreateEventDialog/>
-        </div>
-      ):(
-        <CircularProgress/>
-      )}
+          <div>
+            <h1>Haiiiiii {this.state.details.firstName}</h1>
+            <CreateEventDialog />
+            <ViewEventTabs />
+          </div>
+        ) : (
+            <CircularProgress />
+          )}
       </div>
     )
   }
