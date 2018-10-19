@@ -27,6 +27,11 @@ const eventSchema = mongoose.Schema({
     ref: 'Venue',
     required: true,
   },
+  eventProposer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   status: approvedSchema,
 })
 

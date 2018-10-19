@@ -11,6 +11,7 @@ require('./db/dbInit')
 const authRouter = require('./routes/auth')
 const eventRouter = require('./routes/event')
 const personalRouter = require('./routes/personal')
+const venueRouter = require('./routes/venue')
 const testRouter = require('./routes/test')
 
 // Create server
@@ -35,6 +36,7 @@ server.get('/mdistesting', (request, response) => {
 server.use('/auth', authRouter)
 server.use('/test', testRouter)
 server.use('/event', eventRouter)
+server.use('/venue', venueRouter)
 server.use('/personal', authMiddleware.authenticateJWT, personalRouter)
 
 // Handle errors by returning JSON

@@ -111,6 +111,7 @@ router
         console.log('venues created')
         let newEvents = [
             {
+                eventProposer: newUser._id,
                 name: 'Fun Times',
                 description: 'Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.',
                 // category: {
@@ -121,6 +122,7 @@ router
                 venueId: newVenues[1]._id,
             },
             {
+                eventProposer: newUser._id,
                 name: 'Fun Times',
                 description: 'Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.',
                 // category: {
@@ -135,6 +137,7 @@ router
                 },
             },
             {
+                eventProposer: newUser._id,
                 name: 'Aight Times',
                 description: 'Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.Gonna be the craziest shit ever. Alesso, the beast etc.',
                 // category: {

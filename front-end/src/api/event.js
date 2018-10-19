@@ -19,7 +19,7 @@ export function createEvent(eventDetails) {
     // throw Error(error)})
 }
 export function getVenues() {
-    return api.get(`/event/venues`)
+    return api.get(`/venue`)
   .then(res => {
     console.log("res",res)
     return res.data
