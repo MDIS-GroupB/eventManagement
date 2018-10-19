@@ -21,8 +21,8 @@ import './App.css';
 
 //Token and storing
 const tokenKey = 'userToken'
-// const savedToken = localStorage.getItem(tokenKey)
-const savedToken = null
+const savedToken = localStorage.getItem(tokenKey)
+// const savedToken = null
 setApiToken(savedToken)
 // injectTapEventPlugin()
 

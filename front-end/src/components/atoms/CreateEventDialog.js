@@ -10,7 +10,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Dialog, { DialogActions } from "material-ui/Dialog";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 function sortVenues(venues) {
   let returnVenues = []
@@ -21,7 +23,7 @@ function sortVenues(venues) {
 
 }
 
-export default class SelectDevices extends React.Component {
+export default class CreateEventDialog extends React.Component {
 
   state = {
     open: false,
@@ -75,10 +77,10 @@ export default class SelectDevices extends React.Component {
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
-          scroll="body"
-          autoScrollBodyContent={true}
+          scroll="paper"
         >
-          <div style={{ overflowY: 'scroll', height: '1400px' }}>
+          <div style={{ overflowY: 'scroll' }}>
+            <br />
             <TextField
               onChange={this.onInputChange}
               // onEnterKeyDown={this.createEvent}
@@ -88,6 +90,7 @@ export default class SelectDevices extends React.Component {
               hintText='name'
               floatingLabelText='name'
             />
+            <br />
             <TextField
               onChange={this.onInputChange}
               // onEnterKeyDown={this.createEvent}
@@ -97,6 +100,7 @@ export default class SelectDevices extends React.Component {
               hintText='theme'
               floatingLabelText='theme'
             />
+            <br />
             <TextField
               onChange={this.onInputChange}
               // onEnterKeyDown={this.createEvent}
@@ -106,6 +110,7 @@ export default class SelectDevices extends React.Component {
               hintText='noOfTickets'
               floatingLabelText='noOfTickets'
             />
+            <br />
             <TextField
               onChange={this.onInputChange}
               // onEnterKeyDown={this.createEvent}
@@ -115,6 +120,7 @@ export default class SelectDevices extends React.Component {
               hintText='price'
               floatingLabelText='price'
             />
+            <br />
             <TextField
               onChange={this.onInputChange}
               onEnterKeyDown={this.createEvent}
@@ -150,17 +156,20 @@ export default class SelectDevices extends React.Component {
                 </Table>
 
               </Paper>
-            ) : <CircularProgress />}
-
+            ) : <div>
+                <CircularProgress />
+              </div>
+            }
           </div>
-          {/* <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+
+          <DialogActions>
+            <RaisedButton onClick={this.handleClose} color="primary">
               Disagree
-            </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
+            </RaisedButton>
+            <RaisedButton onClick={this.handleClose} color="primary" autoFocus>
               Agree
-            </Button>
-          </DialogActions> */}
+            </RaisedButton>
+          </DialogActions>
         </Dialog>
       </div>
     )
