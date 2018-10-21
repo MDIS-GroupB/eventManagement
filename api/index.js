@@ -14,6 +14,7 @@ const personalRouter = require('./routes/personal')
 const venueRouter = require('./routes/venue')
 const personalEventRouter = require('./routes/personalEvent')
 const testRouter = require('./routes/test')
+const adminRouter = require('./routes/admin')
 
 // Create server
 const server = express();
@@ -34,12 +35,33 @@ server.get('/mdistesting', (request, response) => {
   response.send('Works')
 })
 
-server.use('/auth', authRouter)
-server.use('/test', testRouter)
-server.use('/event', eventRouter)
-server.use('/venue', venueRouter)
-server.use('/personalEvent', authMiddleware.authenticateJWT, personalEventRouter)
-server.use('/personal', authMiddleware.authenticateJWT, personalRouter)
+server.use('/auth',
+  authRouter,
+)
+server.use('/test',
+  testRouter,
+)
+server.use('/event',
+  eventRouter,
+)
+server.use('/venue',
+  venueRouter,
+)
+server.use('/personalEvent',
+  authMiddleware.authenticateJWT,
+  personalEventRouter,
+)
+server.use('/personal',
+  authMiddleware.authenticateJWT,
+  personalRouter,
+)
+
+server.use('/admin',
+  authMiddleware.authenticateJWT,
+  authMiddleware.checkAdmin,
+  adminRouter,
+)
+
 
 // Handle errors by returning JSON
 server.use((error, req, res, next) => {

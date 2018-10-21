@@ -84,8 +84,22 @@ function dropCollection(req, res, next) {
   });
 }
 
+async function checkAdmin(req, res, next) {
+  let user = await global.User.findById(req.user._id)
+  // console.log('===================')
+  // console.log(user.admin)
+  // console.log('===================')
+
+  if (!!user.admin == true) {
+    next()
+  } else {
+    res.status('401').send('Not Admin')
+  }
+}
+
 module.exports = {
   dropCollection,
+  checkAdmin,
   signTokenHandler,
   authenticateSignIn: passport.authenticate('local', { session: false }),
   authenticateJWT: passport.authenticate('jwt', { session: false }),

@@ -4,7 +4,7 @@ const passportLocalMongoose = require('passport-local-mongoose')
 const userSchema = mongoose.Schema({
   admin: {
     default: true,
-    type: String,
+    type: Boolean,
   }
 })
 userSchema.plugin(passportLocalMongoose, {
