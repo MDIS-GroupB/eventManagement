@@ -5,10 +5,12 @@ const authMiddleware = require('../middleware/auth')
 const router = express.Router()
 
 router
-    .route('/')
+    .route('/event')
     // Get logged in user’s details
     .get(async (req, res) => {
-        res.send('works')
+        let events = await global.Event.find();
+
+        res.json(events)
     })
 
 

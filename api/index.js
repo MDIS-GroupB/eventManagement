@@ -51,7 +51,10 @@ server.use('/personalEvent',
   authMiddleware.authenticateJWT,
   personalEventRouter,
 )
-server.use('/personal',
+server.use('/personal', (req, res, next) => {
+  console.log(req.headers)
+  next()
+},
   authMiddleware.authenticateJWT,
   personalRouter,
 )

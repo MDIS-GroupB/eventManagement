@@ -4,14 +4,14 @@ import TextField from '../atoms/TextField'
 export default class ViewEventTabs extends React.Component {
 
   render() {
-    console.log(this.props.createEventTextFields)
     return (
       <div>
         {this.props.createEventTextFields.fields.map((eventField) => {
-          return (<div>
+          console.log(eventField.id)
+          return (<>
             <TextField
               key={eventField.id}
-              onChange={this.onInputChange}
+              onChange={this.props.createEventTextFields.onInputChange}
               onEnterKeyDown={this.createEvent}
               value={this.props.state[eventField.id]}
               label={eventField.label}
@@ -20,7 +20,7 @@ export default class ViewEventTabs extends React.Component {
               floatingLabelText={eventField.label}
             />
             <br />
-          </div>)
+          </>)
         })}
       </div>
     )

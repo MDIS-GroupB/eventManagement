@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ToastContainer, toast } from 'react-toastify'
-import { setApiToken } from './api/init'
+import api, { setApiToken } from './api/init'
 import * as authAPI from './api/auth'
 import 'react-toastify/dist/ReactToastify.min.css'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -15,6 +15,7 @@ import {
 // Pages
 import LoginPage from './pages/Login'
 import HomePage from './pages/Home'
+import AdminPage from './pages/Admin'
 import NavBar from '../src/components/molecules/NavBar';
 
 import './App.css';
@@ -22,8 +23,8 @@ import './App.css';
 //Token and storing
 const tokenKey = 'userToken'
 // const savedToken = localStorage.getItem(tokenKey)
+// console.log(savedToken)
 const savedToken = null
-setApiToken(savedToken)
 // injectTapEventPlugin()
 
 
@@ -79,10 +80,28 @@ class App extends Component {
   }
 
   componentDidMount() {
-    authAPI.init(this.handleError)
+    authAPI.init(this.handleError, this.handleSignOut)
+    setApiToken(this.state.token)
+  }
+  tokenValidCheck() {
+    // Add a 401 response interceptor
+    api.interceptors.response.use(undefined, err => {
+      const error = err.response;
+      // if error is 401 
+      if (error) {
+        if (error.status === 401 && error.config &&
+          !error.config.__isRetryRequest) {
+          console.log('menu nooooo')
+          // console.log('menu nooooo')
+          this.handleSignOut()
+          // return this.props.history.push('/signOut')
+        }
+      }
+    });
   }
 
   render() {
+    this.tokenValidCheck();
     return (
       <div className="App">
         <Router>
@@ -107,28 +126,53 @@ class App extends Component {
               <Switch>
                 {!!this.state.token ?
                   (
-                    <Route
-                      path='/'
-                      render={
-                        ({ location }) => <HomePage
-                          pathname={location.pathname.substring(1)}
-                          handleError={this.handleError}
-                        />
-                      }
-                    />
+                    <>
+                      <Route
+                        exact path='/'
+                        render={
+                          ({ location }) => <HomePage
+                            pathname={location.pathname.substring(1)}
+                            handleError={this.handleError}
+                          />
+                        }
+                      />
+
+                      <Route
+                        exact path='/admin'
+                        render={
+                          () => <AdminPage
+                          // handleErrors={this.handleError}
+                          // setToken={this.setToken}
+                          // onSignIn={this.handleSignIn}
+                          // onRegister={this.handleRegister}
+                          />
+                        }
+                      />
+                      <Route
+                        path='/signOut'
+                        render={
+                          () => {
+                            this.handleSignOut()
+                            return false
+                          }
+                        }
+                      />
+                    </>
                   ) : (
                     // <h1>"Login"</h1>
-                    <Route
-                      path='/'
-                      render={
-                        () => <LoginPage
-                          handleErrors={this.handleError}
-                          setToken={this.setToken}
-                          onSignIn={this.handleSignIn}
-                          onRegister={this.handleRegister}
-                        />
-                      }
-                    />
+                    <>
+                      <Route
+                        path='/'
+                        render={
+                          () => <LoginPage
+                            handleErrors={this.handleError}
+                            setToken={this.setToken}
+                            onSignIn={this.handleSignIn}
+                            onRegister={this.handleRegister}
+                          />
+                        }
+                      />
+                    </>
                   )
                 }
                 {/* <Route

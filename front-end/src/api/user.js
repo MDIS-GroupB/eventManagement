@@ -1,17 +1,19 @@
 import api from './init'
 
-let handleErrors
+let handleErrors;
 export function init(handleError) {
-    handleErrors = handleError
+  handleErrors = handleErrors
 }
 
 export function getUserDetails() {
-    return api.get(`/personal`)
-  .then(res => {
-    console.log("res",res)
-    return res.data
-  })
+  return api.get(`/personal`)
+    .then(res => {
+      if (res) {
+        console.log("res", res)
+        return res.data
+      }
+    })
   // .catch(error => {
-    // console.log("res",error)
-    // throw Error(error)})
+  // console.log("res",error)
+  // throw Error(error)})
 }
