@@ -14,7 +14,10 @@ export function getPersonalEvents() {
   // console.log("res",error)
   // throw Error(error)})
 }
-export function createEvent() {
+export function createEvent(a) {
+  console.log('==================')
+  console.log(a)
+  console.log('==================')
   return api.post(`/personalEvent`)
     .then(res => {
       // console.log("res", res)

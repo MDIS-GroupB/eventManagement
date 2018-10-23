@@ -48,19 +48,17 @@ export default class CreateEventDialog extends React.Component {
 
   state = {
     open: false,
-    name: "",
+    name: "Crazy Event",
     searchText: "",
     theme: "",
-    noOfTickets: "",
-    price: "",
-    description: "",
+    noOfTickets: "12",
+    price: "200",
+    description: "Fun Times",
     selectedVenue: { _id: 'none' },
     venues: null,
     displayedVenues: null,
   }
   onInputChange = (e, newValue) => {
-    console.log(e.target.id)
-    console.log(newValue)
     this.setState({
       [e.target.id]: newValue
     })
@@ -74,7 +72,7 @@ export default class CreateEventDialog extends React.Component {
     this.setState({ open: false });
   };
 
-  createEvent = () => {
+  onHandleCreateEvent = () => {
     let a = {
       name: this.state.name,
       theme: this.state.theme,
@@ -82,6 +80,9 @@ export default class CreateEventDialog extends React.Component {
       price: this.state.price,
       description: this.state.description,
     }
+    console.log('==================')
+    console.log(a)
+    console.log('==================')
     createEvent(a);
     // this.setState({ open: false })
   }
@@ -155,7 +156,7 @@ export default class CreateEventDialog extends React.Component {
             <RaisedButton onClick={this.handleClose} color="primary">
               Cancel
             </RaisedButton>
-            <RaisedButton onClick={this.handleClose} color="primary" autoFocus>
+            <RaisedButton onClick={this.onHandleCreateEvent} color="primary" autoFocus>
               Create Event
             </RaisedButton>
           </DialogActions>
