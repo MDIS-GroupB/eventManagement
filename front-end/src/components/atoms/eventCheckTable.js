@@ -41,7 +41,7 @@ class ScrollDialog extends React.Component {
                     <TableCell component="th" scope="row">
                       {venue.name}
                     </TableCell>
-                    <TableCell numeric>{venue.venueId.location}</TableCell>
+                    <TableCell numeric>{venue.location}</TableCell>
                     <TableCell numeric>{venue.description}</TableCell>
                     <TableCell numeric><Button>View Me</Button></TableCell>
                   </TableRow>
