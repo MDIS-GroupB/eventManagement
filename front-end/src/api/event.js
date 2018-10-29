@@ -4,8 +4,8 @@ let handleErrors
 export function init(handleError) {
   handleErrors = handleError
 }
-export function getVenues() {
-  return api.get(`/venue/`)
+export function getEvents() {
+  return api.get(`/event/`)
     .then(res => {
       console.log("res", res)
       return res.data
@@ -15,8 +15,8 @@ export function getVenues() {
   // throw Error(error)})
 }
 
-export function getVenue(id) {
-  return api.get(`/venue/${id}`)
+export function getEvent(id) {
+  return api.get(`/event/${id}`)
     .then(res => {
       console.log("res", res)
       return res.data
@@ -25,4 +25,3 @@ export function getVenue(id) {
   // console.log("res",error)
   // throw Error(error)})
 }
-

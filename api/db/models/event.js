@@ -17,8 +17,8 @@ const eventSchema = mongoose.Schema({
   // }
   name: String,
   description: String,
-  noOfTickets:Number,
-  price:Number,
+  noOfTickets: Number,
+  price: Number,
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
@@ -37,6 +37,6 @@ const eventSchema = mongoose.Schema({
   status: approvedSchema,
 })
 
-const event = mongoose.model('event', eventSchema)
+const event = mongoose.model('Event', eventSchema)
 
 module.exports = event

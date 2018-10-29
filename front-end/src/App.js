@@ -17,6 +17,8 @@ import LoginPage from './pages/Login'
 import HomePage from './pages/Home'
 import AdminPage from './pages/Admin'
 import NavBar from '../src/components/molecules/NavBar';
+import VenuePage from './pages/Venue';
+import EventPage from './pages/Event';
 
 import './App.css';
 
@@ -124,7 +126,13 @@ class App extends Component {
                 }
               />
               <Switch>
-                {!!this.state.token ?
+                <Route exact path="/venue/:venueId" component={VenuePage}
+                />
+                <Route exact path="/Event/:eventId" component={EventPage}
+                />
+
+
+                {!!this.state.token ? //check if login
                   (
                     <>
                       <Route

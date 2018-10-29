@@ -3,7 +3,7 @@ import Field from 'material-ui/TextField'
 
 export default function TextField(props) {
 
-  let mutableProps = {...props}
+  let mutableProps = { ...props }
   let handleKey = mutableProps.onEnterKeyDown
   delete mutableProps.onEnterKeyDown
 
@@ -18,8 +18,8 @@ export default function TextField(props) {
 
   return (
     <Field
-      { ...mutableProps }
-      onKeyDown={ handleKeyDown }
+      {...mutableProps}
+      onKeyDown={handleKeyDown}
     />
   )
 }
