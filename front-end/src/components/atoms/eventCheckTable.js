@@ -47,16 +47,16 @@ class ScrollDialog extends React.Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.props.venues.map(venue => {
+              {this.props.events.map(event => {
                 return (
-                  <TableRow key={venue._id}>
+                  <TableRow key={event._id}>
                     <TableCell component="th" scope="row">
-                      {venue.name}
+                      {event.name}
                     </TableCell>
-                    {/* <TableCell numeric>{venue._id}</TableCell> */}
-                    <TableCell numeric>{venue.location}</TableCell>
-                    <TableCell numeric>{venue.description}</TableCell>
-                    <TableCell numeric><Link to={`/event/${venue._id}`}>View Me</Link></TableCell>
+                    {/* <TableCell numeric>{event._id}</TableCell> */}
+                    <TableCell numeric>{event.location}</TableCell>
+                    <TableCell numeric>{event.description}</TableCell>
+                    <TableCell numeric><Link to={`/event/${event._id}`}>View Me</Link></TableCell>
                   </TableRow>
                 );
               })}

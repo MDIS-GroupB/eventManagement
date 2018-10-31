@@ -1,6 +1,7 @@
 const express = require('express')
 const passport = require('passport')
 const authMiddleware = require('../middleware/auth')
+const { Console } = require('console');
 
 const router = express.Router()
 
@@ -28,6 +29,7 @@ router
             properser: proposer
         })
     })
+
 
 
 module.exports = router

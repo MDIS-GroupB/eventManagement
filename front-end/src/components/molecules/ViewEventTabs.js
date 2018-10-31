@@ -32,7 +32,7 @@ function sortEvents(events) {
 export default class ViewEventTabs extends React.Component {
 
   state = {
-    tabNo: 0,
+    tabNo: 2,
     events: null,
   }
   handleChange = (event, value) => {
@@ -47,9 +47,9 @@ export default class ViewEventTabs extends React.Component {
   }
 
   render() {
-
+    let sortedEvents
     if (this.state.events) {
-      sortEvents(this.state.events)
+      sortedEvents = sortEvents(this.state.events)
     }
 
     return (
@@ -58,19 +58,19 @@ export default class ViewEventTabs extends React.Component {
           <div>
             <AppBar style={{ width: '80%', alignSelf: 'center' }} position="static">
               <Tabs value={this.state.tabNo} onChange={this.handleChange}>
-                <Tab label="Pending" />
-                <Tab label="Rejected" />
+                {/* <Tab label="Pending" />
+                <Tab label="Rejected" /> */}
                 <Tab label="Accepted" />
               </Tabs>
             </AppBar>
-            {this.state.tabNo === 0 &&
-              <EventCheckTable venues={sortEvents(this.state.events).pending} />
+            {/* {this.state.tabNo === 0 &&
+              <EventCheckTable events={sortedEvents.pending} />
             }
             {this.state.tabNo === 1 &&
-              <EventCheckTable venues={sortEvents(this.state.events).rejected} />
-            }
+              <EventCheckTable events={sortedEvents.rejected} />
+            } */}
             {this.state.tabNo === 2 &&
-              <EventCheckTable venues={sortEvents(this.state.events).accepted} />
+              <EventCheckTable events={sortedEvents.accepted} />
             }
           </div>
         ) : (

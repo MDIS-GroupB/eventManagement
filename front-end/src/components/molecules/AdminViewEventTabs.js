@@ -15,6 +15,7 @@ function sortEvents(events) {
     accepted: [],
   }
   let returnEvents = events.map((event) => {
+    console.log("you have comed to admin view event")
     if (!event.status) {
       returnJson.pending.push(event)
     } else if (event.status.approved) {
@@ -36,12 +37,14 @@ export default class ViewEventTabs extends React.Component {
   handleChange = (event, value) => {
     this.setState({ tabNo: value });
   };
+  getEvents = async () => {
+    let personalEvents = await getEventData()
+    this.setState({ events: personalEvents });
+  }
 
   async componentDidMount() {
 
-    let personalEvents = await getEventData()
-
-    this.setState({ events: personalEvents });
+    this.getEvents();
   }
 
   render() {
@@ -62,13 +65,13 @@ export default class ViewEventTabs extends React.Component {
               </Tabs>
             </AppBar>
             {this.state.tabNo === 0 &&
-              <EventCheckTable venues={sortedEvents.pending} />
+              <EventCheckTable getEvents={this.getEvents.bind(this)} events={sortedEvents.pending} />
             }
             {this.state.tabNo === 1 &&
-              <EventCheckTable venues={sortedEvents.rejected} />
+              <EventCheckTable getEvents={this.getEvents.bind(this)} events={sortedEvents.rejected} />
             }
             {this.state.tabNo === 2 &&
-              <EventCheckTable venues={sortedEvents.accepted} />
+              <EventCheckTable getEvents={this.getEvents.bind(this)} events={sortedEvents.accepted} />
             }
           </div>
         ) : (
