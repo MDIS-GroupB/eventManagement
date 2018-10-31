@@ -2,20 +2,21 @@ import React, { Component } from 'react';
 import TheSlideShow from '../components/SlideShow/index.js'
 import api from '../api/init'
 
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+import tileData from '@material-ui/core/styles';
+import { CircularProgress } from '@material-ui/core/';
+import { Link } from 'react-router-dom'
+
 export default class SlideShow extends React.Component {
     state = {
-        images: [
-            // { id: 1, url: "https://loremflickrxx.com/300/300/dog" },
-            // { id: 2, url: "https://loremflickr.com/300/300/cat" },
-            // { id: 3, url: "https://loremflickr.com/300/300/cat" },
-            // { id: 4, url: "https://loremflickr.com/300/300?random=1" },
-            // { id: 5, url: "https://loremflickr.com/300/300?random=2" },
-            // { id: 6, url: "https://loremflickr.com/300/300?random=1" },
-            // { id: 7, url: "https://loremflickr.com/300/300?random=1" },
-            // { id: 8, url: "https://loremflickr.com/300/300?random=1" },
-            // { id: 9, url: "https://loremflickr.com/300/300?random=1" },
-            // { id: 10, url: "https://loremflickr.com/300/300?random=1" }
-        ]
+        venues: []
     }
 
     getRandomInt(max) {
@@ -23,27 +24,18 @@ export default class SlideShow extends React.Component {
     }
 
     async getImages() {
-        let imageArray = [10];
         let responses = await api.get(`/venue`)
-        console.log("responses of all venue data")
-        console.log(responses.data.length)
-        let responseArrayLength = responses.data.length
-        // let randomIndex = this.getRandomInt(responseArrayLength)
-        // console.log(randomIndex)
-        // let responseImageUrl = responses.data[randomIndex].image
-        // console.log(responseImageUrl)
-
-        for (let i = 0; i < 10; i++) {
-            let randomIndex = this.getRandomInt(responseArrayLength)
-            let responseImageUrl = responses.data[randomIndex].image
-            imageArray[i] = { id: i, url: responseImageUrl }
-        }
+        // for (let i = 0; i < 10; i++) {
+        //     let randomIndex = this.getRandomInt(responseArrayLength)
+        //     let responseImageUrl = responses.data[randomIndex].image
+        //     imageArray[i] = { id: i, url: responseImageUrl }
+        // }
 
         this.setState({
-            images: imageArray
+            venues: responses.data
         })
         console.log("updated state")
-        console.log(this.state.images)
+        console.log(this.state.venues)
     }
 
     async componentDidMount() {
@@ -51,9 +43,28 @@ export default class SlideShow extends React.Component {
     }
 
     render() {
-        return (
-            <TheSlideShow slides={this.state.images} />
-            //the slides is the props for <theSlideShow/>
-        )
+        // const customColumnStyle = { width: 200 };
+
+        return <>
+            {this.state.venues ? (
+                <div className="slide">
+                    <ListSubheader component="div">Venues</ListSubheader>
+                    <GridList cols={5} >
+                        <GridListTile key="Subheader" style={{ height: 'auto' }}>
+                        </GridListTile>
+                        {this.state.venues.map(tile => (
+                            <GridListTile key={tile.img}>
+                                <img src={tile.image} alt={tile.name} />
+                                <GridListTileBar
+                                    title={tile.name}
+                                    subtitle={<span>{tile.location}</span>}
+                                />
+                            </GridListTile>
+                        ))}
+                    </GridList>
+
+                </div>
+            ) : (<CircularProgress />)}
+        </>
     }
 }
