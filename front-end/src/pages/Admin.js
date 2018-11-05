@@ -15,7 +15,7 @@ export default class LoginPage extends Component {
   }
 
   render() {
-    return <><h1>Testing</h1>
+    return <><h1>Admin Page</h1>
       <ViewEventTabs />
 
     </>

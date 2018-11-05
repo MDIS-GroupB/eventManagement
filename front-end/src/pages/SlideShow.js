@@ -1,70 +1,153 @@
-import React, { Component } from 'react';
-import TheSlideShow from '../components/SlideShow/index.js'
-import api from '../api/init'
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableFooter from "@material-ui/core/TableFooter";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import TablePaginationActions from '../components/atoms/TablePaginationActions';
+import api from '../api/init'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
-import tileData from '@material-ui/core/styles';
 import { CircularProgress } from '@material-ui/core/';
-import { Link } from 'react-router-dom'
 
-export default class SlideShow extends React.Component {
-    state = {
-        venues: []
+
+const actionsStyles = theme => ({
+    root: {
+        flexShrink: 0,
+        color: theme.palette.text.secondary,
+        marginLeft: theme.spacing.unit * 2.5
     }
+});
 
-    getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
+const TablePaginationActionsWrapped = withStyles(actionsStyles, {
+    withTheme: true
+})(TablePaginationActions);
+
+// let counter = 0;
+// function createData(name, calories, fat) {
+//     counter += 1;
+//     return { id: counter, name, calories, fat };
+// }
+
+const styles = theme => ({
+    root: {
+        width: "100%",
+        marginTop: theme.spacing.unit * 3
+    },
+    table: {
+        minWidth: 700,
+        margin: "auto"
+    },
+    tableWrapper: {
+        overflowX: "auto"
     }
+});
 
+class CustomPaginationActionsTable extends React.Component {
     async getImages() {
         let responses = await api.get(`/venue`)
-        // for (let i = 0; i < 10; i++) {
-        //     let randomIndex = this.getRandomInt(responseArrayLength)
-        //     let responseImageUrl = responses.data[randomIndex].image
-        //     imageArray[i] = { id: i, url: responseImageUrl }
-        // }
-
         this.setState({
-            venues: responses.data
+            rows: responses.data
         })
         console.log("updated state")
-        console.log(this.state.venues)
+        console.log(this.state.rows)
     }
-
     async componentDidMount() {
         this.getImages()
     }
 
+    state = {
+        rows: [
+            // createData("Cupcake", 305, 3.7),
+            // createData("Donut", 452, 25.0),
+            // createData("Eclair", 262, 16.0),
+            // createData("Frozen yoghurt", 159, 6.0),
+            // createData("Gingerbread", 356, 16.0),
+            // createData("Honeycomb", 408, 3.2),
+            // createData("Ice cream sandwich", 237, 9.0),
+            // createData("Jelly Bean", 375, 0.0),
+            // createData("KitKat", 518, 26.0),
+            // createData("Lollipop", 392, 0.2),
+            // createData("Marshmallow", 318, 0),
+            // createData("Nougat", 360, 19.0),
+            // createData("Oreo", 437, 18.0)
+        ],
+        page: 0,
+        rowsPerPage: 5
+    };
+
+    handleChangePage = (event, page) => {
+        this.setState({ page });
+    };
+
+    handleChangeRowsPerPage = event => {
+        this.setState({ rowsPerPage: event.target.value });
+    };
+
     render() {
-        // const customColumnStyle = { width: 200 };
+        const { classes } = this.props;
+        const { rows, rowsPerPage, page } = this.state;
+        const emptyRows =
+            rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
         return <>
-            {this.state.venues ? (
-                <div className="slide">
-                    <ListSubheader component="div">Venues</ListSubheader>
-                    <GridList cols={5} >
-                        <GridListTile key="Subheader" style={{ height: 'auto' }}>
-                        </GridListTile>
-                        {this.state.venues.map(tile => (
-                            <GridListTile key={tile.img}>
-                                <img src={tile.image} alt={tile.name} />
-                                <GridListTileBar
-                                    title={tile.name}
-                                    subtitle={<span>{tile.location}</span>}
-                                />
-                            </GridListTile>
-                        ))}
-                    </GridList>
+            {this.state.rows ? (
+                <Paper className={classes.root}>
+                    <div className={classes.tableWrapper}>
+                        <ListSubheader component="div">Venues</ListSubheader>
+                        <GridList cols={5} >
+                            <Table className={classes.table}>
+                                <TableBody>
+                                    {rows
+                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        .map(row => {
+                                            return (
+                                                <GridListTile key={row.img}>
+                                                    <img src={row.image} alt={row.name} width="100%" />
+                                                    <GridListTileBar
+                                                        title={row.name}
+                                                        subtitle={<span>{row.location}</span>}
+                                                    />
+                                                </GridListTile>
+                                            );
+                                        })}
+                                    {/* {emptyRows > 0 && (
+                                    <TableRow style={{ height: 48 * emptyRows }}>
+                                        <TableCell colSpan={2} />
+                                    </TableRow>
+                                )} */}
+                                </TableBody>
 
-                </div>
-            ) : (<CircularProgress />)}
+
+                                <TableFooter>
+                                    <TableRow>
+                                        <TablePagination
+                                            colSpan={3}
+                                            count={rows.length}
+                                            rowsPerPage={rowsPerPage}
+                                            page={page}
+                                            onChangePage={this.handleChangePage}
+                                            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                            ActionsComponent={TablePaginationActionsWrapped}
+                                        />
+                                    </TableRow>
+                                </TableFooter>
+                            </Table>
+                        </GridList>
+                    </div>
+                </Paper>) : (<CircularProgress />)}
         </>
     }
 }
+
+CustomPaginationActionsTable.propTypes = {
+    classes: PropTypes.object.isRequired
+};
+
+export default withStyles(styles)(CustomPaginationActionsTable);

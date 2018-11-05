@@ -53,6 +53,7 @@ export default class CreateEventDialog extends React.Component {
     theme: "",
     noOfTickets: "12",
     price: "200",
+    selectedDateAndTime: "2017-05-24T10:30",
     description: "Fun Times",
     selectedVenue: { _id: 'none' },
     venues: null,
@@ -78,20 +79,19 @@ export default class CreateEventDialog extends React.Component {
       theme: this.state.theme,
       noOfTickets: this.state.noOfTickets,
       price: this.state.price,
+      dateAndTime: this.state.selectedDateAndTime,
       description: this.state.description,
-      venueId:this.state.selectedVenue._id,
+      venueId: this.state.selectedVenue._id,
     }
     console.log('==================')
     console.log(a)
     console.log('==================')
     createEvent(a);
-    // this.setState({ open: false })
+    this.setState({ open: false })
   }
 
   async componentDidMount() {
-
     let venues = await getVenues()
-
     this.setState({ venues });
   }
 
@@ -99,6 +99,16 @@ export default class CreateEventDialog extends React.Component {
     this.setState({ selectedVenue });
   }
 
+  // onDateAndTimeSelect(time) {
+  //   this.setState({ selectedDateAndTime: time })
+  //   console.log("selectedDateAndTime")
+  //   console.log(time)
+  // }
+
+  onDateAndTimeSelect(event) {
+    console.log(event.target.value)
+    this.setState({ selectedDateAndTime: event.target.value })
+  }
 
   render() {
     const createEventTextFields = {
@@ -125,6 +135,17 @@ export default class CreateEventDialog extends React.Component {
               state={this.state}
             />
 
+            <TextField
+              id="datetime-local"
+              type="datetime-local"
+              defaultValue="2017-05-24T10:30"
+              floatingLabelText='Date And Time'
+              InputLabelProps={{
+                shrink: true,
+              }}
+              onChange={this.onDateAndTimeSelect.bind(this)}
+            />
+
             {this.state.venues ? (
               <div>
                 <TextField
@@ -146,23 +167,21 @@ export default class CreateEventDialog extends React.Component {
                   ) : false
                 }
               </div>
-
             ) : <div>
                 <CircularProgress />
               </div>
             }
           </div>
-
-          <DialogActions>
-            <RaisedButton onClick={this.handleClose} color="primary">
+          <DialogActions >
+            <RaisedButton onClick={this.handleClose} color="primary" style={{ margin: "auto" }}>
               Cancel
             </RaisedButton>
-            <RaisedButton onClick={this.onHandleCreateEvent} color="primary" autoFocus>
+            <RaisedButton onClick={this.onHandleCreateEvent} color="primary" autoFocus style={{ margin: "auto" }}>
               Create Event
             </RaisedButton>
           </DialogActions>
-        </Dialog>
-      </div>
+        </Dialog >
+      </div >
     )
   }
 }

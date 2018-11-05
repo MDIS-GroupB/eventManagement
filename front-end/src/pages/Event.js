@@ -30,22 +30,23 @@ export default class LoginPage extends Component {
     render() {
         return <>
 
-            <h1>Event Page Dude!</h1>
+            <h1><i>Event Page</i></h1>
             {!!this.state.eventData ? (
                 <>
-                    <p>Our Event Data:</p>
-                    <h5>{this.state.eventData.eventData.description}</h5>
-                    <h3>{this.state.eventData.eventData.name}</h3>
-                    <p>This Event Proposer:</p>
-                    <h2>{this.state.eventData.properser.firstName} {this.state.eventData.properser.lastName}</h2>
+                    <h2 style={{ color: 'red' }}>Event Details:</h2>
+                    <h3><i>{this.state.eventData.eventData.name}</i></h3>
+                    <h3><i>{this.state.eventData.eventData.description}</i></h3>
+                    <h3><i>{this.state.eventData.eventData.dateAndTime}</i></h3>
+                    <h2 style={{ color: 'red' }}>Event Proposer:</h2>
+                    <h3><i>{this.state.eventData.properser.firstName} {this.state.eventData.properser.lastName}</i></h3>
 
 
-                    <p>This Event Venue Data:</p>
-                    <h2>{this.state.eventData.eventData.venueId.name}</h2>
-                    <h3>{this.state.eventData.eventData.venueId.description}</h3>
-                    <h3>{this.state.eventData.eventData.venueId.location}</h3>
+                    <h2 style={{ color: 'red' }}>Event Venue Details:</h2>
+                    <h3><i>{this.state.eventData.eventData.venueId.name}</i></h3>
+                    <h3><i>{this.state.eventData.eventData.venueId.description}</i></h3>
+                    <h3><i>{this.state.eventData.eventData.venueId.location}</i></h3>
                     <img src={this.state.eventData.eventData.venueId.image}></img>
-                    {this.state.eventData.eventData.venueId.theme.map(theme => <h4>{theme}</h4>)}
+                    {this.state.eventData.eventData.venueId.theme.map(theme => <h3><i>{theme}</i></h3>)}
 
 
 

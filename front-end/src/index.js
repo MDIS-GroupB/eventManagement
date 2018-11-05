@@ -4,8 +4,9 @@ import './index.css';
 import App from './App';
 import SlideShow from './pages/SlideShow';
 import * as serviceWorker from './serviceWorker';
+import SlideShowDraft from './pages/SlideShowDraft';
 
-ReactDOM.render(<SlideShow />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

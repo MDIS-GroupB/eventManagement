@@ -30,15 +30,15 @@ export default class LoginPage extends Component {
   render() {
     return <>
 
-      <h1>Venue Page</h1>
+      <h1><i>Venue Page</i></h1>
       {!!this.state.venueData ? (
         <>
-          <p>Our Data:</p>
-          <h2>{this.state.venueData.name}</h2>
-          <h3>{this.state.venueData.description}</h3>
-          <h3>{this.state.venueData.location}</h3>
+          <h2 style={{ color: 'red' }}>Venue Details:</h2>
+          <h2><i>{this.state.venueData.name}</i></h2>
+          <h3><i>{this.state.venueData.description}</i></h3>
+          <h3><i>{this.state.venueData.location}</i></h3>
           <img src={this.state.venueData.image}></img>
-          {this.state.venueData.theme.map(theme => <h4>{theme}</h4>)}
+          {this.state.venueData.theme.map(theme => <h3><i>{theme}</i></h3>)}
         </>
 
       )

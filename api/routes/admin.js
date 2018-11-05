@@ -8,7 +8,7 @@ router
     .route('/event')
     // Get logged in user’s details
     .get(async (req, res) => {
-        let events = await global.Event.find();
+        let events = await global.Event.find().populate('venueId');
 
         res.json(events)
     })

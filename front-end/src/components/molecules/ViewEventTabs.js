@@ -56,13 +56,13 @@ export default class ViewEventTabs extends React.Component {
       <div>
         {this.state.events ? (
           <div>
-            <AppBar style={{ width: '80%', alignSelf: 'center' }} position="static">
+            {/* <AppBar style={{ width: '80%', alignSelf: 'center' }} position="static">
               <Tabs value={this.state.tabNo} onChange={this.handleChange}>
-                {/* <Tab label="Pending" />
-                <Tab label="Rejected" /> */}
+                <Tab label="Pending" />
+                <Tab label="Rejected" />
                 <Tab label="Accepted" />
               </Tabs>
-            </AppBar>
+            </AppBar> */}
             {/* {this.state.tabNo === 0 &&
               <EventCheckTable events={sortedEvents.pending} />
             }

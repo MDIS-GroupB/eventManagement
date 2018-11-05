@@ -19,6 +19,7 @@ const eventSchema = mongoose.Schema({
   description: String,
   noOfTickets: Number,
   price: Number,
+  dateAndTime: String,
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
