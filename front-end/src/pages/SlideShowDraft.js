@@ -40,9 +40,9 @@ export default class SlideShow extends React.Component {
 
         return <>
             {this.state.venues ? (
-                <div className="slide">
+                <div className="slide" style={{ overflow: "hidden" }}>
                     <ListSubheader component="div">Venues</ListSubheader>
-                    <GridList cols={5} >
+                    <GridList cols={5} style={{ overflow: 'hidden' }} scrollEnabled={false} >
                         {/* <GridListTile key="Subheader" style={{ height: 'auto' }}>
                         </GridListTile> */}
                         {this.state.venues.map((tile) => (

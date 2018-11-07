@@ -93,6 +93,7 @@ export default class CreateEventDialog extends React.Component {
   async componentDidMount() {
     let venues = await getVenues()
     this.setState({ venues });
+    this.onDateAndTimeSelect = this.onDateAndTimeSelect.bind(this)
   }
 
   onVenueSelect(selectedVenue) {
@@ -143,7 +144,7 @@ export default class CreateEventDialog extends React.Component {
               InputLabelProps={{
                 shrink: true,
               }}
-              onChange={this.onDateAndTimeSelect.bind(this)}
+              onChange={this.onDateAndTimeSelect}
             />
 
             {this.state.venues ? (

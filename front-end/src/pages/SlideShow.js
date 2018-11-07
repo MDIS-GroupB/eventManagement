@@ -15,6 +15,8 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { CircularProgress } from '@material-ui/core/';
+import SearchBar from 'material-ui-search-bar'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 
 const actionsStyles = theme => ({
@@ -45,7 +47,7 @@ const styles = theme => ({
         margin: "auto"
     },
     tableWrapper: {
-        overflowX: "auto"
+        // overflowX: "auto"
     }
 });
 
@@ -53,33 +55,24 @@ class CustomPaginationActionsTable extends React.Component {
     async getImages() {
         let responses = await api.get(`/venue`)
         this.setState({
-            rows: responses.data
+            rows: responses.data,
+            searchResult: responses.data
         })
         console.log("updated state")
         console.log(this.state.rows)
     }
     async componentDidMount() {
         this.getImages()
+        this.onSearchTextChange = this.onSearchTextChange.bind(this)
+        this.filterVenues = this.filterVenues.bind(this)
     }
 
     state = {
-        rows: [
-            // createData("Cupcake", 305, 3.7),
-            // createData("Donut", 452, 25.0),
-            // createData("Eclair", 262, 16.0),
-            // createData("Frozen yoghurt", 159, 6.0),
-            // createData("Gingerbread", 356, 16.0),
-            // createData("Honeycomb", 408, 3.2),
-            // createData("Ice cream sandwich", 237, 9.0),
-            // createData("Jelly Bean", 375, 0.0),
-            // createData("KitKat", 518, 26.0),
-            // createData("Lollipop", 392, 0.2),
-            // createData("Marshmallow", 318, 0),
-            // createData("Nougat", 360, 19.0),
-            // createData("Oreo", 437, 18.0)
-        ],
+        rows: [],
         page: 0,
-        rowsPerPage: 5
+        rowsPerPage: 5,
+        seachText: "",
+        searchResult: []
     };
 
     handleChangePage = (event, page) => {
@@ -90,21 +83,61 @@ class CustomPaginationActionsTable extends React.Component {
         this.setState({ rowsPerPage: event.target.value });
     };
 
+    onSearchTextChange(event) {
+        console.log(event.target.value)
+        this.setState({ seachText: event.target.value })
+    }
+
+    filterVenues(venues, searchText) {
+        console.log("venues")
+        console.log(venues)
+        console.log("searchText")
+        console.log(searchText)
+        let returnVenues = [];
+        let reg = new RegExp(`${searchText}`, 'i');
+        venues.forEach((searchVenue, i) => {
+            console.log("searchVenue name")
+            console.log(searchVenue.name)
+            if (searchVenue.name.match(reg)) {
+                returnVenues.push(searchVenue)
+            }
+        })
+        console.log("returnVenues")
+        console.log(returnVenues)
+        this.setState({ searchResult: returnVenues })
+        console.log("console.log(this.state.rows)")
+        console.log(this.state.searchResult)
+    }
+
     render() {
         const { classes } = this.props;
-        const { rows, rowsPerPage, page } = this.state;
+        const { searchResult, rowsPerPage, page } = this.state;
         const emptyRows =
-            rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+            rowsPerPage - Math.min(rowsPerPage, searchResult.length - page * rowsPerPage);
 
         return <>
-            {this.state.rows ? (
+            {this.state.searchResult ? (
                 <Paper className={classes.root}>
                     <div className={classes.tableWrapper}>
                         <ListSubheader component="div">Venues</ListSubheader>
-                        <GridList cols={5} >
+
+                        <MuiThemeProvider>
+                            <SearchBar
+                                value=""
+                                onChange={(value) => this.setState({ seachText: value })}
+                                onRequestSearch={() => this.filterVenues(this.state.rows, this.state.seachText)}
+                                style={{
+                                    margin: '0 auto',
+                                    maxWidth: 800,
+                                }}
+                            />
+                        </MuiThemeProvider>
+
+
+                        <GridList cols={5} style={{ paddingTop: 30 }} >
                             <Table className={classes.table}>
                                 <TableBody>
-                                    {rows
+                                    {searchResult
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map(row => {
                                             return (
@@ -129,7 +162,7 @@ class CustomPaginationActionsTable extends React.Component {
                                     <TableRow>
                                         <TablePagination
                                             colSpan={3}
-                                            count={rows.length}
+                                            count={searchResult.length}
                                             rowsPerPage={rowsPerPage}
                                             page={page}
                                             onChangePage={this.handleChangePage}
