@@ -7,6 +7,29 @@ const router = express.Router()
 
 router
     // .route('/')
+    //get all
+    .get('/allWithHoster', async (req, res) => {
+        var response = []
+        let events = await global.Event.find().populate('venueId')
+        events.map(async (event) => {
+            let hosterId = event.eventProposer
+            console.log("hosterId")
+            console.log(hosterId)
+            console.log(response)
+            let hoster = await global.Personal.findOne({ userID: hosterId })
+            response.push({
+                eventData: event,
+                properser: hoster
+            })
+        })
+        res.json(response)
+    })
+
+    .get('/all', async (req, res) => {
+        let events = await global.Event.find().populate('venueId')
+        res.json(events)
+    })
+
     // Get logged in user’s details
     .get('/', async (req, res) => {
         let events = await global.Event.find({ eventProposer: req.user._id })

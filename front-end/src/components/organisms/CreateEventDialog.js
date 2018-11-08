@@ -3,7 +3,6 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import TextField from '../atoms/TextField'
 import { getVenues } from "../../api/venue"
-import { createEvent } from "../../api/personalEvent"
 import { CircularProgress } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -74,6 +73,14 @@ export default class CreateEventDialog extends React.Component {
   };
 
   onHandleCreateEvent = () => {
+    if (this.props.selectedVenueId) {
+      // let selectedVenueId = this.props.selectedVenueId
+      console.log("this.props.selectedVenueId")
+      console.log(this.props.selectedVenueId)
+      this.setState({ selectedVenue: { _id: this.props.selectedVenueId } })
+      console.log("changeed VenueId is heree")
+      console.log(this.state.selectedVenue)
+    }
     let a = {
       name: this.state.name,
       theme: this.state.theme,
@@ -86,7 +93,7 @@ export default class CreateEventDialog extends React.Component {
     console.log('==================')
     console.log(a)
     console.log('==================')
-    createEvent(a);
+    // createEvent(a);
     this.setState({ open: false })
   }
 
@@ -94,17 +101,12 @@ export default class CreateEventDialog extends React.Component {
     let venues = await getVenues()
     this.setState({ venues });
     this.onDateAndTimeSelect = this.onDateAndTimeSelect.bind(this)
+    this.onHandleCreateEvent = this.onHandleCreateEvent.bind(this)
   }
 
   onVenueSelect(selectedVenue) {
     this.setState({ selectedVenue });
   }
-
-  // onDateAndTimeSelect(time) {
-  //   this.setState({ selectedDateAndTime: time })
-  //   console.log("selectedDateAndTime")
-  //   console.log(time)
-  // }
 
   onDateAndTimeSelect(event) {
     console.log(event.target.value)
@@ -115,8 +117,10 @@ export default class CreateEventDialog extends React.Component {
     const createEventTextFields = {
       onInputChange: this.onInputChange,
       onEnterKeyDown: this.createEvent,
-      fields: eventFields
+      fields: eventFields,
     }
+
+    const selectedVenue = this.props.selectedVenue
 
     return (
       <div>
@@ -130,7 +134,6 @@ export default class CreateEventDialog extends React.Component {
         >
           <DialogTitle>Create Event</DialogTitle>
           <div style={{ overflowY: 'scroll' }}>
-            <br />
             <CreateEventFields
               createEventTextFields={createEventTextFields}
               state={this.state}
@@ -146,31 +149,38 @@ export default class CreateEventDialog extends React.Component {
               }}
               onChange={this.onDateAndTimeSelect}
             />
+            <br />
+            {!!selectedVenue ? (
+              <TextField
+                floatingLabelText='Selected Venue'
+                defaultValue={selectedVenue}
+                readOnly
+              />) :
 
-            {this.state.venues ? (
-              <div>
-                <TextField
-                  onChange={this.onInputChange}
-                  onEnterKeyDown={this.createEvent}
-                  value={this.state.searchText}
-                  label='Search e.g. The Bar'
-                  id='searchText'
-                  hintText='Search'
-                  floatingLabelText='Search'
-                />
-                {!!this.state.searchText ?
-                  (
-                    <VenueTable
-                      selectedVenue={this.state.selectedVenue}
-                      onVenueSelect={(newVenue) => (this.onVenueSelect(newVenue))}
-                      venues={filterVenues(this.state.venues, this.state.searchText)}
-                    />
-                  ) : false
-                }
-              </div>
-            ) : <div>
-                <CircularProgress />
-              </div>
+              this.state.venues ? (
+                <div>
+                  <TextField
+                    onChange={this.onInputChange}
+                    onEnterKeyDown={this.createEvent}
+                    value={this.state.searchText}
+                    label='Search e.g. The Bar'
+                    id='searchText'
+                    hintText='Search'
+                    floatingLabelText='Search'
+                  />
+                  {!!this.state.searchText ?
+                    (
+                      <VenueTable
+                        selectedVenue={this.state.selectedVenue}
+                        onVenueSelect={(newVenue) => (this.onVenueSelect(newVenue))}
+                        venues={filterVenues(this.state.venues, this.state.searchText)}
+                      />
+                    ) : false
+                  }
+                </div>
+              ) : <div>}
+                  <CircularProgress />
+                </div>
             }
           </div>
           <DialogActions >

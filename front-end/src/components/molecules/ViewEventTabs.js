@@ -1,12 +1,7 @@
 import React from 'react'
-import RaisedButton from 'material-ui/RaisedButton'
 import EventCheckTable from '../atoms/eventCheckTable'
 import { CircularProgress } from '@material-ui/core';
 import { getPersonalEvents } from "../../api/personalEvent"
-
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 
 function sortEvents(events) {
   let returnJson = {

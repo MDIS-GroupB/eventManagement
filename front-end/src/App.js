@@ -19,6 +19,8 @@ import AdminPage from './pages/Admin'
 import NavBar from '../src/components/molecules/NavBar';
 import VenuePage from './pages/Venue';
 import EventPage from './pages/Event';
+import VenueGallery from './pages/VenueGallery';
+import EventGallery from './pages/EventGallery';
 
 import './App.css';
 
@@ -126,10 +128,12 @@ class App extends Component {
                 }
               />
               <Switch>
-                <Route exact path="/venue/:venueId" component={VenuePage}
+                <Route exact path="/Venue/:venueId" component={VenuePage}
                 />
                 <Route exact path="/Event/:eventId" component={EventPage}
                 />
+                <Route exact path="/VenueGallery/" component={VenueGallery} />
+                <Route exact path="/EventGallery/" component={EventGallery} />
 
 
                 {!!this.state.token ? //check if login

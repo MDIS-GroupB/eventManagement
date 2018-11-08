@@ -17,7 +17,13 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import { CircularProgress } from '@material-ui/core/';
 import SearchBar from 'material-ui-search-bar'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import CreateEventDialog from '../components/organisms/CreateEventDialog'
+import { Link, BrowserRouter } from 'react-router-dom'
+import RaisedButton from 'material-ui/RaisedButton'
+import '../App.css'
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 
+import IconButton from '@material-ui/core/IconButton';
 
 const actionsStyles = theme => ({
     root: {
@@ -30,12 +36,6 @@ const actionsStyles = theme => ({
 const TablePaginationActionsWrapped = withStyles(actionsStyles, {
     withTheme: true
 })(TablePaginationActions);
-
-// let counter = 0;
-// function createData(name, calories, fat) {
-//     counter += 1;
-//     return { id: counter, name, calories, fat };
-// }
 
 const styles = theme => ({
     root: {
@@ -53,25 +53,25 @@ const styles = theme => ({
 
 class CustomPaginationActionsTable extends React.Component {
     async getImages() {
-        let responses = await api.get(`/venue`)
+        let responses = await api.get(`/event/all`)
         this.setState({
-            rows: responses.data,
+            events: responses.data,
             searchResult: responses.data
         })
         console.log("updated state")
-        console.log(this.state.rows)
+        console.log(this.state.events)
     }
     async componentDidMount() {
         this.getImages()
         this.onSearchTextChange = this.onSearchTextChange.bind(this)
-        this.filterVenues = this.filterVenues.bind(this)
+        this.filterEvents = this.filterEvents.bind(this)
     }
 
     state = {
-        rows: [],
+        events: [],
         page: 0,
         rowsPerPage: 5,
-        seachText: "",
+        searchText: "",
         searchResult: []
     };
 
@@ -85,28 +85,24 @@ class CustomPaginationActionsTable extends React.Component {
 
     onSearchTextChange(event) {
         console.log(event.target.value)
-        this.setState({ seachText: event.target.value })
+        this.setState({ searchText: event.target.value })
     }
 
-    filterVenues(venues, searchText) {
-        console.log("venues")
-        console.log(venues)
-        console.log("searchText")
-        console.log(searchText)
-        let returnVenues = [];
-        let reg = new RegExp(`${searchText}`, 'i');
-        venues.forEach((searchVenue, i) => {
-            console.log("searchVenue name")
-            console.log(searchVenue.name)
-            if (searchVenue.name.match(reg)) {
-                returnVenues.push(searchVenue)
-            }
+    filterEvents(value) {
+        this.setState({ searchText: value }, () => {
+            let events = this.state.events
+            let searchText = this.state.searchText
+            let returnEvents = [];
+            let reg = new RegExp(`${searchText}`, 'i');
+            events.forEach((searchEvent, i) => {
+                // console.log("searchVenue name")
+                // console.log(searchVenue.name)
+                if (searchEvent.name.match(reg)) {
+                    returnEvents.push(searchEvent)
+                }
+            })
+            this.setState({ searchResult: returnEvents })
         })
-        console.log("returnVenues")
-        console.log(returnVenues)
-        this.setState({ searchResult: returnVenues })
-        console.log("console.log(this.state.rows)")
-        console.log(this.state.searchResult)
     }
 
     render() {
@@ -119,13 +115,14 @@ class CustomPaginationActionsTable extends React.Component {
             {this.state.searchResult ? (
                 <Paper className={classes.root}>
                     <div className={classes.tableWrapper}>
-                        <ListSubheader component="div">Venues</ListSubheader>
+                        <ListSubheader component="div">Events</ListSubheader>
 
                         <MuiThemeProvider>
                             <SearchBar
-                                value=""
-                                onChange={(value) => this.setState({ seachText: value })}
-                                onRequestSearch={() => this.filterVenues(this.state.rows, this.state.seachText)}
+                                onChange={
+                                    (value) => this.filterEvents(value)
+                                }
+                                // onRequestSearch={() => this.filterVenues(this.state.venues, this.state.seachText)}
                                 style={{
                                     margin: '0 auto',
                                     maxWidth: 800,
@@ -133,30 +130,31 @@ class CustomPaginationActionsTable extends React.Component {
                             />
                         </MuiThemeProvider>
 
-
-                        <GridList cols={5} style={{ paddingTop: 30 }} >
+                        <GridList cols={5} style={{ paddingTop: 20 }}>
                             <Table className={classes.table}>
                                 <TableBody>
                                     {searchResult
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map(row => {
                                             return (
-                                                <GridListTile key={row.img}>
-                                                    <img src={row.image} alt={row.name} width="100%" />
-                                                    <GridListTileBar
-                                                        title={row.name}
-                                                        subtitle={<span>{row.location}</span>}
-                                                    />
-                                                </GridListTile>
+                                                <>
+                                                    <GridListTile key={row.img} >
+                                                        {/* <BrowserRouter><Link to={`/venue/${row._id}`}>View Me</Link></BrowserRouter> */}
+                                                        {/* {console.log(row.venueId.image)} */}
+                                                        <img src={row.venueId.image} alt={row.name} width="100%" />
+                                                        <GridListTileBar
+                                                            title={row.name}
+                                                            subtitle={<span>{row.dateAndTime}</span>}
+                                                        />
+
+                                                    </GridListTile>
+                                                    <MuiThemeProvider className='rowC'>
+                                                        <Link to={`/Event/${row._id}`} ><RaisedButton>View Event Detail</RaisedButton></Link>
+                                                    </MuiThemeProvider>
+                                                </>
                                             );
                                         })}
-                                    {/* {emptyRows > 0 && (
-                                    <TableRow style={{ height: 48 * emptyRows }}>
-                                        <TableCell colSpan={2} />
-                                    </TableRow>
-                                )} */}
                                 </TableBody>
-
 
                                 <TableFooter>
                                     <TableRow>

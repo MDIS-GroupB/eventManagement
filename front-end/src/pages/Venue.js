@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 
 import { getVenue } from '../api/venue'
 import CircularProgress from 'material-ui/CircularProgress';
-import ViewEventTabs from '../components/molecules/AdminViewEventTabs';
 
 export default class LoginPage extends Component {
 

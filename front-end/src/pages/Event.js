@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 
 import { getEvent } from '../api/event'
 import CircularProgress from 'material-ui/CircularProgress';
-import ViewEventTabs from '../components/molecules/AdminViewEventTabs';
 
 export default class LoginPage extends Component {
 
@@ -24,8 +23,6 @@ export default class LoginPage extends Component {
         console.log(this.state.eventData)
         console.log(this.state.eventData.eventData.description)
     }
-
-
 
     render() {
         return <>
