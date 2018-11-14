@@ -17,13 +17,16 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import { CircularProgress } from '@material-ui/core/';
 import SearchBar from 'material-ui-search-bar'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import CreateEventDialog from '../components/organisms/CreateEventDialog'
 import { Link, BrowserRouter } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 import '../App.css'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-
 import IconButton from '@material-ui/core/IconButton';
+import { bookEvent } from "../api/payment"
+import { create } from '@material-ui/icons/Create'
+import Payment from 'material-ui/svg-icons/action/payment';
+import Info from 'material-ui/svg-icons/action/info';
+
 
 const actionsStyles = theme => ({
     root: {
@@ -53,10 +56,17 @@ const styles = theme => ({
 
 class CustomPaginationActionsTable extends React.Component {
     async getImages() {
-        let responses = await api.get(`/event/all`)
+        let responses = await api.get(`/event/allWithHoster`)
+        let approvedEvents = [];
+        responses.data.forEach((approvedEvent, i) => {
+            if (approvedEvent.eventData.status != undefined && approvedEvent.eventData.status.approved === true) {
+                approvedEvents.push(approvedEvent)
+            }
+        })
+
         this.setState({
-            events: responses.data,
-            searchResult: responses.data
+            events: approvedEvents,
+            searchResult: approvedEvents
         })
         console.log("updated state")
         console.log(this.state.events)
@@ -97,12 +107,16 @@ class CustomPaginationActionsTable extends React.Component {
             events.forEach((searchEvent, i) => {
                 // console.log("searchVenue name")
                 // console.log(searchVenue.name)
-                if (searchEvent.name.match(reg)) {
+                if (searchEvent.eventData.name.match(reg)) {
                     returnEvents.push(searchEvent)
                 }
             })
             this.setState({ searchResult: returnEvents })
         })
+    }
+
+    onHandleBookEvent = () => {
+        bookEvent();
     }
 
     render() {
@@ -130,7 +144,7 @@ class CustomPaginationActionsTable extends React.Component {
                             />
                         </MuiThemeProvider>
 
-                        <GridList cols={5} style={{ paddingTop: 20 }}>
+                        <GridList cols={5} style={{ paddingBottom: 20 }}>
                             <Table className={classes.table}>
                                 <TableBody>
                                     {searchResult
@@ -138,19 +152,40 @@ class CustomPaginationActionsTable extends React.Component {
                                         .map(row => {
                                             return (
                                                 <>
-                                                    <GridListTile key={row.img} >
-                                                        {/* <BrowserRouter><Link to={`/venue/${row._id}`}>View Me</Link></BrowserRouter> */}
-                                                        {/* {console.log(row.venueId.image)} */}
-                                                        <img src={row.venueId.image} alt={row.name} width="100%" />
-                                                        <GridListTileBar
-                                                            title={row.name}
-                                                            subtitle={<span>{row.dateAndTime}</span>}
-                                                        />
+                                                    <GridListTile key={row.eventData.img} style={{ marginTop: 20 }}>
+                                                        {/* <BrowserRouter><Link to={`/venue/${row.eventData._id}`}>View Me</Link></BrowserRouter> */}
+                                                        {/* {console.log(row.eventData.venueId.image)} */}
+                                                        <img src={row.eventData.venueId.image} alt={row.eventData.name} width="100%" />
 
+                                                        <GridListTileBar
+                                                            title={<span style={{ marginLeft: 80 }}>{row.eventData.name}</span>}
+                                                            subtitle={<>
+                                                                <span style={{ marginLeft: 80 }}>{row.eventData.dateAndTime}</span><br />
+                                                                <span style={{ marginLeft: 80 }}>{row.eventData.price} SGD</span><br />
+                                                                <span style={{ marginLeft: 80 }}>{row.proposer.firstName}</span>
+                                                                <span style={{ marginLeft: 5 }} > {row.proposer.lastName}</span><br />
+                                                                {/* alignment can be improved */}
+                                                            </>
+                                                            }
+                                                            actionIcon={
+                                                                <>
+                                                                    <Link to={`/Event/${row.eventData._id}`} >
+                                                                        <IconButton style={{ right: 610 }}>{/* alignment can be improved */}
+                                                                            <Info className={classes.title} style={{ color: 'white' }} />
+                                                                        </IconButton>
+                                                                    </Link>
+                                                                    <IconButton onClick={this.onHandleBookEvent}>
+                                                                        <Payment className={classes.title} style={{ color: 'white' }} />
+                                                                    </IconButton>
+                                                                </>
+                                                            }
+                                                        />
                                                     </GridListTile>
-                                                    <MuiThemeProvider className='rowC'>
-                                                        <Link to={`/Event/${row._id}`} ><RaisedButton>View Event Detail</RaisedButton></Link>
-                                                    </MuiThemeProvider>
+
+                                                    {/* <Link to={`/Event/${row.eventData._id}`} ><RaisedButton>View Event Detail</RaisedButton></Link> */}
+                                                    {/* <RaisedButton onClick={this.onHandleBookEvent} color="primary" autoFocus style={{ margin: "auto" }}>
+                                                        Book Event
+                                                    </RaisedButton> */}
                                                 </>
                                             );
                                         })}

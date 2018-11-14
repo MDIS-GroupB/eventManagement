@@ -24,6 +24,15 @@ import EventGallery from './pages/EventGallery';
 
 import './App.css';
 
+// //for strip api
+// const express = require('express');
+// const keys = require('./config/keys')
+// // const stripe = require('stripe')('sk_test_EZF4ILlvdn0YuTh3fJs2VU1q');
+// const stripe = require('stripe')(keys.stripeSecretKey)
+// const bodyParser = require('body-parser');
+// const exphbs = require('express-handlebars');
+
+
 //Token and storing
 const tokenKey = 'userToken'
 const savedToken = localStorage.getItem(tokenKey)
@@ -128,13 +137,6 @@ class App extends Component {
                 }
               />
               <Switch>
-                <Route exact path="/Venue/:venueId" component={VenuePage}
-                />
-                <Route exact path="/Event/:eventId" component={EventPage}
-                />
-                <Route exact path="/VenueGallery/" component={VenueGallery} />
-                <Route exact path="/EventGallery/" component={EventGallery} />
-
 
                 {!!this.state.token ? //check if login
                   (
@@ -148,6 +150,11 @@ class App extends Component {
                           />
                         }
                       />
+
+                      <Route exact path="/Venue/:venueId" component={VenuePage} />
+                      <Route exact path="/Event/:eventId" component={EventPage} />
+                      <Route exact path="/Venues/" component={VenueGallery} />
+                      <Route exact path="/Events/" component={EventGallery} />
 
                       <Route
                         exact path='/admin'

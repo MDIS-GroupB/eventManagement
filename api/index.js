@@ -8,6 +8,8 @@ const helmet = require('helmet');
 require('./db/dbInit')
 
 //Routes
+const paymentRouter = require('./routes/payment')
+const chargeRouter = require('./routes/charge')
 const authRouter = require('./routes/auth')
 const eventRouter = require('./routes/event')
 const personalRouter = require('./routes/personal')
@@ -30,11 +32,33 @@ server.use(function (req, res, next) {
 });
 server.use(cors());
 
-//Dereks first route
-server.get('/mdistesting', (request, response) => {
-  response.send('Works')
+//stripe payment api
+const keys = require('./config/keys')
+const stripe = require('stripe')(keys.stripeSecretKey)
+const exphbs = require('express-handlebars');
+
+//Handlebars Middleware
+server.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+server.set('view engine', 'handlebars');
+
+//render payment model
+server.get('/', (req, res) => {
+  res.render('index', {
+    stripePublishableKey: keys.stripePushliableKey
+  });
 })
 
+//server side payment router
+server.use('/payment',
+  paymentRouter,
+)
+
+// server side payment success router
+server.use('/charge',
+  chargeRouter,
+)
+
+//server side routers
 server.use('/auth',
   authRouter,
 )

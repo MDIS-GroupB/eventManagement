@@ -8,8 +8,10 @@ import NavigationExpandMoreIcon from 'material-ui/svg-icons/navigation/expand-mo
 import {
   Toolbar,
   ToolbarGroup,
-  ToolbarSeparator } from 'material-ui/Toolbar'
+  ToolbarSeparator
+} from 'material-ui/Toolbar'
 import logo from '../../imgs/logo.jpg'
+import { Link } from 'react-router-dom'
 
 
 export default class NavBar extends React.Component {
@@ -38,24 +40,28 @@ export default class NavBar extends React.Component {
       <div>
         {this.props.signedIn ? (
           <Toolbar>
-            <ToolbarGroup firstChild={ true }>
+            <ToolbarGroup firstChild={true}>
               <img
                 className='navbar-logo'
-                src={ logo }
+                src={logo}
                 alt='wimo logo'
               />
             </ToolbarGroup>
             <ToolbarGroup>
               <ToolbarSeparator />
-              
+
+              <Link to={`/`}><RaisedButton >Home</RaisedButton></Link>
+              <Link to={`/venues/`}><RaisedButton style={{ marginLeft: 20 }} >View Venues</RaisedButton></Link>
+              <Link to={`/events/`}><RaisedButton style={{ marginLeft: 20 }}>View Events</RaisedButton></Link>
+
               <IconMenu
                 iconButtonElement={
-                  <IconButton touch={ true }>
+                  <IconButton touch={true}>
                     <NavigationExpandMoreIcon />
                   </IconButton>
                 }
-                onRequestChange={ this.handleOnRequestChange }
-                open={ this.state.openMenu }
+                onRequestChange={this.handleOnRequestChange}
+                open={this.state.openMenu}
                 anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
                 targetOrigin={{ horizontal: 'right', vertical: 'top' }}
               >
@@ -72,15 +78,15 @@ export default class NavBar extends React.Component {
                   <MenuItem primaryText="Email Conctr Support" />
                 </a>
                 <MenuItem
-                  onClick={ this.props.logOut }
+                  onClick={this.props.logOut}
                   primaryText="Log Out"
                 />
               </IconMenu>
             </ToolbarGroup>
           </Toolbar>
         ) : (
-          false
-        )}
+            false
+          )}
       </div>
     )
   }

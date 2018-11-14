@@ -9,6 +9,7 @@
     "compression": "^1.7.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
     "global": "^4.3.2",
     "gridfs-stream": "^1.1.1",
     "helmet": "^3.13.0",
@@ -18,7 +19,8 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local-mongoose": "^5.0.1",
-    "react-datetime-picker": "^2.0.0"
+    "react-datetime-picker": "^2.0.0",
+    "stripe": "^6.15.0"
   },
   "scripts": {
     "start": "yarn nodemon index.js",

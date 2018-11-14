@@ -21,6 +21,9 @@ import CreateEventDialog from '../components/organisms/CreateEventDialog'
 import { Link, BrowserRouter } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 import '../App.css'
+import IconButton from '@material-ui/core/IconButton';
+import Info from 'material-ui/svg-icons/action/info';
+import Create from 'material-ui/svg-icons/content/create';
 
 const actionsStyles = theme => ({
     root: {
@@ -139,14 +142,27 @@ class CustomPaginationActionsTable extends React.Component {
                                                         {/* <BrowserRouter><Link to={`/venue/${row._id}`}>View Me</Link></BrowserRouter> */}
                                                         <img src={row.image} alt={row.name} width="100%" />
                                                         <GridListTileBar
-                                                            title={row.name}
-                                                            subtitle={<span>{row.location}</span>}
+                                                            title={<span style={{ marginLeft: 80 }}>{row.name}</span>}
+                                                            subtitle={<span style={{ marginLeft: 80 }}>{row.location}</span>}
+                                                            // alignment can be improved
+                                                            actionIcon={
+                                                                <>
+                                                                    <Link to={`/Venue/${row._id}`}>
+                                                                        <IconButton style={{ right: 610 }}>{/* alignment can be improved */}
+                                                                            <Info className={classes.title} style={{ color: 'white' }} />
+                                                                        </IconButton>
+                                                                    </Link>
+                                                                    <IconButton onClick={this.onHandleBookEvent}>
+                                                                        <Create className={classes.title} style={{ color: 'white' }} />
+                                                                    </IconButton>
+                                                                </>
+                                                            }
                                                         />
 
                                                     </GridListTile>
                                                     <MuiThemeProvider className='rowC'>
                                                         <CreateEventDialog selectedVenue={row.name} selectedVenueId={row._id} style={{ flexDirection: 'row' }} />
-                                                        <Link to={`/Venue/${row._id}`} ><RaisedButton>View Venue Detail</RaisedButton></Link>
+                                                        {/* <Link to={`/Venue/${row._id}`} ><RaisedButton>View Venue Detail</RaisedButton></Link> */}
                                                     </MuiThemeProvider>
                                                 </>
                                             );

@@ -38,9 +38,6 @@ export default class LoginPage extends Component {
         {this.state.details ? (
           <div>
             <i><h1>Haiiiiii {this.state.details.firstName}</h1></i>
-            <Link to={`/VenueGallery/`}><RaisedButton>View Venue Gallery</RaisedButton></Link>
-            <br /><br />
-
             <CreateEventDialog />
             <br />
             <ViewEventTabs />

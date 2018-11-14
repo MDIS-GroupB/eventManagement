@@ -3,6 +3,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import TextField from '../atoms/TextField'
 import { getVenues } from "../../api/venue"
+import { createEvent } from "../../api/personalEvent"
 import { CircularProgress } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -57,6 +58,7 @@ export default class CreateEventDialog extends React.Component {
     selectedVenue: { _id: 'none' },
     venues: null,
     displayedVenues: null,
+    passedProps: null
   }
   onInputChange = (e, newValue) => {
     this.setState({
@@ -73,13 +75,12 @@ export default class CreateEventDialog extends React.Component {
   };
 
   onHandleCreateEvent = () => {
-    if (this.props.selectedVenueId) {
-      // let selectedVenueId = this.props.selectedVenueId
-      console.log("this.props.selectedVenueId")
-      console.log(this.props.selectedVenueId)
-      this.setState({ selectedVenue: { _id: this.props.selectedVenueId } })
-      console.log("changeed VenueId is heree")
-      console.log(this.state.selectedVenue)
+    if (this.state.passedVenueId) {
+      var currentVenueId = this.state.passedVenueId
+      this.setState({ open: false })
+    }
+    else {
+      var currentVenueId = this.state.selectedVenue._id
     }
     let a = {
       name: this.state.name,
@@ -88,18 +89,20 @@ export default class CreateEventDialog extends React.Component {
       price: this.state.price,
       dateAndTime: this.state.selectedDateAndTime,
       description: this.state.description,
-      venueId: this.state.selectedVenue._id,
+      venueId: currentVenueId,
     }
     console.log('==================')
     console.log(a)
     console.log('==================')
-    // createEvent(a);
+    createEvent(a);
     this.setState({ open: false })
   }
 
   async componentDidMount() {
     let venues = await getVenues()
     this.setState({ venues });
+    let passedVenueId = this.props.selectedVenueId
+    this.setState({ passedVenueId });
     this.onDateAndTimeSelect = this.onDateAndTimeSelect.bind(this)
     this.onHandleCreateEvent = this.onHandleCreateEvent.bind(this)
   }

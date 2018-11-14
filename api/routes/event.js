@@ -11,17 +11,21 @@ router
     .get('/allWithHoster', async (req, res) => {
         var response = []
         let events = await global.Event.find().populate('venueId')
-        events.map(async (event) => {
-            let hosterId = event.eventProposer
-            console.log("hosterId")
-            console.log(hosterId)
-            console.log(response)
+        const rowLen = events.length;
+
+        for (var i = 0; i < rowLen; i++) {
+            let hosterId = events[i].eventProposer
             let hoster = await global.Personal.findOne({ userID: hosterId })
             response.push({
-                eventData: event,
-                properser: hoster
+                eventData: events[i],
+                proposer: hoster
             })
-        })
+        }
+
+        //dont' use .map or foreach in async function call, it dosen't goes by sequence
+        // await only can wait a function call or a promise
+
+        console.log("after the response")
         res.json(response)
     })
 
@@ -52,7 +56,5 @@ router
             properser: proposer
         })
     })
-
-
 
 module.exports = router
