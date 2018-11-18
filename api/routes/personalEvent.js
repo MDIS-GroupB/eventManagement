@@ -8,7 +8,7 @@ router
     // .route('/')
     // Get logged in user’s details
     .get('/', async (req, res) => {
-        // console.log(req)
+        console.log(req)
         let event = await global.Event.find({
             eventProposer: req.user._id
         }).populate('venueId')

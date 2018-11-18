@@ -19,6 +19,11 @@ router
                 currency: 'usd',
                 customer: customer.id
             }))
+            .then(
+                //Find noOfTickets from event where event_id===req.body.event_id
+                //if noOfTickets >0 noOfTickets-- redirect to success page
+                //else redirect to noTicket page
+            )
             .then(charge => res.render('success'));
     });
 //good to add error handling

@@ -68,6 +68,11 @@ export default class CreateEventDialog extends React.Component {
 
   handleClickOpen = () => {
     this.setState({ open: true });
+    console.log("open status")
+    console.log(this.props)
+    // if (this.props.openDialog === true) {
+
+    // }
   };
 
   handleClose = () => {
@@ -103,9 +108,16 @@ export default class CreateEventDialog extends React.Component {
     this.setState({ venues });
     let passedVenueId = this.props.selectedVenueId
     this.setState({ passedVenueId });
+    // let ifOpen = this.props.openDialog
+    // this.setState({ open: ifOpen })
+    // this.handleClickOpen()
     this.onDateAndTimeSelect = this.onDateAndTimeSelect.bind(this)
     this.onHandleCreateEvent = this.onHandleCreateEvent.bind(this)
   }
+
+  // componentWillUpdate(prevProps) {
+  //   this.handleClickOpen()
+  // }
 
   onVenueSelect(selectedVenue) {
     this.setState({ selectedVenue });
@@ -124,6 +136,7 @@ export default class CreateEventDialog extends React.Component {
     }
 
     const selectedVenue = this.props.selectedVenue
+    const maxDate = { new: Date() }
 
     return (
       <div>
@@ -151,6 +164,7 @@ export default class CreateEventDialog extends React.Component {
                 shrink: true,
               }}
               onChange={this.onDateAndTimeSelect}
+              minDate={new Date()}
             />
             <br />
             {!!selectedVenue ? (

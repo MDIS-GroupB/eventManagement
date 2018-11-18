@@ -65,6 +65,7 @@ class CustomPaginationActionsTable extends React.Component {
         this.getImages()
         this.onSearchTextChange = this.onSearchTextChange.bind(this)
         this.filterVenues = this.filterVenues.bind(this)
+        this.onHandleCreateEvent = this.onHandleCreateEvent.bind(this)
     }
 
     state = {
@@ -72,7 +73,8 @@ class CustomPaginationActionsTable extends React.Component {
         page: 0,
         rowsPerPage: 5,
         searchText: "",
-        searchResult: []
+        searchResult: [],
+        openDialog: false
     };
 
     handleChangePage = (event, page) => {
@@ -103,6 +105,12 @@ class CustomPaginationActionsTable extends React.Component {
             })
             this.setState({ searchResult: returnVenues })
         })
+    }
+
+    onHandleCreateEvent() {
+        this.setState({ openDialog: true })
+        console.log("openDialog status")
+        console.log(this.state.openDialog)
     }
 
     render() {
@@ -152,7 +160,7 @@ class CustomPaginationActionsTable extends React.Component {
                                                                             <Info className={classes.title} style={{ color: 'white' }} />
                                                                         </IconButton>
                                                                     </Link>
-                                                                    <IconButton onClick={this.onHandleBookEvent}>
+                                                                    <IconButton onClick={this.onHandleCreateEvent}>
                                                                         <Create className={classes.title} style={{ color: 'white' }} />
                                                                     </IconButton>
                                                                 </>
@@ -161,7 +169,7 @@ class CustomPaginationActionsTable extends React.Component {
 
                                                     </GridListTile>
                                                     <MuiThemeProvider className='rowC'>
-                                                        <CreateEventDialog selectedVenue={row.name} selectedVenueId={row._id} style={{ flexDirection: 'row' }} />
+                                                        <CreateEventDialog openDialog={this.state.openDialog} selectedVenue={row.name} selectedVenueId={row._id} style={{ flexDirection: 'row' }} />
                                                         {/* <Link to={`/Venue/${row._id}`} ><RaisedButton>View Venue Detail</RaisedButton></Link> */}
                                                     </MuiThemeProvider>
                                                 </>

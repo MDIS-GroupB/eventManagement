@@ -17,6 +17,7 @@ const venueRouter = require('./routes/venue')
 const personalEventRouter = require('./routes/personalEvent')
 const testRouter = require('./routes/test')
 const adminRouter = require('./routes/admin')
+const commentRouter = require('./routes/comment')
 
 // Create server
 const server = express();
@@ -87,6 +88,11 @@ server.use('/admin',
   authMiddleware.authenticateJWT,
   authMiddleware.checkAdmin,
   adminRouter,
+)
+
+server.use('/comment',
+  authMiddleware.authenticateJWT,
+  commentRouter,
 )
 
 

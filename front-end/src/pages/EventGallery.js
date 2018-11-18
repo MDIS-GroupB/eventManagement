@@ -28,6 +28,7 @@ import Payment from 'material-ui/svg-icons/action/payment';
 import Info from 'material-ui/svg-icons/action/info';
 
 
+
 const actionsStyles = theme => ({
     root: {
         flexShrink: 0,
@@ -161,6 +162,7 @@ class CustomPaginationActionsTable extends React.Component {
                                                             title={<span style={{ marginLeft: 80 }}>{row.eventData.name}</span>}
                                                             subtitle={<>
                                                                 <span style={{ marginLeft: 80 }}>{row.eventData.dateAndTime}</span><br />
+                                                                <span style={{ marginLeft: 80 }}>Tickets Left : {row.eventData.noOfTickets}</span><br />
                                                                 <span style={{ marginLeft: 80 }}>{row.eventData.price} SGD</span><br />
                                                                 <span style={{ marginLeft: 80 }}>{row.proposer.firstName}</span>
                                                                 <span style={{ marginLeft: 5 }} > {row.proposer.lastName}</span><br />
