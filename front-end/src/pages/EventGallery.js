@@ -116,8 +116,10 @@ class CustomPaginationActionsTable extends React.Component {
         })
     }
 
-    onHandleBookEvent = () => {
-        bookEvent();
+    onHandleBookEvent = async () => {
+        var returnPage = await bookEvent();
+        console.log("return page is ")
+        console.log(returnPage.data)
     }
 
     render() {

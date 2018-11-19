@@ -132,7 +132,6 @@ class LoginPage extends Component {
                 </>
 
             )
-
                 : (<CircularProgress />)}
 
         </>
