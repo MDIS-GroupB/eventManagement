@@ -27,6 +27,7 @@ export function getEvent(id) {
   // })
 }
 
+
 export async function changeEventStatus(id, status) {
   // let a = {
   //   status: this.state.name,

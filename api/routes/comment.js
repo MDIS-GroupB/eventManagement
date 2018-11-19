@@ -10,18 +10,31 @@ router
         console.log(req.body)
         console.log(req.user._id)
 
-        var firstName = await global.Personal.findOne({ _id: req.user._id }).firstName
-        var lastName = await global.Personal.findOne({ _id: req.user._id }).lastName
+        var reviewer = await global.Personal.findOne({ userID: req.user._id })
+
+        console.log(reviewer.firstName)
 
         let newComment = await global.Comment.create({
-            reviewer: firstName + lastName,
+            reviewer: reviewer.firstName + " " + reviewer.lastName,
             commentDate: req.body.commentDate,
             comments: req.body.comments,
             eventId: req.body.eventId
         })
+        console.log(newComment)
         console.log("inserted!")
         // console.log(newComment)
     })
+
+    .get('/:id', async (req, res) => {
+        var id = req.params.id;
+        let comments = await global.Comment.find({ eventId: id })
+        console.log("selected comment")
+        console.log(comments)
+        res.json({
+            comments: comments,
+        })
+    })
+
     .get('/', async (req, res) => {
         res.json({
             works: true,
