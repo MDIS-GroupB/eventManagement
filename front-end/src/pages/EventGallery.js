@@ -26,6 +26,7 @@ import { bookEvent } from "../api/payment"
 import { create } from '@material-ui/icons/Create'
 import Payment from 'material-ui/svg-icons/action/payment';
 import Info from 'material-ui/svg-icons/action/info';
+import PaymentDialog from '../components/molecules/PaymentDialog';
 
 
 
@@ -83,7 +84,8 @@ class CustomPaginationActionsTable extends React.Component {
         page: 0,
         rowsPerPage: 5,
         searchText: "",
-        searchResult: []
+        searchResult: [],
+        payment: false
     };
 
     handleChangePage = (event, page) => {
@@ -118,8 +120,7 @@ class CustomPaginationActionsTable extends React.Component {
 
     onHandleBookEvent = async () => {
         var returnPage = await bookEvent();
-        console.log("return page is ")
-        console.log(returnPage.data)
+        this.setState({ payment: returnPage.data})
     }
 
     render() {
@@ -212,6 +213,13 @@ class CustomPaginationActionsTable extends React.Component {
                         </GridList>
                     </div>
                 </Paper>) : (<CircularProgress />)}
+                {
+                    this.state.payment ? (
+                        <PaymentDialog
+                        html={this.state.payment}
+                        />
+                    ): false
+                }
         </>
     }
 }
