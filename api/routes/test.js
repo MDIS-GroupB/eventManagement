@@ -120,6 +120,8 @@ router
                 //   required: true,
                 // },
                 venueId: newVenues[1]._id,
+                price: 4000,
+                noOfTickets: 30,
             },
             {
                 eventProposer: newUser._id,
@@ -131,6 +133,8 @@ router
                 //   required: true,
                 // },
                 venueId: newVenues[2]._id,
+                price: 4000,
+                noOfTickets: 30,
                 status: {
                     approved: true,
                     userId: admin._id
@@ -146,6 +150,8 @@ router
                 //   required: true,
                 // },
                 venueId: newVenues[3]._id,
+                price: 4000,
+                noOfTickets: 30,
                 status: {
                     approved: false,
                     userId: admin._id

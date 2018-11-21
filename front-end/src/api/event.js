@@ -14,6 +14,16 @@ export function getEvents() {
   // console.log("res",error)
   // throw Error(error)})
 }
+export function postCharge() {
+  return api.post(`/charge/`)
+    .then(res => {
+      console.log("res", res)
+      return res.data
+    })
+  // .catch(error => {
+  // console.log("res",error)
+  // throw Error(error)})
+}
 
 export function getEvent(id) {
   return api.get(`/event/${id}`)

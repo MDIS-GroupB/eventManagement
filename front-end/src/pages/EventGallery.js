@@ -26,8 +26,13 @@ import { bookEvent } from "../api/payment"
 import { create } from '@material-ui/icons/Create'
 import Payment from 'material-ui/svg-icons/action/payment';
 import Info from 'material-ui/svg-icons/action/info';
+<<<<<<< Updated upstream
 import PaymentDialog from '../components/molecules/PaymentDialog';
 import * as exportFunc from '../components/molecules/PaymentDialog'
+=======
+import StripeButton from '../components/molecules/StripeButton';
+
+>>>>>>> Stashed changes
 
 
 const actionsStyles = theme => ({
@@ -122,10 +127,14 @@ class CustomPaginationActionsTable extends React.Component {
 
     onHandleBookEvent = async () => {
         var returnPage = await bookEvent();
+<<<<<<< Updated upstream
         this.setState({ payment: returnPage.data })
         this.setState({ openDialog: true })
         exportFunc.updateState(this.state.openDialog)
         console.log(this.state.openDialog + "is the onee")
+=======
+        this.setState({ payment: true })
+>>>>>>> Stashed changes
     }
 
     render() {
@@ -159,6 +168,8 @@ class CustomPaginationActionsTable extends React.Component {
                                     {searchResult
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         .map(row => {
+                                            console.log('row')
+                                            console.log(row)
                                             return (
                                                 <>
                                                     <GridListTile key={row.eventData.img} style={{ marginTop: 20 }}>
@@ -171,7 +182,7 @@ class CustomPaginationActionsTable extends React.Component {
                                                             subtitle={<>
                                                                 <span style={{ marginLeft: 80 }}>{row.eventData.dateAndTime}</span><br />
                                                                 <span style={{ marginLeft: 80 }}>Tickets Left : {row.eventData.noOfTickets}</span><br />
-                                                                <span style={{ marginLeft: 80 }}>{row.eventData.price} SGD</span><br />
+                                                                <span style={{ marginLeft: 80 }}>{parseInt(row.eventData.price) / 100} SGD</span><br />
                                                                 <span style={{ marginLeft: 80 }}>{row.proposer.firstName}</span>
                                                                 <span style={{ marginLeft: 5 }} > {row.proposer.lastName}</span><br />
                                                                 {/* alignment can be improved */}
@@ -180,12 +191,16 @@ class CustomPaginationActionsTable extends React.Component {
                                                             actionIcon={
                                                                 <>
                                                                     <Link to={`/Event/${row.eventData._id}`} >
-                                                                        <IconButton style={{ right: 610 }}>{/* alignment can be improved */}
+                                                                        <IconButton style={{ right: 550 }}>{/* alignment can be improved */}
                                                                             <Info className={classes.title} style={{ color: 'white' }} />
                                                                         </IconButton>
                                                                     </Link>
                                                                     <IconButton onClick={this.onHandleBookEvent}>
-                                                                        <Payment className={classes.title} style={{ color: 'white' }} />
+                                                                        <StripeButton
+                                                                            price={row.eventData.price}
+                                                                            eventName={row.eventData.name}
+                                                                            eventDescription="Event ticket bought"
+                                                                        />
                                                                     </IconButton>
                                                                 </>
                                                             }
@@ -218,6 +233,7 @@ class CustomPaginationActionsTable extends React.Component {
                         </GridList>
                     </div>
                 </Paper>) : (<CircularProgress />)}
+<<<<<<< Updated upstream
             {
                 this.state.payment ? (
                     <PaymentDialog
@@ -226,6 +242,8 @@ class CustomPaginationActionsTable extends React.Component {
                     />
                 ) : false
             }
+=======
+>>>>>>> Stashed changes
         </>
     }
 }
