@@ -72,7 +72,7 @@ export default class ViewEventTabs extends React.Component {
           {/* <td dangerouslySetInnerHTML={{ __html: this.props.html }} /> */}
           <StripeCheckout
             token={this.onToken}
-            // stripeKey={}
+          // stripeKey={}
           />
           <RaisedButton onClick={this.handleClose} color="primary" style={{ margin: "auto" }}>
             Cancel
