@@ -27,9 +27,12 @@ import { create } from '@material-ui/icons/Create'
 import Payment from 'material-ui/svg-icons/action/payment';
 import Info from 'material-ui/svg-icons/action/info';
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import PaymentDialog from '../components/molecules/PaymentDialog';
 import * as exportFunc from '../components/molecules/PaymentDialog'
 =======
+=======
+>>>>>>> Stashed changes
 import StripeButton from '../components/molecules/StripeButton';
 
 >>>>>>> Stashed changes
@@ -128,10 +131,14 @@ class CustomPaginationActionsTable extends React.Component {
     onHandleBookEvent = async () => {
         var returnPage = await bookEvent();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         this.setState({ payment: returnPage.data })
         this.setState({ openDialog: true })
         exportFunc.updateState(this.state.openDialog)
         console.log(this.state.openDialog + "is the onee")
+=======
+        this.setState({ payment: true })
+>>>>>>> Stashed changes
 =======
         this.setState({ payment: true })
 >>>>>>> Stashed changes
@@ -233,7 +240,6 @@ class CustomPaginationActionsTable extends React.Component {
                         </GridList>
                     </div>
                 </Paper>) : (<CircularProgress />)}
-<<<<<<< Updated upstream
             {
                 this.state.payment ? (
                     <PaymentDialog
@@ -242,8 +248,6 @@ class CustomPaginationActionsTable extends React.Component {
                     />
                 ) : false
             }
-=======
->>>>>>> Stashed changes
         </>
     }
 }
