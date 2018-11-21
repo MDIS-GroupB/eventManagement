@@ -24,6 +24,7 @@ import '../App.css'
 import IconButton from '@material-ui/core/IconButton';
 import Info from 'material-ui/svg-icons/action/info';
 import Create from 'material-ui/svg-icons/content/create';
+import * as exportFunc from '../components/organisms/CreateEventDialog'
 
 const actionsStyles = theme => ({
     root: {
@@ -107,10 +108,11 @@ class CustomPaginationActionsTable extends React.Component {
         })
     }
 
-    onHandleCreateEvent() {
-        this.setState({ openDialog: true })
+    onHandleCreateEvent = async () => {
+        await this.setState({ openDialog: true })
         console.log("openDialog status")
         console.log(this.state.openDialog)
+        exportFunc.handleClickOpen(this.state.openDialog)
     }
 
     render() {
@@ -146,7 +148,7 @@ class CustomPaginationActionsTable extends React.Component {
                                         .map(row => {
                                             return (
                                                 <>
-                                                    <GridListTile key={row.img} >
+                                                    <GridListTile key={row.img} style={{ marginTop: 20 }} >
                                                         {/* <BrowserRouter><Link to={`/venue/${row._id}`}>View Me</Link></BrowserRouter> */}
                                                         <img src={row.image} alt={row.name} width="100%" />
                                                         <GridListTileBar

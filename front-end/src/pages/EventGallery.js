@@ -27,7 +27,7 @@ import { create } from '@material-ui/icons/Create'
 import Payment from 'material-ui/svg-icons/action/payment';
 import Info from 'material-ui/svg-icons/action/info';
 import PaymentDialog from '../components/molecules/PaymentDialog';
-
+import * as exportFunc from '../components/molecules/PaymentDialog'
 
 
 const actionsStyles = theme => ({
@@ -77,6 +77,7 @@ class CustomPaginationActionsTable extends React.Component {
         this.getImages()
         this.onSearchTextChange = this.onSearchTextChange.bind(this)
         this.filterEvents = this.filterEvents.bind(this)
+        console.log("component did mount fired")
     }
 
     state = {
@@ -85,7 +86,8 @@ class CustomPaginationActionsTable extends React.Component {
         rowsPerPage: 5,
         searchText: "",
         searchResult: [],
-        payment: false
+        payment: false,
+        openDialog: false
     };
 
     handleChangePage = (event, page) => {
@@ -120,7 +122,10 @@ class CustomPaginationActionsTable extends React.Component {
 
     onHandleBookEvent = async () => {
         var returnPage = await bookEvent();
-        this.setState({ payment: returnPage.data})
+        this.setState({ payment: returnPage.data })
+        this.setState({ openDialog: true })
+        exportFunc.updateState(this.state.openDialog)
+        console.log(this.state.openDialog + "is the onee")
     }
 
     render() {
@@ -213,13 +218,14 @@ class CustomPaginationActionsTable extends React.Component {
                         </GridList>
                     </div>
                 </Paper>) : (<CircularProgress />)}
-                {
-                    this.state.payment ? (
-                        <PaymentDialog
+            {
+                this.state.payment ? (
+                    <PaymentDialog
                         html={this.state.payment}
-                        />
-                    ): false
-                }
+
+                    />
+                ) : false
+            }
         </>
     }
 }

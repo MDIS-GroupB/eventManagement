@@ -1,28 +1,59 @@
-<section class="py-2">
-    <div class="row">
-        <div class="col-md-6 text-center">
-            <h1 class="display-3 mt-3 pt-5">
-                web development ebook
-            </h1>
-            <p class="lead">
-                learn web development front to back
-            </p>
+<!DOCTYPE html>
+<html lang="en">
 
-            <form action="/charge" method="POST">
-                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key={{stripePublishableKey}}
-                    data-amount="1" data-name="ebook" data-description="ebook writen by dk" data-image="/img/download2.jpg"
-                    data-locale="auto" data-currency="sgd">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+        crossorigin="anonymous">
+    <title>Web Development Ebook</title>
+</head>
+
+<body class="bg-primary text-white">
+    <div class="container">
+        <section class="py-2">
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <h1 class="display-3 mt-3 pt-5">
+                        web development ebook
+                    </h1>
+                    <p class="lead">
+                        learn web development front ot back
+                    </p>
+
+                    <form action="/charge" method="POST">
+                        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key={{stripePublishableKey}}
+                            data-amount="1" data-name="ebook" data-description="ebook writen by dk" data-image="/img/download2.jpg"
+                            data-locale="auto" data-currency="sgd">
+                            </script>
+                        <script>
+                            //Hide default stripe button
+                            document.getElementsByClassName('stripe-button-el')[0].style.display = 'none'
+                        </script>
+                        <button type="submit" class="btn btn-outline-dark btn-lg">purchase for 0.1$</button>
+                    </form>
+
+                    <button onclick="myFunction()">Try it</button>
+
+                    <p id="demo"></p>
+
+                    <script>
+                        function myFunction() {
+                            var str = "The best things in life are free";
+                            var patt = new RegExp("e");
+                            var res = patt.test(str);
+                            document.getElementById("demo").innerHTML = res;
+                        }
                     </script>
-                <script>
-                    //Hide default stripe button
-                    document.getElementsByClassName('stripe-button-el')[0].style.display = 'none'
-                </script>
-                <button type="submit" class="btn btn-outline-dark text-white btn-lg">purchase for 25$</button>
-            </form>
 
-        </div>
-        <div class="col-md-6">
-            <img src="/img/download.jpg" alt="" class="img-fuild">
-        </div>
+                </div>
+                <div class="col-md-6">
+                    <img src="/img/download.jpg" alt="" class="img-fuild">
+                </div>
+            </div>
+        </section>
     </div>
-</section>
+</body>
+
+</html>

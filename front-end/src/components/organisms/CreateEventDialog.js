@@ -44,6 +44,15 @@ function filterVenues(venues, searchText) {
   return returnVenues
 }
 
+export function handleClickOpen(open) {
+  console.log("para from parent" + open)
+  this.setState({ open: open });
+  console.log("open status")
+  console.log("call from the child component" + this.state.open)
+  // if (this.props.openDialog === true) {
+  // }
+};
+
 export default class CreateEventDialog extends React.Component {
 
   state = {
@@ -66,14 +75,6 @@ export default class CreateEventDialog extends React.Component {
     })
   }
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
-    console.log("open status")
-    console.log(this.props)
-    // if (this.props.openDialog === true) {
-
-    // }
-  };
 
   handleClose = () => {
     this.setState({ open: false });
@@ -113,6 +114,7 @@ export default class CreateEventDialog extends React.Component {
     // this.handleClickOpen()
     this.onDateAndTimeSelect = this.onDateAndTimeSelect.bind(this)
     this.onHandleCreateEvent = this.onHandleCreateEvent.bind(this)
+    handleClickOpen = handleClickOpen.bind(this)
   }
 
   // componentWillUpdate(prevProps) {
@@ -128,6 +130,7 @@ export default class CreateEventDialog extends React.Component {
     this.setState({ selectedDateAndTime: event.target.value })
   }
 
+
   render() {
     const createEventTextFields = {
       onInputChange: this.onInputChange,
@@ -140,7 +143,7 @@ export default class CreateEventDialog extends React.Component {
 
     return (
       <div>
-        <RaisedButton onClick={this.handleClickOpen}>Create Event</RaisedButton>
+        {/* <RaisedButton onClick={this.handleClickOpen}>Create Event</RaisedButton> */}
         <Dialog
           fullScreen
           open={this.state.open}
