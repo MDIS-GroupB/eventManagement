@@ -20,13 +20,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import { Link, BrowserRouter } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 import '../App.css'
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 import IconButton from '@material-ui/core/IconButton';
-import { bookEvent } from "../api/payment"
-import { create } from '@material-ui/icons/Create'
-import Payment from 'material-ui/svg-icons/action/payment';
 import Info from 'material-ui/svg-icons/action/info';
-import PaymentDialog from '../components/molecules/PaymentDialog';
 import * as exportFunc from '../components/molecules/PaymentDialog'
 import StripeButton from '../components/molecules/StripeButton';
 
@@ -120,14 +115,6 @@ class CustomPaginationActionsTable extends React.Component {
         })
     }
 
-    onHandleBookEvent = async () => {
-        var returnPage = await bookEvent();
-        this.setState({ payment: returnPage.data })
-        this.setState({ openDialog: true })
-        exportFunc.updateState(this.state.openDialog)
-        console.log(this.state.openDialog + "is the onee")
-    }
-
     render() {
         const { classes } = this.props;
         const { searchResult, rowsPerPage, page } = this.state;
@@ -188,20 +175,15 @@ class CustomPaginationActionsTable extends React.Component {
                                                                     </Link>
                                                                     <IconButton>
                                                                         <StripeButton
-                                                                            price={row.eventData.price}
-                                                                            eventName={row.eventData.name}
-                                                                            eventDescription="Event ticket bought"
+                                                                            name={row.eventData.name}
+                                                                            description={"Event ticket bought"}
+                                                                            amount={row.eventData.price}
                                                                         />
                                                                     </IconButton>
                                                                 </>
                                                             }
                                                         />
                                                     </GridListTile>
-
-                                                    {/* <Link to={`/Event/${row.eventData._id}`} ><RaisedButton>View Event Detail</RaisedButton></Link> */}
-                                                    {/* <RaisedButton onClick={this.onHandleBookEvent} color="primary" autoFocus style={{ margin: "auto" }}>
-                                                        Book Event
-                                                    </RaisedButton> */}
                                                 </>
                                             );
                                         })}

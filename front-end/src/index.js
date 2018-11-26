@@ -2,11 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import VenueGallery from './pages/VenueGallery';
 import * as serviceWorker from './serviceWorker';
-import SlideShowDraft from './pages/SlideShowDraft';
-import EventGallery from './pages/EventGallery';
-import Strip from './pages/Strip';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
