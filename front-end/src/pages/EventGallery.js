@@ -176,8 +176,12 @@ class CustomPaginationActionsTable extends React.Component {
                                                                     <IconButton>
                                                                         <StripeButton
                                                                             name={row.eventData.name}
-                                                                            description={"Event ticket bought"}
+                                                                            description={row.eventData.description}
+                                                                            date={row.eventData.dateAndTime}
+                                                                            location={row.eventData.venueId.location}
+                                                                            hoster={row.proposer.firstName + ' ' + row.proposer.lastName}
                                                                             amount={row.eventData.price}
+                                                                            currency='SGD'
                                                                         />
                                                                     </IconButton>
                                                                 </>
