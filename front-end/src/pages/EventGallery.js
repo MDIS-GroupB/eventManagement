@@ -169,7 +169,7 @@ class CustomPaginationActionsTable extends React.Component {
                                                             actionIcon={
                                                                 <>
                                                                     <Link to={`/Event/${row.eventData._id}`} >
-                                                                        <IconButton style={{ right: 550 }}>{/* alignment can be improved */}
+                                                                        <IconButton style={{ right: 515 }}>{/* alignment can be improved */}
                                                                             <Info className={classes.title} style={{ color: 'white' }} />
                                                                         </IconButton>
                                                                     </Link>

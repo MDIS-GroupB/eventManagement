@@ -44,9 +44,9 @@ function filterVenues(venues, searchText) {
   return returnVenues
 }
 
-export function handleClickOpen(open) {
-  console.log("para from parent" + open)
-  this.setState({ open: open });
+export function handleClickOpen() {
+  console.log("para from parent")
+  this.setState({ open: true });
   console.log("open status")
   console.log("call from the child component" + this.state.open)
   // if (this.props.openDialog === true) {
@@ -75,14 +75,17 @@ export default class CreateEventDialog extends React.Component {
     })
   }
 
+  handleClickOpen = () => {
+    this.setState({ open: true })
+  }
 
   handleClose = () => {
     this.setState({ open: false });
   };
 
   onHandleCreateEvent = () => {
-    if (this.state.passedVenueId) {
-      var currentVenueId = this.state.passedVenueId
+    if (this.props.selectedVenueId) {
+      var currentVenueId = this.props.selectedVenueId
       this.setState({ open: false })
     }
     else {
@@ -105,10 +108,12 @@ export default class CreateEventDialog extends React.Component {
   }
 
   async componentDidMount() {
+    console.log("the pass venue id si " + this.props.selectedVenueId)
+    console.log("the pass venue name is +" + this.props.selectedVenue)
     let venues = await getVenues()
     this.setState({ venues });
-    let passedVenueId = this.props.selectedVenueId
-    this.setState({ passedVenueId });
+    // let passedVenueId = this.props.selectedVenueId
+    // this.setState({ passedVenueId });
     // let ifOpen = this.props.openDialog
     // this.setState({ open: ifOpen })
     // this.handleClickOpen()
@@ -139,11 +144,12 @@ export default class CreateEventDialog extends React.Component {
     }
 
     const selectedVenue = this.props.selectedVenue
+    const selectedVenueId = this.props.selectedVenueId
     const maxDate = { new: Date() }
 
     return (
       <div>
-        {/* <RaisedButton onClick={this.handleClickOpen}>Create Event</RaisedButton> */}
+        <RaisedButton onClick={this.handleClickOpen}>Create Event</RaisedButton>
         <Dialog
           fullScreen
           open={this.state.open}
