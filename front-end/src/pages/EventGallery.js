@@ -181,6 +181,8 @@ class CustomPaginationActionsTable extends React.Component {
                                                                             location={row.eventData.venueId.location}
                                                                             hoster={row.proposer.firstName + ' ' + row.proposer.lastName}
                                                                             amount={row.eventData.price}
+                                                                            ticket={row.eventData.noOfTickets}
+                                                                            eventId={row.eventData._id}
                                                                             currency='SGD'
                                                                         />
                                                                     </IconButton>

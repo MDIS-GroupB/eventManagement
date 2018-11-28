@@ -15,6 +15,7 @@ router
         // console.log(event)
         res.json(event)
     })
+
     .post('/', async (req, res) => {
         console.log("you comed to backend api")
         console.log(req.body)
@@ -33,6 +34,20 @@ router
         console.log("inserted!")
         console.log(newEvent)
         res.json({ test: "j" })
+    })
+
+    .patch('/:id', async (req, res) => {
+        console.log("you are patching tickets number")
+        // var updateObject = req.body;
+        var id = req.params.id;
+        var ticketNum = 2;
+        await global.Event.update({ _id: Object(id) }, { $inc: { noOfTickets: -1 } });
+        let updatedProduct = await global.Event.findOne({ _id: Object(id) })
+
+        res.json({
+            works: true,
+            products: updatedProduct,
+        })
     })
 
     .delete('/:id', async (req, res) => {

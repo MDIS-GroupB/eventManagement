@@ -29,23 +29,38 @@ const sendEmail = (name, description, date, location, hoster, amount) => {
         })
 }
 
-const onToken = (name, description, date, location, hoster, amount) => token =>
-    axios.post("http://localhost:8085/charge",
-        {
-            description,
-            source: token.id,
-            currency: 'SGD',
-            amount: amount
-        })
-        .then(successPayment)
-        .then(sendEmail(name, description, date, location, hoster, amount))
-        .catch(errorPayment);
+const countDownTicket = (eventId) => {
+    console.log("count down ticket api triggered")
+    console.log("the passed event Id is " + eventId)
+    axios.patch(`http://localhost:8085/personalEvent/${eventId}`)
+}
 
-const Checkout = ({ name, description, date, location, hoster, amount }) => {
+const onToken = (name, description, date, location, hoster, amount, ticket, eventId) => token => {
+    if (ticket > 0) {
+        console.log("the passed event Id is " + name, description, date, location, hoster, amount, ticket, eventId)
+        axios.post("http://localhost:8085/charge",
+            {
+                description,
+                source: token.id,
+                currency: 'SGD',
+                amount: amount
+            })
+            .then(successPayment)
+            .then(countDownTicket(eventId))
+            .then(sendEmail(name, description, date, location, hoster, amount))
+            .catch(errorPayment);
+    }
+    else {
+        alert('No Ticket Leaft');
+    }
+}
+
+const Checkout = ({ name, description, date, location, hoster, amount, ticket, eventId }) => {
     console.log("the passed in values")
     console.log({
-        name, description, date, location, hoster, amount
+        name, description, date, location, hoster, amount, ticket, eventId
     })
+
     return (
         <StripeCheckout
             name={name}
@@ -54,7 +69,9 @@ const Checkout = ({ name, description, date, location, hoster, amount }) => {
             location={location}
             hoster={hoster}
             amount={amount}
-            token={onToken(name, description, date, location, hoster, amount)}
+            ticket={ticket}
+            eventId={eventId}
+            token={onToken(name, description, date, location, hoster, amount, ticket, eventId)}
             currency={'SGD'}
             stripeKey={"pk_test_RqzhsUSIsZ2vzPUOG15tMaao"}
         />)
