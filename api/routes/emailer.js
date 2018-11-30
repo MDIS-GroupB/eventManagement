@@ -25,7 +25,7 @@ router
         <li> Event Date: ${req.body.date}</li>
         <li> Venue Place: ${req.body.location}</li>
         <li> Hoster Name: ${req.body.hoster}</li>
-        <li> Ticket Price: ${req.body.amount + ' ' + req.body.currency}</li>
+        <li> Ticket Price: ${parseInt(req.body.amount) / 100 + ' ' + req.body.currency}</li>
     </ul>
     <h3>Thank you</h3>
     <p></p>
@@ -33,7 +33,7 @@ router
 
         var mailOptions = {
             from: 'dereknodejs123@gmail.com',
-            to: 'dereknodejsrecip@gmail.com',
+            to: req.body.email,
             subject: 'Sending Email using Node.js',
             text: 'That was 2 easy!',
             html: output

@@ -3,7 +3,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import Divider from 'material-ui/Divider'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from '../components/atoms/TextField'
-import logo from '../imgs/logo.jpg'
+import logo from '../imgs/logo.png'
 
 export default class LoginPage extends Component {
   constructor(props) {

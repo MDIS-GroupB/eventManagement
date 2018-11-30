@@ -81,7 +81,7 @@ class LoginPage extends Component {
                     <h3><i>{this.state.eventData.eventData.name}</i></h3>
                     <h3><i>{this.state.eventData.eventData.description}</i></h3>
                     <h3><i>{this.state.eventData.eventData.dateAndTime}</i></h3>
-                    <h3><i>{this.state.eventData.eventData.price} SGD</i></h3>
+                    <h3><i>{parseInt(this.state.eventData.eventData.price) / 100} SGD</i></h3>
 
                     <h2 style={{ color: 'red' }}>Event Proposer:</h2>
                     <h3><i>{this.state.eventData.properser.firstName} {this.state.eventData.properser.lastName}</i></h3>

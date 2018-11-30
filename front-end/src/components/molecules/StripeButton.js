@@ -14,9 +14,9 @@ const errorPayment = data => {
     alert('Payment Error');
 };
 
-const sendEmail = (name, description, date, location, hoster, amount) => {
+const sendEmail = (name, description, date, location, hoster, amount, email) => {
     console.log("the passed para is")
-    console.log(name, description, date, location, hoster, amount)
+    console.log(name, description, date, location, hoster, amount, email)
     axios.post("http://localhost:8085/emailer",
         {
             name,
@@ -25,6 +25,7 @@ const sendEmail = (name, description, date, location, hoster, amount) => {
             location,
             hoster,
             amount,
+            email,
             currency: 'SGD'
         })
 }
@@ -35,9 +36,8 @@ const countDownTicket = (eventId) => {
     axios.patch(`http://localhost:8085/personalEvent/${eventId}`)
 }
 
-const onToken = (name, description, date, location, hoster, amount, ticket, eventId) => token => {
+const onToken = (name, description, date, location, hoster, amount, ticket, email, eventId) => token => {
     if (ticket > 0) {
-        console.log("the passed event Id is " + name, description, date, location, hoster, amount, ticket, eventId)
         axios.post("http://localhost:8085/charge",
             {
                 description,
@@ -47,7 +47,7 @@ const onToken = (name, description, date, location, hoster, amount, ticket, even
             })
             .then(successPayment)
             .then(countDownTicket(eventId))
-            .then(sendEmail(name, description, date, location, hoster, amount))
+            .then(sendEmail(name, description, date, location, hoster, amount, email))
             .catch(errorPayment);
     }
     else {
@@ -55,10 +55,10 @@ const onToken = (name, description, date, location, hoster, amount, ticket, even
     }
 }
 
-const Checkout = ({ name, description, date, location, hoster, amount, ticket, eventId }) => {
+const Checkout = ({ name, description, date, location, hoster, amount, ticket, email, eventId }) => {
     console.log("the passed in values")
     console.log({
-        name, description, date, location, hoster, amount, ticket, eventId
+        name, description, date, location, hoster, amount, ticket, email, eventId
     })
 
     return (
@@ -70,8 +70,9 @@ const Checkout = ({ name, description, date, location, hoster, amount, ticket, e
             hoster={hoster}
             amount={amount}
             ticket={ticket}
+            email={email}
             eventId={eventId}
-            token={onToken(name, description, date, location, hoster, amount, ticket, eventId)}
+            token={onToken(name, description, date, location, hoster, amount, ticket, email, eventId)}
             currency={'SGD'}
             stripeKey={"pk_test_RqzhsUSIsZ2vzPUOG15tMaao"}
         />)

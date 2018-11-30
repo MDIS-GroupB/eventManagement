@@ -24,7 +24,7 @@ router
         let newEvent = await global.Event.create({
             name: req.body.name,
             noOfTickets: req.body.noOfTickets,
-            price: req.body.price,
+            price: parseInt(req.body.price) * 100, //because stripe charge in cents
             dateAndTime: req.body.dateAndTime,
             description: req.body.description,
             eventProposer: req.user._id,

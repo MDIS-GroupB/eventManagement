@@ -59,7 +59,7 @@ class ScrollDialog extends React.Component {
                     </TableCell>
                     <TableCell numeric>{event.venueId.location}</TableCell>
                     <TableCell numeric>{event.description}</TableCell>
-                    <TableCell numeric><Button onClick={() => this.handleChangeEvent(event._id, true)}>Accepte</Button></TableCell>
+                    <TableCell numeric><Button onClick={() => this.handleChangeEvent(event._id, true)}>Accept</Button></TableCell>
                     <TableCell numeric><Button onClick={() => this.handleChangeEvent(event._id, false)}>Decline</Button></TableCell>
                     <TableCell numeric > <Link to={`/event/${event._id}`}>View Me</Link></TableCell>
                   </TableRow>

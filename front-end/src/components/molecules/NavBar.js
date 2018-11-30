@@ -10,7 +10,7 @@ import {
   ToolbarGroup,
   ToolbarSeparator
 } from 'material-ui/Toolbar'
-import logo from '../../imgs/logo.jpg'
+import logo from '../../imgs/logo.png'
 import { Link } from 'react-router-dom'
 
 

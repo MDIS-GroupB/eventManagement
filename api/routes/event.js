@@ -10,7 +10,7 @@ router
     //get all
     .get('/allWithHoster', async (req, res) => {
         var response = []
-        let events = await global.Event.find().populate('venueId')
+        let events = await global.Event.find().populate('venueId').populate('eventProposer') //get associated venue and proposer info
         const rowLen = events.length;
 
         for (var i = 0; i < rowLen; i++) {

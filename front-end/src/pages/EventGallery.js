@@ -68,11 +68,21 @@ class CustomPaginationActionsTable extends React.Component {
         console.log("updated state")
         console.log(this.state.events)
     }
+
+    async getUser() {
+        let response = await api.get('/personal/getUserEmail')
+        console.log("the user email is " + response.data[0].email)
+        let userEmail = response.data[0].email
+        this.setState({ userEmail: userEmail })
+    }
+
+
     async componentDidMount() {
-        this.getImages()
+        await this.getImages()
+        await this.getUser()
         this.onSearchTextChange = this.onSearchTextChange.bind(this)
         this.filterEvents = this.filterEvents.bind(this)
-        console.log("component did mount fired")
+        console.log("state after did mount: " + this.state.userEmail)
     }
 
     state = {
@@ -81,6 +91,7 @@ class CustomPaginationActionsTable extends React.Component {
         rowsPerPage: 5,
         searchText: "",
         searchResult: [],
+        userEmail: "",
         payment: false,
         openDialog: false
     };
@@ -183,6 +194,7 @@ class CustomPaginationActionsTable extends React.Component {
                                                                             amount={row.eventData.price}
                                                                             ticket={row.eventData.noOfTickets}
                                                                             eventId={row.eventData._id}
+                                                                            email={this.state.userEmail}
                                                                             currency='SGD'
                                                                         />
                                                                     </IconButton>
