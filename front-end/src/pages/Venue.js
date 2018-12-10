@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 
 import { getVenue } from '../api/venue'
 import CircularProgress from 'material-ui/CircularProgress';
+import commentBox from '../components/molecules/commentBox'
 
 export default class LoginPage extends Component {
 
@@ -28,7 +29,7 @@ export default class LoginPage extends Component {
 
   render() {
     return <>
-
+      <commentBox />
       <h1><i>Venue Page</i></h1>
       {!!this.state.venueData ? (
         <>
@@ -38,7 +39,9 @@ export default class LoginPage extends Component {
           <h3><i>{this.state.venueData.location}</i></h3>
           <img src={this.state.venueData.image}></img>
           {this.state.venueData.theme.map(theme => <h3><i>{theme}</i></h3>)}
+          {commentBox}
         </>
+
 
       )
 

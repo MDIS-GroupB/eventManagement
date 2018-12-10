@@ -63,3 +63,14 @@ export async function changeEventStatus(id, status) {
   // })
 }
 
+export async function likeEvent(id) {
+  console.log("like id is " + id)
+  await api.post(`/event/like/${id}`)
+}
+
+export async function disLikeEvent(id) {
+  console.log("dislike id is " + id)
+  await api.post(`event/disLike/${id}`)
+}
+
+

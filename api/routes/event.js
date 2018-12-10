@@ -57,4 +57,24 @@ router
         })
     })
 
+    .post('/like/:id', async (req, res) => {
+        console.log("you comed to comment backend api")
+        console.log(req.params.id)
+
+        await global.Event.update({ _id: Object(req.params.id) }, { $inc: { like: + 1 } });
+        let updatedEvent = await global.Event.findOne({ _id: Object(req.params.id) })
+
+        console.log("event liked " + updatedEvent)
+    })
+
+    .post('/disLike/:id', async (req, res) => {
+        console.log("you comed to comment backend api")
+        console.log(req.params.id)
+
+        await global.Event.update({ _id: Object(req.params.id) }, { $inc: { disLike: + 1 } });
+        let updatedEvent = await global.Event.findOne({ _id: Object(req.params.id) })
+
+        console.log("event liked " + updatedEvent)
+    })
+
 module.exports = router

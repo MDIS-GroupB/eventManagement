@@ -20,6 +20,8 @@ const eventSchema = mongoose.Schema({
   noOfTickets: Number,
   price: Number,
   dateAndTime: String,
+  like: { type: Number, default: 0 },
+  disLike: { type: Number, default: 0 },
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
@@ -37,6 +39,8 @@ const eventSchema = mongoose.Schema({
   },
   status: approvedSchema,
 })
+
+
 
 const event = mongoose.model('Event', eventSchema)
 
