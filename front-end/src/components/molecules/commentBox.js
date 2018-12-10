@@ -30,7 +30,7 @@ export default class myThing extends React.Component {
         })
     }
 
-    onHandleComment = () => {
+    onHandleComment = async () => {
         var commentDate = new Date()
         let a = {
             eventId: this.props.passedId,
@@ -40,9 +40,10 @@ export default class myThing extends React.Component {
         console.log('==================')
         console.log(a)
         console.log('==================')
-        createComment(a);
-        this.mainInput.value = "";
-        this.componentDidMount();
+        let prevComments = await createComment(a);
+        console.log("prevComments ara" + prevComments)
+        this.setState({ prevComments: prevComments })
+        document.getElementById("create-course-form").reset();
     }
 
     render() {
@@ -62,7 +63,7 @@ export default class myThing extends React.Component {
                             })
                         }
 
-                        < form >
+                        < form id="create-course-form">
                             <textarea
                                 placeholder="Comment on this Event"
                                 onChange={this.onCommentChange}
@@ -70,7 +71,7 @@ export default class myThing extends React.Component {
                             >
                             </textarea>
                             <br /> <br />
-                            <RaisedButton onClick={this.onHandleComment} type="submit" color="primary" autoFocus style={{ margin: "auto" }}>
+                            <RaisedButton onClick={this.onHandleComment} color="primary" autoFocus style={{ margin: "auto" }}>
                                 Comment
                         </RaisedButton>
                         </form> <br /> <br />

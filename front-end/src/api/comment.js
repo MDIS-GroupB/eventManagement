@@ -1,11 +1,13 @@
 import api from './init'
 
 let handleErrors
-export function createComment(a) {
+export async function createComment(a) {
     console.log('==================')
     console.log(a)
     console.log('==================')
-    return api.post(`/comment`, a)
+    let prevComments = await api.post(`/comment`, a)
+    // console.log("prev Comments " + JSON.stringify(prevComments.data.comments))
+    return prevComments.data.comments
 }
 
 export function getComments(id) {

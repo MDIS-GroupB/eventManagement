@@ -23,6 +23,13 @@ router
         console.log(newComment)
         console.log("inserted!")
         // console.log(newComment)
+
+        let comments = await global.Comment.find({ eventId: req.body.eventId })
+        console.log("selected comment")
+        console.log(comments)
+        res.json({
+            comments: comments,
+        })
     })
 
     .get('/:id', async (req, res) => {
