@@ -19,6 +19,7 @@ const testRouter = require('./routes/test')
 const adminRouter = require('./routes/admin')
 const commentRouter = require('./routes/comment')
 const emailRouter = require('./routes/emailer')
+const likesRouter = require('./routes/likes')
 
 // Create server
 const server = express();
@@ -98,6 +99,11 @@ server.use('/comment',
 
 server.use('/emailer',
   emailRouter
+)
+
+server.use('/likes',
+  authMiddleware.authenticateJWT,
+  likesRouter
 )
 
 
