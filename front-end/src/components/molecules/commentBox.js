@@ -33,7 +33,7 @@ export default class myThing extends React.Component {
     onHandleComment = async () => {
         var commentDate = new Date()
         let a = {
-            eventId: this.props.passedId,
+            passedId: this.props.passedId,
             comments: this.state.comments,
             commentDate: commentDate.toString().slice(0, 23),
         }

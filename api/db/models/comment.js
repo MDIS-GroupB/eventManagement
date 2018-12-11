@@ -4,7 +4,7 @@ const commentSchema = mongoose.Schema({
   reviewer: String,
   commentDate: String,
   comments: String,
-  eventId: {
+  passedId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Event',
     // required: true,

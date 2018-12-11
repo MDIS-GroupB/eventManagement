@@ -18,13 +18,13 @@ router
             reviewer: reviewer.firstName + " " + reviewer.lastName,
             commentDate: req.body.commentDate,
             comments: req.body.comments,
-            eventId: req.body.eventId
+            passedId: req.body.passedId
         })
         console.log(newComment)
         console.log("inserted!")
         // console.log(newComment)
 
-        let comments = await global.Comment.find({ eventId: req.body.eventId })
+        let comments = await global.Comment.find({ passedId: req.body.passedId })
         console.log("selected comment")
         console.log(comments)
         res.json({
@@ -34,7 +34,7 @@ router
 
     .get('/:id', async (req, res) => {
         var id = req.params.id;
-        let comments = await global.Comment.find({ eventId: id })
+        let comments = await global.Comment.find({ passedId: id })
         console.log("selected comment")
         console.log(comments)
         res.json({
