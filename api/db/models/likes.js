@@ -1,14 +1,13 @@
 const mongoose = require('./init').mongoose
 
 const likesSchema = mongoose.Schema({
-    reviewer: String,
+    reviewerId: String,
     passedId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Event',
         // required: true,
     },
-    like: Boolean,
-    dislike: Boolean
+    like: Number,
+    disLike: Number
 })
 
 const likes = mongoose.model('Likes', likesSchema)

@@ -16,56 +16,77 @@ router
 
     .get('/:id', async (req, res) => {
         var id = req.params.id;
+        console.log("id is the id " + id)
         let likes = await global.Likes.find({ passedId: id })
-        console.log("selected likes")
-        console.log(comments)
+        let likeCount = 0;
+        let disLikeCount = 0;
+        for (i = 0; i < likes.length; i++) {
+            likeCount += likes[i].like
+            disLikeCount += likes[i].disLike
+        }
+        console.log("like and disLike count " + likeCount + " " + disLikeCount)
         res.json({
-            comments: comments,
+            likeCount: likeCount,
+            disLikeCount: disLikeCount
         })
     })
 
     .post('/doLike/:id', async (req, res) => {
         console.log("wtf?")
-        let records = await global.Likes.findOne({ passedId: req.param.id })
-        console.log(records)
-        if (!records) {
-            let record = await records.findOne({ reviewerId: req.user._id })
-            if (!record) {
-                record.update({ $set: { like: 1, disLike: 0 } })
-            }
+        let record = await global.Likes.findOne({ passedId: req.params.id, reviewerId: req.user._id })
+        console.log(!!record)
+        if (!!record) {
+            await global.Likes.update({ passedId: req.params.id, reviewerId: req.user._id }, { $inc: { like: 1 } })
+            console.log("updated")
         }
         else {
             let newRecord = await global.Likes.create({
                 reviewerId: req.user._id,
-                passedId: req.body.passedId,
+                passedId: req.params.id,
                 like: 1,
                 disLike: 0,
             })
-            console.log(reRecords)
+            console.log(newRecord)
         }
 
-        // console.log("you comed to comment backend api")
-        // console.log(req.params.id)
+        let likes = await global.Likes.find({ passedId: req.params.id })
+        let likeCount = 0;
+        for (i = 0; i < likes.length; i++) {
+            likeCount += likes[i].like
+        }
+        console.log("like count " + likeCount)
+        res.json({
+            likeCount: likeCount,
+        })
 
-        // await global.Likes.updateOne({ _id: Object(req.params.id) }, { $set: { like: 1, disLike: 0 } });
-        // let updatedLikes = await global.Event.findOne({ _id: Object(req.params.id) })
-
-        // console.log("do liked " + updatedLikes)
-        // res.json({
-        //     likes: updatedLikes
-        // })
     })
 
     .post('/disLike/:id', async (req, res) => {
-        console.log("you comed to comment backend api")
-        console.log(req.params.id)
+        console.log("wtf?")
+        let record = await global.Likes.findOne({ passedId: req.params.id, reviewerId: req.user._id })
+        console.log(!!record)
+        if (!!record) {
+            await global.Likes.update({ passedId: req.params.id, reviewerId: req.user._id }, { $inc: { disLike: 1 } })
+            console.log("updated")
+        }
+        else {
+            let newRecord = await global.Likes.create({
+                reviewerId: req.user._id,
+                passedId: req.params.id,
+                like: 0,
+                disLike: 1,
+            })
+            console.log(newRecord)
+        }
 
-        await global.Event.update({ _id: Object(req.params.id) }, { $inc: { disLike: + 1 } });
-        let updatedEvent = await global.Event.findOne({ _id: Object(req.params.id) })
-
-        console.log("event disLiked " + updatedEvent)
+        let likes = await global.Likes.find({ passedId: req.params.id })
+        let disLikeCount = 0;
+        for (i = 0; i < likes.length; i++) {
+            disLikeCount += likes[i].disLike
+        }
+        console.log("disLike count " + disLikeCount)
         res.json({
-            disLike: updatedEvent.disLike
+            disLikeCount: disLikeCount
         })
     })
 

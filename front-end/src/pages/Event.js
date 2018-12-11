@@ -50,11 +50,9 @@ class LoginPage extends Component {
                     <img src={this.state.eventData.eventData.venueId.image}></img>
                     <br />
 
-                    {/* <LikeButtons
+                    <LikeButtons
                         passedId={this.props.match.params.eventId}
-                        likeCount={this.state.eventData.eventData.like}
-                        disLikeCount={this.state.eventData.eventData.disLike}
-                    /> */}
+                    />
 
                     {this.state.eventData.eventData.venueId.theme.map(theme => <h3><i>{theme}</i></h3>)}
 

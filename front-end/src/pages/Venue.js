@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { getVenue } from '../api/venue'
 import CircularProgress from 'material-ui/CircularProgress';
 import CommentBox from '../components/molecules/commentBox'
+import LikeButtons from '../components/molecules/likeButtons'
 
 export default class LoginPage extends Component {
 
@@ -38,6 +39,10 @@ export default class LoginPage extends Component {
           <h3><i>{this.state.venueData.description}</i></h3>
           <h3><i>{this.state.venueData.location}</i></h3>
           <img src={this.state.venueData.image}></img>
+          <br />
+          <LikeButtons
+            passedId={this.props.match.params.venueId}
+          />
           {this.state.venueData.theme.map(theme => <h3><i>{theme}</i></h3>)}
           <CommentBox passedId={this.props.match.params.venueId} />
         </>

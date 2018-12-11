@@ -35,8 +35,8 @@ router
     .get('/:id', async (req, res) => {
         var id = req.params.id;
         let comments = await global.Comment.find({ passedId: id })
-        console.log("selected comment")
-        console.log(comments)
+        // console.log("selected comment")
+        // console.log(comments)
         res.json({
             comments: comments,
         })
