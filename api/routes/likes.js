@@ -1,9 +1,15 @@
 const express = require('express')
-const passport = require('passport')
-const authMiddleware = require('../middleware/auth')
-const { Console } = require('console');
 
 const router = express.Router()
+function sorter(likes) {
+    let likeCount = 0;
+    let disLikeCount = 0;
+    for (i = 0; i < likes.length; i++) {
+        likeCount += likes[i].like
+        disLikeCount += likes[i].disLike
+    }
+    return [likeCount, disLikeCount]
+}
 
 router
     .get('/', async (req, res) => {
@@ -17,17 +23,18 @@ router
     .get('/:id', async (req, res) => {
         var id = req.params.id;
         console.log("id is the id " + id)
-        let likes = await global.Likes.find({ passedId: id })
-        let likeCount = 0;
-        let disLikeCount = 0;
-        for (i = 0; i < likes.length; i++) {
-            likeCount += likes[i].like
-            disLikeCount += likes[i].disLike
-        }
-        console.log("like and disLike count " + likeCount + " " + disLikeCount)
+        let likes = await global.Likes.find({ eventId: id, like: true })
+        let dislikes = await global.Likes.find({ eventId: id, dislike: false })
+        let myLike = await global.Likes.findOne({ eventId: id, reviewerId: req.user._id })
+        // let likeCount, disLikeCount;
+        // rating
+        // [likeCount, disLikeCount] = sorter(ratings)
+        console.log(req.user._id)
+        // console.log("like and disLike count " + likeCount + " " + disLikeCount)
         res.json({
-            likeCount: likeCount,
-            disLikeCount: disLikeCount
+            likeCount: likes.length,
+            disLikeCount: dislikes.length,
+            myLike: myLike
         })
     })
 

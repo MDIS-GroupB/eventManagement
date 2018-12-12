@@ -6,17 +6,14 @@ export function init(handleError, signOut) {
 }
 
 export function signIn({ email, password }) {
-  console.log('asd')
   return api.post(`/auth`, {
     "email": email,
     "password": password
   })
     .then(res => {
-      console.log("res", res)
       return res.data
     })
     .catch(error => {
-      console.log("res", error)
       throw Error(error.response.data.error)
     })
 }

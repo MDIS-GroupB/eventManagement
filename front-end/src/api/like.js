@@ -6,11 +6,9 @@ export function init(handleError) {
 }
 
 export async function doLike(id) {
-    console.log("passed id is " + id)
     return api.post(`/likes/doLike/${id}`)
         .then(
             res => {
-                console.log("res body is " + res.data.likeCount)
                 return res.data.likeCount
             }
         )
