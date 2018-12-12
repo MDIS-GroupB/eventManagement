@@ -7,32 +7,22 @@ export function init(handleError) {
 export function getEvents() {
   return api.get(`/event/`)
     .then(res => {
-      console.log("res", res)
       return res.data
     })
-  // .catch(error => {
-  // console.log("res",error)
-  // throw Error(error)})
 }
 export function postCharge() {
   return api.post(`/charge/`)
     .then(res => {
-      console.log("res", res)
       return res.data
     })
-  // .catch(error => {
-  // console.log("res",error)
-  // throw Error(error)})
 }
 
 export function getEvent(id) {
   return api.get(`/event/${id}`)
     .then(res => {
-      console.log("res", res)
       return res.data
     })
   // .catch(error => {
-  //   console.log("res", error)
   //   throw Error(error)
   // })
 }
@@ -52,13 +42,11 @@ export async function changeEventStatus(id, status) {
   }
   return api.patch(`/admin/event/${id}`, eventParams)
     .then(res => {
-      console.log("res after patch", res)
       if (!res.data) {
         return res.data
       }
     })
   // .catch(error => {
-  //   console.log("res", error)
   //   throw Error(error)
   // })
 }

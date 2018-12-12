@@ -1,19 +1,9 @@
 const express = require('express')
 
 const router = express.Router()
-function sorter(likes) {
-    let likeCount = 0;
-    let disLikeCount = 0;
-    for (i = 0; i < likes.length; i++) {
-        likeCount += likes[i].like
-        disLikeCount += likes[i].disLike
-    }
-    return [likeCount, disLikeCount]
-}
 
 router
     .get('/', async (req, res) => {
-        console.log("triggered")
         res.json({
             works: true,
             products: "geet your shit working",
@@ -22,14 +12,12 @@ router
 
     .get('/:id', async (req, res) => {
         var id = req.params.id;
-        console.log("id is the id " + id)
         let likes = await global.Likes.find({ eventId: id, like: true })
-        let dislikes = await global.Likes.find({ eventId: id, dislike: false })
+        let dislikes = await global.Likes.find({ eventId: id, like: false })
         let myLike = await global.Likes.findOne({ eventId: id, reviewerId: req.user._id })
         // let likeCount, disLikeCount;
         // rating
         // [likeCount, disLikeCount] = sorter(ratings)
-        console.log(req.user._id)
         // console.log("like and disLike count " + likeCount + " " + disLikeCount)
         res.json({
             likeCount: likes.length,
@@ -39,62 +27,43 @@ router
     })
 
     .post('/doLike/:id', async (req, res) => {
-        console.log("wtf?")
-        let record = await global.Likes.findOne({ passedId: req.params.id, reviewerId: req.user._id })
-        console.log(!!record)
+        let record = await global.Likes.findOne({ eventId: req.params.id, reviewerId: req.user._id })
         if (!!record) {
-            await global.Likes.update({ passedId: req.params.id, reviewerId: req.user._id }, { $inc: { like: 1 } })
-            console.log("updated")
+            if (record.like == true) {
+                record.remove()
+            } else {
+                record.like = true
+                await record.save()
+            }
         }
         else {
-            let newRecord = await global.Likes.create({
+            await global.Likes.create({
                 reviewerId: req.user._id,
-                passedId: req.params.id,
-                like: 1,
-                disLike: 0,
+                eventId: req.params.id,
+                like: true,
             })
-            console.log(newRecord)
         }
-
-        let likes = await global.Likes.find({ passedId: req.params.id })
-        let likeCount = 0;
-        for (i = 0; i < likes.length; i++) {
-            likeCount += likes[i].like
-        }
-        console.log("like count " + likeCount)
-        res.json({
-            likeCount: likeCount,
-        })
-
+        res.status(200).json({});
     })
 
     .post('/disLike/:id', async (req, res) => {
-        console.log("wtf?")
-        let record = await global.Likes.findOne({ passedId: req.params.id, reviewerId: req.user._id })
-        console.log(!!record)
+        let record = await global.Likes.findOne({ eventId: req.params.id, reviewerId: req.user._id })
         if (!!record) {
-            await global.Likes.update({ passedId: req.params.id, reviewerId: req.user._id }, { $inc: { disLike: 1 } })
-            console.log("updated")
+            if (record.like == false) {
+                record.remove()
+            } else {
+                record.like = false
+                await record.save()
+            }
         }
         else {
-            let newRecord = await global.Likes.create({
+            await global.Likes.create({
                 reviewerId: req.user._id,
-                passedId: req.params.id,
-                like: 0,
-                disLike: 1,
+                eventId: req.params.id,
+                like: false,
             })
-            console.log(newRecord)
         }
-
-        let likes = await global.Likes.find({ passedId: req.params.id })
-        let disLikeCount = 0;
-        for (i = 0; i < likes.length; i++) {
-            disLikeCount += likes[i].disLike
-        }
-        console.log("disLike count " + disLikeCount)
-        res.json({
-            disLikeCount: disLikeCount
-        })
+        res.status(200).json({});
     })
 
 module.exports = router

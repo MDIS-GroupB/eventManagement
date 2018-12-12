@@ -5,6 +5,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { doLike } from '../../api/like'
 import { donLike } from '../../api/like'
 import { getLikeCount } from '../../api/like'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 export default class myThing extends React.Component {
@@ -17,47 +18,81 @@ export default class myThing extends React.Component {
         console.log("likeData")
         console.log(likeData)
         this.setState({
-            like: likeData.likeCount,
-            disLike: likeData.disLikeCount
+            likeData: likeData
         })
     }
 
     onHandleLike = async () => {
-        // console.log("you like this")
-        // let likeCount = await doLike(this.props.passedId)
-        // this.setState({
-        //     like: likeCount,
-        // })
-        // console.log(this.state.like + " ~ " + this.state.disLike)
+        console.log("you like this")
+        this.setState({
+            likeData: null,
+        })
+        await doLike(this.props.passedId)
+        let likeData = await getLikeCount(this.props.passedId)
+        this.setState({
+            likeData: likeData,
+        })
     }
 
     onHandleDislike = async () => {
-        // console.log("you don like this")
-        // let disLikeCount = await donLike(this.props.passedId)
-        // this.setState({
-        //     disLike: disLikeCount
-        // })
-        // console.log(this.state.like + " ~  " + this.state.disLike)
+        await this.setState({
+            likeData: null,
+        })
+        await donLike(this.props.passedId)
+        let likeData = await getLikeCount(this.props.passedId)
+        await this.setState({
+            likeData: likeData,
+        })
     }
 
     render() {
         return (
             <>
-                <IconButton
-                // disabled={true}
-                >
-                    <Like style={{ color: "blue" }}
-                        onClick={this.onHandleLike} />
-                </IconButton>
-                <i><b>{this.state.like}</b></i>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <IconButton
-                // disabled={true}
-                >
-                    <Dislike style={{ color: 'red' }}
-                        onClick={this.onHandleDislike} />
-                </IconButton>
-                <i><b>{this.state.disLike}</b></i>
+                {
+                    this.state.likeData ? (
+                        <>
+                            {this.state.likeData.myLike ? (
+                                <>
+                                    <IconButton
+                                    // disabled={true}
+                                    >
+                                        <Like style={this.state.likeData.myLike.like ? { color: "blue" } : {}}
+                                            onClick={this.onHandleLike} />
+                                    </IconButton>
+                                    <i><b>{this.state.likeData.likeCount}</b></i>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <IconButton
+                                    // disabled={true}
+                                    >
+                                        <Dislike style={!this.state.likeData.myLike.like ? { color: "red" } : {}}
+                                            onClick={this.onHandleDislike} />
+                                    </IconButton>
+                                    <i><b>{this.state.likeData.disLikeCount}</b></i>
+                                </>
+                            ) : (
+                                    <>
+                                        <IconButton
+                                        // disabled={true}
+                                        >
+                                            <Like
+                                                onClick={this.onHandleLike} />
+                                        </IconButton>
+                                        <i><b>{this.state.likeData.likeCount}</b></i>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <IconButton
+                                        // disabled={true}
+                                        >
+                                            <Dislike
+                                                onClick={this.onHandleDislike} />
+                                        </IconButton>
+                                        <i><b>{this.state.likeData.disLikeCount}</b></i>
+                                    </>
+                                )}
+                        </>
+                    ) : (
+                            <CircularProgress />
+                        )
+                }
             </>
         )
     }
