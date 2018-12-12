@@ -30,7 +30,7 @@ router
         let record = await global.Likes.findOne({ eventId: req.params.id, reviewerId: req.user._id })
         if (!!record) {
             if (record.like == true) {
-                record.remove()
+                await record.remove()
             } else {
                 record.like = true
                 await record.save()
@@ -50,7 +50,7 @@ router
         let record = await global.Likes.findOne({ eventId: req.params.id, reviewerId: req.user._id })
         if (!!record) {
             if (record.like == false) {
-                record.remove()
+                await record.remove()
             } else {
                 record.like = false
                 await record.save()

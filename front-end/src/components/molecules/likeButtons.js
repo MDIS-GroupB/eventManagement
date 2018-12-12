@@ -53,17 +53,13 @@ export default class myThing extends React.Component {
                         <>
                             {this.state.likeData.myLike ? (
                                 <>
-                                    <IconButton
-                                    // disabled={true}
-                                    >
+                                    <IconButton>
                                         <Like style={this.state.likeData.myLike.like ? { color: "blue" } : {}}
                                             onClick={this.onHandleLike} />
                                     </IconButton>
                                     <i><b>{this.state.likeData.likeCount}</b></i>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <IconButton
-                                    // disabled={true}
-                                    >
+                                <IconButton>
                                         <Dislike style={!this.state.likeData.myLike.like ? { color: "red" } : {}}
                                             onClick={this.onHandleDislike} />
                                     </IconButton>
@@ -71,17 +67,13 @@ export default class myThing extends React.Component {
                                 </>
                             ) : (
                                     <>
-                                        <IconButton
-                                        // disabled={true}
-                                        >
+                                        <IconButton>
                                             <Like
                                                 onClick={this.onHandleLike} />
                                         </IconButton>
                                         <i><b>{this.state.likeData.likeCount}</b></i>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <IconButton
-                                        // disabled={true}
-                                        >
+                                <IconButton>
                                             <Dislike
                                                 onClick={this.onHandleDislike} />
                                         </IconButton>
