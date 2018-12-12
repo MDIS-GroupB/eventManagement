@@ -173,9 +173,10 @@ export default class CreateEventDialog extends React.Component {
                 shrink: true,
               }}
               onChange={this.onDateAndTimeSelect}
-              minDate={new Date()}
+              min={new Date().toISOString().slice(0, 16)}
             />
             <br />
+
             {!!selectedVenue ? (
               <TextField
                 floatingLabelText='Selected Venue'

@@ -10,10 +10,19 @@ router
     //get all
     .get('/allWithHoster', async (req, res) => {
         var response = []
-        let events = await global.Event.find().populate('venueId').populate('eventProposer') //get associated venue and proposer info
-        const rowLen = events.length;
+        let AllEvents = await global.Event.find().populate('venueId').populate('eventProposer') //get associated venue and proposer info
 
-        for (var i = 0; i < rowLen; i++) {
+        let events = []
+        for (var i = 0; i < AllEvents.length; i++) {
+            if (Date.parse(AllEvents[i].dateAndTime) > Date.parse(new Date())) {
+                events.push(AllEvents[i])
+            }
+        }
+
+
+        // const rowLen = events.length;
+
+        for (var i = 0; i < events.length; i++) {
             let hosterId = events[i].eventProposer
             let hoster = await global.Personal.findOne({ userID: hosterId })
             response.push({

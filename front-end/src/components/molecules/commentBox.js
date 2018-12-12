@@ -35,7 +35,7 @@ export default class myThing extends React.Component {
         let a = {
             passedId: this.props.passedId,
             comments: this.state.comments,
-            commentDate: commentDate.toString().slice(0, 23),
+            commentDate: commentDate.toString().slice(0, 24),
         }
         console.log('==================')
         console.log(a)
