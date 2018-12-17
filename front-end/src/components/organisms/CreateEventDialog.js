@@ -49,8 +49,7 @@ export function handleClickOpen() {
   this.setState({ open: true });
   console.log("open status")
   console.log("call from the child component" + this.state.open)
-  // if (this.props.openDialog === true) {
-  // }
+
 };
 
 export default class CreateEventDialog extends React.Component {
@@ -112,19 +111,10 @@ export default class CreateEventDialog extends React.Component {
     console.log("the pass venue name is +" + this.props.selectedVenue)
     let venues = await getVenues()
     this.setState({ venues });
-    // let passedVenueId = this.props.selectedVenueId
-    // this.setState({ passedVenueId });
-    // let ifOpen = this.props.openDialog
-    // this.setState({ open: ifOpen })
-    // this.handleClickOpen()
     this.onDateAndTimeSelect = this.onDateAndTimeSelect.bind(this)
     this.onHandleCreateEvent = this.onHandleCreateEvent.bind(this)
     handleClickOpen = handleClickOpen.bind(this)
   }
-
-  // componentWillUpdate(prevProps) {
-  //   this.handleClickOpen()
-  // }
 
   onVenueSelect(selectedVenue) {
     this.setState({ selectedVenue });
@@ -144,8 +134,6 @@ export default class CreateEventDialog extends React.Component {
     }
 
     const selectedVenue = this.props.selectedVenue
-    const selectedVenueId = this.props.selectedVenueId
-    const maxDate = { new: Date() }
 
     return (
       <div>

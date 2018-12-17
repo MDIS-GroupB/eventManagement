@@ -11,20 +11,15 @@ import Paper from "@material-ui/core/Paper";
 import TablePaginationActions from '../components/atoms/TablePaginationActions';
 import api from '../api/init'
 import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import { CircularProgress } from '@material-ui/core/';
 import SearchBar from 'material-ui-search-bar'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import CreateEventDialog from '../components/organisms/CreateEventDialog'
-import { Link, BrowserRouter } from 'react-router-dom'
-import RaisedButton from 'material-ui/RaisedButton'
 import '../App.css'
-import IconButton from '@material-ui/core/IconButton';
-import Info from 'material-ui/svg-icons/action/info';
-import Create from 'material-ui/svg-icons/content/create';
+import VenueElement from '../components/molecules/VenueElement'
 import * as exportFunc from '../components/organisms/CreateEventDialog'
+
 
 const actionsStyles = theme => ({
     root: {
@@ -66,7 +61,6 @@ class CustomPaginationActionsTable extends React.Component {
         this.getImages()
         this.onSearchTextChange = this.onSearchTextChange.bind(this)
         this.filterVenues = this.filterVenues.bind(this)
-        this.onHandleCreateEvent = this.onHandleCreateEvent.bind(this)
     }
 
     state = {
@@ -98,8 +92,6 @@ class CustomPaginationActionsTable extends React.Component {
             let returnVenues = [];
             let reg = new RegExp(`${searchText}`, 'i');
             venues.forEach((searchVenue, i) => {
-                // console.log("searchVenue name")
-                // console.log(searchVenue.name)
                 if (searchVenue.name.match(reg)) {
                     returnVenues.push(searchVenue)
                 }
@@ -132,7 +124,7 @@ class CustomPaginationActionsTable extends React.Component {
                                 onChange={
                                     (value) => this.filterVenues(value)
                                 }
-                                // onRequestSearch={() => this.filterVenues(this.state.venues, this.state.seachText)}
+
                                 style={{
                                     margin: '0 auto',
                                     maxWidth: 800,
@@ -148,31 +140,13 @@ class CustomPaginationActionsTable extends React.Component {
                                         .map(row => {
                                             return (
                                                 <>
-                                                    <GridListTile key={row.img} style={{ marginTop: 20 }} >
-                                                        {/* <BrowserRouter><Link to={`/venue/${row._id}`}>View Me</Link></BrowserRouter> */}
-                                                        <img src={row.image} alt={row.name} width="100%" />
-                                                        <GridListTileBar
-                                                            title={<span style={{ marginLeft: 80 }}>{row.name}</span>}
-                                                            subtitle={<span style={{ marginLeft: 80 }}>{row.location}</span>}
-                                                            // alignment can be improved
-                                                            actionIcon={
-                                                                <>
-                                                                    <Link to={`/Venue/${row._id}`}>
-                                                                        <IconButton style={{ right: 610 }}>{/* alignment can be improved */}
-                                                                            <Info className={classes.title} style={{ color: 'white' }} />
-                                                                        </IconButton>
-                                                                    </Link>
-                                                                    <IconButton onClick={this.onHandleCreateEvent}>
-                                                                        <Create className={classes.title} style={{ color: 'white' }} />
-                                                                    </IconButton>
-                                                                </>
-                                                            }
-                                                        />
-
-                                                    </GridListTile>
-                                                    <MuiThemeProvider className='rowC'>
+                                                    <VenueElement
+                                                        row={row}
+                                                        classes={classes}
+                                                        onHandleCreateEvent={this.onHandleCreateEvent}
+                                                    />
+                                                    <MuiThemeProvider>
                                                         <CreateEventDialog openDialog={this.state.openDialog} selectedVenue={row.name} selectedVenueId={row._id} style={{ flexDirection: 'row' }} />
-                                                        {/* <Link to={`/Venue/${row._id}`} ><RaisedButton>View Venue Detail</RaisedButton></Link> */}
                                                     </MuiThemeProvider>
                                                 </>
                                             );
