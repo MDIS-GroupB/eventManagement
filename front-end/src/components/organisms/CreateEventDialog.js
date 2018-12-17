@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from '@material-ui/core/Button';
 import RaisedButton from 'material-ui/RaisedButton'
 
 import TextField from '../atoms/TextField'
@@ -29,6 +30,10 @@ const eventFields = [{
   label: 'Price',
 }]
 
+const successCreate = data => {
+  alert('Payment Successful');
+};
+
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
@@ -49,8 +54,7 @@ export function handleClickOpen() {
   this.setState({ open: true });
   console.log("open status")
   console.log("call from the child component" + this.state.open)
-  // if (this.props.openDialog === true) {
-  // }
+
 };
 
 export default class CreateEventDialog extends React.Component {
@@ -105,6 +109,9 @@ export default class CreateEventDialog extends React.Component {
     console.log('==================')
     createEvent(a);
     this.setState({ open: false })
+    setTimeout(function () {
+      alert('Create Event Successful');
+    }, 1000);
   }
 
   async componentDidMount() {
@@ -112,19 +119,10 @@ export default class CreateEventDialog extends React.Component {
     console.log("the pass venue name is +" + this.props.selectedVenue)
     let venues = await getVenues()
     this.setState({ venues });
-    // let passedVenueId = this.props.selectedVenueId
-    // this.setState({ passedVenueId });
-    // let ifOpen = this.props.openDialog
-    // this.setState({ open: ifOpen })
-    // this.handleClickOpen()
     this.onDateAndTimeSelect = this.onDateAndTimeSelect.bind(this)
     this.onHandleCreateEvent = this.onHandleCreateEvent.bind(this)
     handleClickOpen = handleClickOpen.bind(this)
   }
-
-  // componentWillUpdate(prevProps) {
-  //   this.handleClickOpen()
-  // }
 
   onVenueSelect(selectedVenue) {
     this.setState({ selectedVenue });
@@ -144,12 +142,11 @@ export default class CreateEventDialog extends React.Component {
     }
 
     const selectedVenue = this.props.selectedVenue
-    const selectedVenueId = this.props.selectedVenueId
-    const maxDate = { new: Date() }
 
     return (
       <div>
         <RaisedButton onClick={this.handleClickOpen}>Create Event</RaisedButton>
+
         <Dialog
           fullScreen
           open={this.state.open}
@@ -167,7 +164,7 @@ export default class CreateEventDialog extends React.Component {
             <TextField
               id="datetime-local"
               type="datetime-local"
-              defaultValue="2017-05-24T10:30"
+              defaultValue={new Date().toISOString().slice(0, 16)}
               floatingLabelText='Date And Time'
               InputLabelProps={{
                 shrink: true,
