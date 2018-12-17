@@ -30,19 +30,6 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, {
     withTheme: true
 })(TablePaginationActions);
 
-const styles = theme => ({
-    root: {
-        width: "100%",
-        marginTop: theme.spacing.unit * 3
-    },
-    table: {
-        minWidth: 700,
-        margin: "auto"
-    },
-    tableWrapper: {
-        // overflowX: "auto"
-    }
-});
 
 class CustomPaginationActionsTable extends React.Component {
     async getImages() {
@@ -81,7 +68,7 @@ class CustomPaginationActionsTable extends React.Component {
     state = {
         events: [],
         page: 0,
-        rowsPerPage: 5,
+        rowsPerPage: 6,
         searchText: "",
         searchResult: [],
         userEmail: "",
@@ -128,65 +115,58 @@ class CustomPaginationActionsTable extends React.Component {
 
         return <>
             {this.state.searchResult ? (
-                <Paper className={classes.root}>
-                    <div className={classes.tableWrapper}>
-                        <ListSubheader component="div">Events</ListSubheader>
+                <div >
+                    <ListSubheader component="div">Events</ListSubheader>
 
-                        <MuiThemeProvider>
-                            <SearchBar
-                                onChange={
-                                    (value) => this.filterEvents(value)
-                                }
-                                // onRequestSearch={() => this.filterVenues(this.state.venues, this.state.seachText)}
-                                style={{
-                                    margin: '0 auto',
-                                    maxWidth: 800,
-                                }}
-                            />
-                        </MuiThemeProvider>
+                    <MuiThemeProvider>
+                        <SearchBar
+                            onChange={
+                                (value) => this.filterEvents(value)
+                            }
+                            // onRequestSearch={() => this.filterVenues(this.state.venues, this.state.seachText)}
+                            style={{
+                                margin: '0 auto',
+                                maxWidth: 800,
+                            }}
+                        />
+                    </MuiThemeProvider>
 
-                        <GridList cols={5} style={{ paddingBottom: 20 }}>
-                            <Table className={classes.table}>
-                                <TableBody>
-                                    {searchResult
-                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                        .map(row => {
-                                            console.log('row')
-                                            console.log(row)
-                                            return (
-                                                <>
-                                                    <EventElement
-                                                        row={row}
-                                                        classes={classes}
-                                                    />
-                                                </>
-                                            );
-                                        })}
-                                </TableBody>
-
-                                <TableFooter>
-                                    <TableRow>
-                                        <TablePagination
-                                            colSpan={3}
-                                            count={searchResult.length}
-                                            rowsPerPage={rowsPerPage}
-                                            page={page}
-                                            onChangePage={this.handleChangePage}
-                                            onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                            ActionsComponent={TablePaginationActionsWrapped}
+                    <GridList cols={5} style={{ paddingTop: 20 }}>
+                        {searchResult
+                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .map(row => {
+                                console.log('row')
+                                console.log(row)
+                                return (
+                                    <>
+                                        <EventElement
+                                            row={row}
+                                            classes={classes}
                                         />
-                                    </TableRow>
-                                </TableFooter>
-                            </Table>
-                        </GridList>
-                    </div>
-                </Paper>) : (<CircularProgress />)}
+                                    </>
+                                );
+                            })}
+
+                    </GridList>
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                colSpan={3}
+                                count={searchResult.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                onChangePage={this.handleChangePage}
+                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                ActionsComponent={TablePaginationActionsWrapped}
+                                rowsPerPageOptions={[6, 12, 18, 24]}
+                            />
+                        </TableRow>
+                    </TableFooter>
+                </div>
+            ) : (<CircularProgress />)
+            }
         </>
     }
 }
 
-CustomPaginationActionsTable.propTypes = {
-    classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(CustomPaginationActionsTable);
+export default CustomPaginationActionsTable;

@@ -1,7 +1,6 @@
 import React from 'react'
 import IconButton from '@material-ui/core/IconButton';
 import Info from 'material-ui/svg-icons/action/info';
-import Create from 'material-ui/svg-icons/content/create';
 import { Link, BrowserRouter } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 import GridListTile from '@material-ui/core/GridListTile';
@@ -24,23 +23,21 @@ export default class myThing extends React.Component {
         console.log("the ppassed props " + JSON.stringify(this.props.row.eventData))
         return (
             <>
-                <GridListTile style={{ marginTop: 20 }} >
+                <GridListTile style={{ maxWidth: '33%' }}>
 
-                    <img src={this.props.row.image} alt={this.props.row.name} width="100%" />
+                    <img src={this.props.row.image} alt={this.props.row.name} />
                     <GridListTileBar
-                        title={<span style={{ marginLeft: 80 }}>{this.props.row.name}</span>}
-                        subtitle={<span style={{ marginLeft: 80 }}>{this.props.row.location}</span>}
+                        title={<span>{this.props.row.name}</span>}
+                        subtitle={<span>{this.props.row.location}</span>}
                         actionIcon={
-                            <>
+                            <div style={{ display: 'flex', flexDirection: 'row', marginRight: '10px' }}>
                                 <Link to={`/Venue/${this.props.row._id}`}>
-                                    <IconButton style={{ right: 610 }}>
-                                        <Info className={this.props.classes.title} style={{ color: 'white' }} />
+                                    <IconButton style={{ right: 495 }}>
+                                        <Info style={{ color: 'white' }} />
                                     </IconButton>
                                 </Link>
-                                <IconButton onClick={this.props.onHandleCreateEvent}>
-                                    <Create className={this.props.classes.title} style={{ color: 'white' }} />
-                                </IconButton>
-                            </>
+                                {this.props.children}
+                            </div>
                         }
                     />
 

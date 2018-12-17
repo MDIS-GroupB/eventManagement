@@ -19,6 +19,8 @@ import CreateEventDialog from '../components/organisms/CreateEventDialog'
 import '../App.css'
 import VenueElement from '../components/molecules/VenueElement'
 import * as exportFunc from '../components/organisms/CreateEventDialog'
+import IconButton from '@material-ui/core/IconButton';
+import Create from 'material-ui/svg-icons/content/create';
 
 
 const actionsStyles = theme => ({
@@ -33,19 +35,6 @@ const TablePaginationActionsWrapped = withStyles(actionsStyles, {
     withTheme: true
 })(TablePaginationActions);
 
-const styles = theme => ({
-    root: {
-        width: "100%",
-        marginTop: theme.spacing.unit * 3
-    },
-    table: {
-        minWidth: 700,
-        margin: "auto"
-    },
-    tableWrapper: {
-        // overflowX: "auto"
-    }
-});
 
 class CustomPaginationActionsTable extends React.Component {
     async getImages() {
@@ -66,7 +55,7 @@ class CustomPaginationActionsTable extends React.Component {
     state = {
         venues: [],
         page: 0,
-        rowsPerPage: 5,
+        rowsPerPage: 6,
         searchText: "",
         searchResult: [],
         openDialog: false
@@ -108,74 +97,71 @@ class CustomPaginationActionsTable extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
         const { searchResult, rowsPerPage, page } = this.state;
         const emptyRows =
             rowsPerPage - Math.min(rowsPerPage, searchResult.length - page * rowsPerPage);
 
         return <>
             {this.state.searchResult ? (
-                <Paper className={classes.root}>
-                    <div className={classes.tableWrapper}>
+                <Paper >
+                    <div >
                         <ListSubheader component="div">Venues</ListSubheader>
 
-                        <MuiThemeProvider>
-                            <SearchBar
-                                onChange={
-                                    (value) => this.filterVenues(value)
-                                }
+                        <SearchBar
+                            onChange={
+                                (value) => this.filterVenues(value)
+                            }
 
-                                style={{
-                                    margin: '0 auto',
-                                    maxWidth: 800,
-                                }}
-                            />
-                        </MuiThemeProvider>
+                            style={{
+                                margin: '0 auto',
+                                maxWidth: 800,
+                            }}
+                        />
 
-                        <GridList cols={5} style={{ paddingTop: 20 }}>
-                            <Table className={classes.table}>
-                                <TableBody>
-                                    {searchResult
-                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                        .map(row => {
-                                            return (
-                                                <>
-                                                    <VenueElement
-                                                        row={row}
-                                                        classes={classes}
-                                                        onHandleCreateEvent={this.onHandleCreateEvent}
-                                                    />
-                                                    <MuiThemeProvider>
-                                                        <CreateEventDialog openDialog={this.state.openDialog} selectedVenue={row.name} selectedVenueId={row._id} style={{ flexDirection: 'row' }} />
-                                                    </MuiThemeProvider>
-                                                </>
-                                            );
-                                        })}
-                                </TableBody>
+                        <div>
+                            <GridList cols={5} style={{ paddingTop: 20 }}> //GridList property not working
 
-                                <TableFooter>
-                                    <TableRow>
-                                        <TablePagination
-                                            colSpan={3}
-                                            count={searchResult.length}
-                                            rowsPerPage={rowsPerPage}
-                                            page={page}
-                                            onChangePage={this.handleChangePage}
-                                            onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                            ActionsComponent={TablePaginationActionsWrapped}
-                                        />
-                                    </TableRow>
-                                </TableFooter>
-                            </Table>
-                        </GridList>
+                                {searchResult
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map(row => {
+                                        return (
+                                            <>
+                                                <VenueElement
+                                                    row={row}
+                                                    onHandleCreateEvent={this.onHandleCreateEvent}
+                                                >
+                                                    <CreateEventDialog
+                                                        button={<IconButton color="primary" aria-label="Add">
+                                                            <Create />
+                                                        </IconButton>}
+                                                        openDialog={this.state.openDialog}
+                                                        selectedVenue={row.name}
+                                                        selectedVenueId={row._id}
+                                                        style={{ flexDirection: 'row' }} />
+                                                </VenueElement>
+                                            </>
+                                        );
+                                    })}
+                            </GridList>
+                        </div>
+
+
+                        <TablePagination
+                            colSpan={3}
+                            count={searchResult.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onChangePage={this.handleChangePage}
+                            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                            ActionsComponent={TablePaginationActionsWrapped}
+                            rowsPerPageOptions={[6, 12, 18, 24]}
+                        />
+
                     </div>
                 </Paper>) : (<CircularProgress />)}
         </>
     }
 }
 
-CustomPaginationActionsTable.propTypes = {
-    classes: PropTypes.object.isRequired
-};
 
-export default withStyles(styles)(CustomPaginationActionsTable);
+export default CustomPaginationActionsTable;

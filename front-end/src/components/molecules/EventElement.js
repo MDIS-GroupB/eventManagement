@@ -22,7 +22,7 @@ export default class myThing extends React.Component {
         console.log("the ppassed props " + JSON.stringify(this.props.row.eventData))
         return (
             <>
-                <GridListTile style={{ marginTop: 20 }}>
+                <GridListTile style={{ maxWidth: '33%' }}>
                     <img src={this.props.row.eventData.venueId.image} alt={this.props.row.eventData.name} width="100%" />
 
                     <GridListTileBar
@@ -38,8 +38,8 @@ export default class myThing extends React.Component {
                         actionIcon={
                             <>
                                 <Link to={`/Event/${this.props.row.eventData._id}`} >
-                                    <IconButton style={{ right: 515 }}>
-                                        <Info className={this.props.classes.title} style={{ color: 'white' }} />
+                                    <IconButton style={{ right: 450 }}>
+                                        <Info style={{ color: 'white' }} />
                                     </IconButton>
                                 </Link>
                                 <IconButton>

@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from '@material-ui/core/Button';
 import RaisedButton from 'material-ui/RaisedButton'
 
 import TextField from '../atoms/TextField'
@@ -28,6 +29,10 @@ const eventFields = [{
   id: 'price',
   label: 'Price',
 }]
+
+const successCreate = data => {
+  alert('Payment Successful');
+};
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -104,6 +109,9 @@ export default class CreateEventDialog extends React.Component {
     console.log('==================')
     createEvent(a);
     this.setState({ open: false })
+    setTimeout(function () {
+      alert('Create Event Successful');
+    }, 1000);
   }
 
   async componentDidMount() {
@@ -138,6 +146,7 @@ export default class CreateEventDialog extends React.Component {
     return (
       <div>
         <RaisedButton onClick={this.handleClickOpen}>Create Event</RaisedButton>
+
         <Dialog
           fullScreen
           open={this.state.open}
@@ -155,7 +164,7 @@ export default class CreateEventDialog extends React.Component {
             <TextField
               id="datetime-local"
               type="datetime-local"
-              defaultValue="2017-05-24T10:30"
+              defaultValue={new Date().toISOString().slice(0, 16)}
               floatingLabelText='Date And Time'
               InputLabelProps={{
                 shrink: true,
