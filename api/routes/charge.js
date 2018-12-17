@@ -5,10 +5,10 @@ const util = require('util')
 const router = express.Router()
 
 const postStripeCharge = res => (stripeErr, stripeRes) => {
-    console.log(typeof res)
     if (stripeErr) {
         res.status(500).send({ error: stripeErr });
     } else {
+        // createBooking(stripeRes)
         res.status(200).send({ success: stripeRes });
     }
 }
@@ -17,7 +17,26 @@ const postStripeCharge = res => (stripeErr, stripeRes) => {
 router
     //Charge route
     .post('/', (req, res) => {
-        stripe.charges.create(req.body, postStripeCharge(res))
+        stripe.charges.create(
+            req.body.charge,
+            postStripeCharge(res)
+        )
+    })
+
+    .post('/booking', async (req, res) => {
+        const eventId = req.body.eventId
+        const userId = req.user._id
+        const stripeId = req.body.successData.id
+
+        let event = global.Event.findById(eventId)
+        await global.Booking.create({
+            eventId: eventId,
+            buyer: userId,
+            seller: event.eventProposer,
+            price: event.price,
+            stripeRef: stripeId
+        })
+        res.json({ data: null })
     })
 //good to add error handling
 

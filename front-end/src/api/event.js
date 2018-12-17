@@ -16,6 +16,12 @@ export function postCharge() {
       return res.data
     })
 }
+export function createBooking(data) {
+  return api.post(`/charge/booking`, data)
+    .then(res => {
+      return res.data
+    })
+}
 
 export function getEvent(id) {
   return api.get(`/event/${id}`)

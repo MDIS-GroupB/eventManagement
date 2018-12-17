@@ -58,6 +58,7 @@ server.use('/payment',
 
 // server side payment success router
 server.use('/charge',
+  authMiddleware.authenticateJWT,
   chargeRouter,
 )
 
@@ -79,7 +80,6 @@ server.use('/personalEvent',
   personalEventRouter,
 )
 server.use('/personal', (req, res, next) => {
-  console.log(req.headers)
   next()
 },
   authMiddleware.authenticateJWT,

@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios';
+import { createBooking } from '../../api/event';
 import StripeCheckout from 'react-stripe-checkout';
 
 const CURRENCY = 'EUR';
@@ -8,9 +9,11 @@ const util = require('util')
 
 const successPayment = data => {
     alert('Payment Successful');
+    return data
 };
 
 const errorPayment = data => {
+    console.log(data)
     alert('Payment Error');
 };
 
@@ -40,26 +43,32 @@ const onToken = (name, description, date, location, hoster, amount, ticket, emai
     if (ticket > 0) {
         axios.post("http://localhost:8085/charge",
             {
-                description,
-                source: token.id,
-                currency: 'SGD',
-                amount: amount
+                charge: {
+                    description,
+                    source: token.id,
+                    currency: 'SGD',
+                    amount: amount
+                },
+                eventId,
             })
             .then(successPayment)
-            .then(countDownTicket(eventId))
-            .then(sendEmail(name, description, date, location, hoster, amount, email))
+            .then((data) => {
+                createBooking({ eventId: eventId, successData: data.data.success })
+            })
+            // .then(countDownTicket(eventId))
+            // .then(sendEmail(name, description, date, location, hoster, amount, email))
             .catch(errorPayment);
     }
     else {
-        alert('No Ticket Leaft');
+        alert('No Ticket left');
     }
 }
 
 const Checkout = ({ name, description, date, location, hoster, amount, ticket, email, eventId }) => {
     console.log("the passed in values")
-    console.log({
+    console.log(
         name, description, date, location, hoster, amount, ticket, email, eventId
-    })
+    )
 
     return (
         <StripeCheckout

@@ -26,7 +26,6 @@ router
         //dont' use .map or foreach in async function call, it dosen't goes by sequence
         // await only can wait a function call or a promise
 
-        console.log("after the response")
         res.json(response)
     })
 
@@ -59,8 +58,6 @@ router
     })
 
     .post('/like/:id', async (req, res) => {
-        console.log("you comed to comment backend api")
-        console.log(req.params.id)
 
         await global.Event.updateOne({ _id: Object(req.params.id) }, { $inc: { like: + 1 } });
         let updatedEvent = await global.Event.findOne({ _id: Object(req.params.id) })
