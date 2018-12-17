@@ -28,14 +28,16 @@ router
         const userId = req.user._id
         const stripeId = req.body.successData.id
 
-        let event = global.Event.findById(eventId)
-        await global.Booking.create({
+        let event = await global.Event.findById(eventId)
+        let booking = await global.Booking.create({
             eventId: eventId,
             buyer: userId,
             seller: event.eventProposer,
             price: event.price,
             stripeRef: stripeId
         })
+        console.log('booking')
+        console.log(booking)
         res.json({ data: null })
     })
 //good to add error handling

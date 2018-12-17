@@ -57,6 +57,18 @@ export async function changeEventStatus(id, status) {
   // })
 }
 
+export async function changeBookingPaid(id) {
+  return api.patch(`/admin/booking/${id}`)
+    .then(res => {
+      if (!res.data) {
+        return res.data
+      }
+    })
+  // .catch(error => {
+  //   throw Error(error)
+  // })
+}
+
 export async function likeEvent(id) {
   console.log("like id is " + id)
   return api.post(`/event/like/${id}`)

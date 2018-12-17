@@ -6,9 +6,14 @@ router
     // .route('/')
     // Get user details
     .get('/', async (req, res) => {
-        let personalDetails = await global.Personal.find({ userID: req.user._id })
-
-        res.json(personalDetails)
+        let personalDetails = await global.Personal.findOne({ userId: req.user._id })
+        let orderHistory = await global.Booking.find({ buyer: req.user._id }).populate('eventId')
+        let sellingHistory = await global.Booking.find({ seller: req.user._id }).populate('eventId')
+        res.json({
+            personalDetails: personalDetails,
+            sellingHistory: sellingHistory,
+            orderHistory: orderHistory
+        })
     })
 
     .get('/getUserEmail', async (req, res) => {

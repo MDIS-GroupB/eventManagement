@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const compression = require('compression');
 const helmet = require('helmet');
+const sls = require('serverless-http')
 
 //Init
 require('./db/dbInit')
@@ -121,5 +122,4 @@ server.listen(port, () => {
   console.log(`Started at localhost:${port}`)
 })
 
-  // For deploy to heroku
-  // server.listen(process.env.PORT || 5000)
+module.exports.server = sls(server)

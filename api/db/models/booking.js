@@ -21,6 +21,7 @@ const bookingSchema = mongoose.Schema({
     ref: 'Event',
     required: true,
   },
+  created_at: { type: Date, required: true, default: Date.now },
   stripeRef: String,
 })
 

@@ -12,6 +12,14 @@ router
 
         res.json(events)
     })
+router
+    .route('/booking')
+    // Get logged in user’s details
+    .get(async (req, res) => {
+        let bookings = await global.Booking.find().populate('eventId').populate('seller');
+
+        res.json(bookings)
+    })
 
 router
     .route('/event/:id')
@@ -32,6 +40,15 @@ router
         theEvent.status = updateStatus
         let updatedEvent = await theEvent.save()
         res.json(updatedEvent)
+    })
+router
+    .route('/booking/:id')
+    .patch(async (req, res) => {
+        let theBooking = await global.Booking.findById(req.params.id)
+        theBooking.payedOut = true
+        let updatedBooking = await theBooking.save()
+        console.log(updatedBooking)
+        res.json(updatedBooking)
     })
 
 module.exports = router

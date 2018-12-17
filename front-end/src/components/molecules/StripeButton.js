@@ -20,7 +20,7 @@ const errorPayment = data => {
 const sendEmail = (name, description, date, location, hoster, amount, email) => {
     console.log("the passed para is")
     console.log(name, description, date, location, hoster, amount, email)
-    axios.post("http://localhost:8085/emailer",
+    axios.post("https://16dgqbln9e.execute-api.ap-southeast-1.amazonaws.com/dev/emailer",
         {
             name,
             description,
@@ -36,12 +36,12 @@ const sendEmail = (name, description, date, location, hoster, amount, email) => 
 const countDownTicket = (eventId) => {
     console.log("count down ticket api triggered")
     console.log("the passed event Id is " + eventId)
-    axios.patch(`http://localhost:8085/personalEvent/${eventId}`)
+    axios.patch(`https://16dgqbln9e.execute-api.ap-southeast-1.amazonaws.com/dev/personalEvent/${eventId}`)
 }
 
 const onToken = (name, description, date, location, hoster, amount, ticket, email, eventId) => token => {
     if (ticket > 0) {
-        axios.post("http://localhost:8085/charge",
+        axios.post("https://16dgqbln9e.execute-api.ap-southeast-1.amazonaws.com/dev/charge",
             {
                 charge: {
                     description,
@@ -55,8 +55,8 @@ const onToken = (name, description, date, location, hoster, amount, ticket, emai
             .then((data) => {
                 createBooking({ eventId: eventId, successData: data.data.success })
             })
-            // .then(countDownTicket(eventId))
-            // .then(sendEmail(name, description, date, location, hoster, amount, email))
+            .then(countDownTicket(eventId))
+            .then(sendEmail(name, description, date, location, hoster, amount, email))
             .catch(errorPayment);
     }
     else {

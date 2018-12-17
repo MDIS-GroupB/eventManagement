@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 // import { getEventData } from "./../api/admin"
 import CircularProgress from 'material-ui/CircularProgress';
 import ViewEventTabs from '../components/molecules/AdminViewEventTabs';
+import ViewBookingPaidTabs from '../components/molecules/AdminViewBookingPayed';
 
 export default class LoginPage extends Component {
 
@@ -17,6 +18,7 @@ export default class LoginPage extends Component {
   render() {
     return <><h1>Admin Page</h1>
       <ViewEventTabs />
+      <ViewBookingPaidTabs />
 
     </>
   }

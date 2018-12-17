@@ -8,8 +8,6 @@ const fs = require('fs');
 router
     // Get payment page
     .get('/', (req, res) => {
-        console.log("you have come to back end")
-        console.log(process.cwd())
 
         // fs.readFile('views/index.handlebars', 'utf8', function read(err, data) {
         //     if (err) {

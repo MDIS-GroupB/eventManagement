@@ -8,3 +8,11 @@ export function getEventData() {
       }
     })
 }
+export function getBookingData() {
+  return api.get(`/admin/booking/`)
+    .then(res => {
+      if (res) {
+        return res.data
+      }
+    })
+}

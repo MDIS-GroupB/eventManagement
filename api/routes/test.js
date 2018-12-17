@@ -7,8 +7,14 @@ const venuesJson = require('../dev/venues.json')
 const router = express.Router()
 let venues = venuesJson
 
+router.route('/foso').get((req, res) => {
+    res.send('All New')
+})
 router
     .route('/all')
+    .get((req, res) => {
+        res.send('works')
+    })
     // Get logged in user’s details
     .post(async (req, res) => {
         venues.forEach('/createVenues', async (key, i) => {
