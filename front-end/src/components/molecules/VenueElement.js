@@ -32,7 +32,7 @@ export default class myThing extends React.Component {
                         actionIcon={
                             <div style={{ display: 'flex', flexDirection: 'row', marginRight: '10px' }}>
                                 <Link to={`/Venue/${this.props.row._id}`}>
-                                    <IconButton style={{ right: 495 }}>
+                                    <IconButton>
                                         <Info style={{ color: 'white' }} />
                                     </IconButton>
                                 </Link>

@@ -61,13 +61,13 @@ export default class CreateEventDialog extends React.Component {
 
   state = {
     open: false,
-    name: "Crazy Event",
+    name: "",
     searchText: "",
     theme: "",
-    noOfTickets: "12",
-    price: "200",
-    selectedDateAndTime: "2017-05-24T10:30",
-    description: "Fun Times",
+    noOfTickets: "",
+    price: "",
+    selectedDateAndTime: "",
+    description: "",
     selectedVenue: { _id: 'none' },
     venues: null,
     displayedVenues: null,

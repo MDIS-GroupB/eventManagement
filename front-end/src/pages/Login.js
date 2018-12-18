@@ -10,10 +10,10 @@ export default class LoginPage extends Component {
     super(props);
     this.state = {
       createAccount: true,
-      email: 'finance@gmail.com',
-      password: 'asdfasdf',
-      firstName: 'Chuck',
-      lastName: 'Norris',
+      email: '',
+      password: '',
+      firstName: '',
+      lastName: '',
       loading: false
     }
   }

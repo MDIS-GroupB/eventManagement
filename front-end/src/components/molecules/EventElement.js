@@ -40,25 +40,27 @@ export default class myThing extends React.Component {
                         }
                         actionIcon={
                             <>
-                                <Link to={`/Event/${this.props.row.eventData._id}`} >
-                                    <IconButton style={{ right: 450 }}>
-                                        <Info style={{ color: 'white' }} />
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <Link to={`/Event/${this.props.row.eventData._id}`} >
+                                        <IconButton>
+                                            <Info style={{ color: 'white' }} />
+                                        </IconButton>
+                                    </Link>
+                                    <IconButton>
+                                        <StripeButton
+                                            name={this.props.row.eventData.name}
+                                            description={this.props.row.eventData.description}
+                                            date={this.props.row.eventData.dateAndTime}
+                                            location={this.props.row.eventData.venueId.location}
+                                            hoster={this.props.row.proposer.firstName + ' ' + this.props.row.proposer.lastName}
+                                            amount={this.props.row.eventData.price}
+                                            ticket={this.props.row.eventData.noOfTickets}
+                                            eventId={this.props.row.eventData._id}
+                                            email={this.state.userEmail}
+                                            currency='SGD'
+                                        />
                                     </IconButton>
-                                </Link>
-                                <IconButton>
-                                    <StripeButton
-                                        name={this.props.row.eventData.name}
-                                        description={this.props.row.eventData.description}
-                                        date={this.props.row.eventData.dateAndTime}
-                                        location={this.props.row.eventData.venueId.location}
-                                        hoster={this.props.row.proposer.firstName + ' ' + this.props.row.proposer.lastName}
-                                        amount={this.props.row.eventData.price}
-                                        ticket={this.props.row.eventData.noOfTickets}
-                                        eventId={this.props.row.eventData._id}
-                                        email={this.state.userEmail}
-                                        currency='SGD'
-                                    />
-                                </IconButton>
+                                </div>
                             </>
                         }
                     />
