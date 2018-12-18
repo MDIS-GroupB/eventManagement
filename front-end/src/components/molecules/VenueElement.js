@@ -23,7 +23,7 @@ export default class myThing extends React.Component {
         console.log("the ppassed props " + JSON.stringify(this.props.row.eventData))
         return (
             <>
-                <GridListTile style={{ maxWidth: '33%' }}>
+                <GridListTile style={{ margin: '1px', maxWidth: '33%' }}>
 
                     <img src={this.props.row.image} alt={this.props.row.name} />
                     <GridListTileBar

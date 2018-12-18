@@ -43,6 +43,7 @@ class ScrollDialog extends React.Component {
   };
 
   render() {
+    console.log(this.props.events)
     return (
       <div>
         {this.props.events.map(order => (
@@ -50,7 +51,7 @@ class ScrollDialog extends React.Component {
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                 <Typography>{moment(order.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</Typography>
-                {this.props.payedOut && <div style={{ height: '50px' }}><RaisedButton onClick={() => { this.handleChangeEvent(order._id) }}>PAID</RaisedButton></div>}
+                {!this.props.payedOut && <div style={{ height: '50px' }}><RaisedButton onClick={() => { this.handleChangeEvent(order._id) }}>PAID</RaisedButton></div>}
               </div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>

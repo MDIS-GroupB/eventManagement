@@ -115,53 +115,57 @@ class CustomPaginationActionsTable extends React.Component {
 
         return <>
             {this.state.searchResult ? (
-                <div >
-                    <ListSubheader component="div">Events</ListSubheader>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div style={{ width: '80%' }}>
+                        <ListSubheader component="div">Events</ListSubheader>
 
-                    <MuiThemeProvider>
-                        <SearchBar
-                            onChange={
-                                (value) => this.filterEvents(value)
-                            }
-                            // onRequestSearch={() => this.filterVenues(this.state.venues, this.state.seachText)}
-                            style={{
-                                margin: '0 auto',
-                                maxWidth: 800,
-                            }}
-                        />
-                    </MuiThemeProvider>
-
-                    <GridList cols={5} style={{ paddingTop: 20 }}>
-                        {searchResult
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map(row => {
-                                console.log('row')
-                                console.log(row)
-                                return (
-                                    <>
-                                        <EventElement
-                                            row={row}
-                                            classes={classes}
-                                        />
-                                    </>
-                                );
-                            })}
-
-                    </GridList>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                colSpan={3}
-                                count={searchResult.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                onChangePage={this.handleChangePage}
-                                onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                                ActionsComponent={TablePaginationActionsWrapped}
-                                rowsPerPageOptions={[6, 12, 18, 24]}
+                        <MuiThemeProvider>
+                            <SearchBar
+                                onChange={
+                                    (value) => this.filterEvents(value)
+                                }
+                                // onRequestSearch={() => this.filterVenues(this.state.venues, this.state.seachText)}
+                                style={{
+                                    margin: '0 auto',
+                                    maxWidth: 800,
+                                }}
                             />
-                        </TableRow>
-                    </TableFooter>
+                        </MuiThemeProvider>
+
+                        <div>
+                            <GridList cols={3} style={{ paddingTop: 20 }}>
+                                {searchResult
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map(row => {
+                                        console.log('row')
+                                        console.log(row)
+                                        return (
+                                            <>
+                                                <EventElement
+                                                    row={row}
+                                                    classes={classes}
+                                                />
+                                            </>
+                                        );
+                                    })}
+
+                            </GridList>
+                            <TableFooter>
+                                <TableRow>
+                                    <TablePagination
+                                        colSpan={3}
+                                        count={searchResult.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        onChangePage={this.handleChangePage}
+                                        onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                                        ActionsComponent={TablePaginationActionsWrapped}
+                                        rowsPerPageOptions={[6, 12, 18, 24]}
+                                    />
+                                </TableRow>
+                            </TableFooter>
+                        </div>
+                    </div>
                 </div>
             ) : (<CircularProgress />)
             }

@@ -44,8 +44,9 @@ export default class LoginPage extends Component {
           <div>
             <i><h1>Welcome {this.state.details.firstName}</h1></i>
             <CreateEventDialog />
+            <h3>My Approved Events</h3>
             <br />
-            <ViewEventTabs />
+            <div style={{ display: 'flex', justifyContent: 'center' }}> <div style={{ width: '80%' }}><ViewEventTabs /></div></div>
             <h3>Order History</h3>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               {this.state.details.orderHistory.length > 0 ? (

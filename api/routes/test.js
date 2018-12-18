@@ -56,6 +56,9 @@ router
         await global.Venue.remove()
         await global.Event.remove()
         await global.Personal.remove()
+        await global.Comment.remove()
+        await global.Likes.remove()
+        await global.Booking.remove()
 
         console.log('Collections Dropped')
         const user = new User({ email: 'js@gmail.com', admin: true })

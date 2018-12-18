@@ -14,12 +14,9 @@ function sortPayment(events) {
     paid: [],
   }
   events.map((booking) => {
-    console.log(booking)
     if (booking.payedOut) {
-      console.log(true)
       returnJson.paid.push(booking)
     } else {
-      console.log(false)
       returnJson.pending.push(booking)
     }
   })
@@ -64,10 +61,14 @@ export default class ViewEventTabs extends React.Component {
               </Tabs>
             </AppBar>
             {this.state.tabNo === 0 &&
-              <BookingCheckTable getEvents={this.getEvents.bind(this)} events={sortedPayment.paid} />
+              <>
+                {sortedPayment.paid ? <BookingCheckTable payedOut={true} getEvents={this.getEvents.bind(this)} events={sortedPayment.paid} /> : "No items to review"}
+              </>
             }
             {this.state.tabNo === 1 &&
-              <BookingCheckTable payedOut={false} getEvents={this.getEvents.bind(this)} events={sortedPayment.pending} />
+              <>
+                {sortedPayment.pending ? <BookingCheckTable getEvents={this.getEvents.bind(this)} events={sortedPayment.pending} /> : "No items to review"}
+              </>
             }
           </div>
         ) : (

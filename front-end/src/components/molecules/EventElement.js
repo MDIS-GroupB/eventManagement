@@ -7,6 +7,7 @@ import { Link, BrowserRouter } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import moment from 'moment';
 
 
 export default class myThing extends React.Component {
@@ -22,16 +23,18 @@ export default class myThing extends React.Component {
         console.log("the ppassed props " + JSON.stringify(this.props.row.eventData))
         return (
             <>
-                <GridListTile style={{ maxWidth: '33%' }}>
-                    <img src={this.props.row.eventData.venueId.image} alt={this.props.row.eventData.name} width="100%" />
+                <GridListTile style={{ margin: '1px', maxWidth: '33%' }}>
+                    <img src={this.props.row.eventData.venueId.image} alt={this.props.row.eventData.name} />
 
                     <GridListTileBar
-                        title={<span style={{ marginLeft: 80 }}>{this.props.row.eventData.name}</span>}
+                        style={{ paddingBottom: '20px' }}
+                        title={<span>{this.props.row.eventData.name}</span>}
                         subtitle={<>
-                            <span style={{ marginLeft: 80 }}>{this.props.row.eventData.dateAndTime}</span><br />
-                            <span style={{ marginLeft: 80 }}>Tickets Left : {this.props.row.eventData.noOfTickets}</span><br />
-                            <span style={{ marginLeft: 80 }}>{parseInt(this.props.row.eventData.price) / 100} SGD</span><br />
-                            <span style={{ marginLeft: 80 }}>{this.props.row.proposer.firstName}</span>
+                            <span>{moment(this.props.row.eventData.dateAndTime).format('MMMM Do YYYY, h:mm:ss a')}</span><br />
+
+                            <span>Tickets Left : {this.props.row.eventData.noOfTickets}</span><br />
+                            <span>{parseInt(this.props.row.eventData.price) / 100} SGD</span><br />
+                            <span>{this.props.row.proposer.firstName}</span>
                             <span style={{ marginLeft: 5 }} > {this.props.row.proposer.lastName}</span><br />
                         </>
                         }
