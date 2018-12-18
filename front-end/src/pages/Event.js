@@ -31,35 +31,48 @@ class LoginPage extends Component {
 
     render() {
         return <>
-            <h1><i>Event Page</i></h1>
+            <h1>Event Page</h1>
             {(!!this.state.eventData) ? (
-                <>
-                    <h2 style={{ color: 'red' }}>Event Details:</h2>
-                    <h3><i>{this.state.eventData.eventData.name}</i></h3>
-                    <h3><i>{this.state.eventData.eventData.description}</i></h3>
-                    <h3><i>{this.state.eventData.eventData.dateAndTime}</i></h3>
-                    <h3><i>{parseInt(this.state.eventData.eventData.price) / 100} SGD</i></h3>
+                <div>
+                    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                        <div style={{ textAlign: 'center', flexDirection: 'column', justifyContent: 'space-around' }}>
+                            <div style={{ textAlign: 'center', border: '2px solid black', margin: '20px' }}>
+                                <h3>Event Details:</h3>
+                                <h4>{this.state.eventData.eventData.name}</h4>
+                                <h4>{this.state.eventData.eventData.description}</h4>
+                                <h4>{this.state.eventData.eventData.dateAndTime}</h4>
+                                <h4>{parseInt(this.state.eventData.eventData.price) / 100} SGD</h4>
+                            </div>
 
-                    <h2 style={{ color: 'red' }}>Event Proposer:</h2>
-                    <h3><i>{this.state.eventData.properser.firstName} {this.state.eventData.properser.lastName}</i></h3>
+                            <div style={{ border: '2px solid black', margin: '20px' }}>
+                                <h3>Event Proposer:</h3>
+                                <h4>{this.state.eventData.properser.firstName} {this.state.eventData.properser.lastName}</h4>
+                            </div>
 
-                    <h2 style={{ color: 'red' }}>Event Venue Details:</h2>
-                    <h3><i>{this.state.eventData.eventData.venueId.name}</i></h3>
-                    <h3><i>{this.state.eventData.eventData.venueId.description}</i></h3>
-                    <h3><i>{this.state.eventData.eventData.venueId.location}</i></h3>
-                    <img src={this.state.eventData.eventData.venueId.image}></img>
-                    <br />
+                            <div style={{ border: '2px solid black', margin: '20px' }}>
+                                <h3>Event Venue Details:</h3>
+                                <h4>{this.state.eventData.eventData.venueId.name}</h4>
+                                <h4>{this.state.eventData.eventData.venueId.description}</h4>
+                                <h4>{this.state.eventData.eventData.venueId.location}</h4>
+                                <img src={this.state.eventData.eventData.venueId.image}></img>
+                                <br />
+                            </div>
+                        </div>
 
-                    <LikeButtons
-                        passedId={this.props.match.params.eventId}
-                    />
+                        <div>
+                            <h3>Venue Type</h3>
+                            <LikeButtons
+                                passedId={this.props.match.params.eventId}
+                            />
+                        </div>
 
-                    {this.state.eventData.eventData.venueId.theme.map(theme => <h3><i>{theme}</i></h3>)}
+                        <h4>{this.state.eventData.eventData.venueId.theme.join(', ')}</h4>
 
-                    <CommentBox
-                        passedId={this.props.match.params.eventId}
-                    />
-                </>
+                        <CommentBox
+                            passedId={this.props.match.params.eventId}
+                        />
+                    </div>
+                </div>
             )
                 : (<CircularProgress />)}
 
