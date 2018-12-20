@@ -57,11 +57,14 @@ export default class LoginPage extends Component {
                         <Typography>{moment(order.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</Typography>
                       </ExpansionPanelSummary>
                       <ExpansionPanelDetails>
-                        <Typography>
-                          <p>{order.eventId.name}</p>
-                          <p>{order.eventId.description}</p>
-                          {/* DEREK PLEASE FINISH */}
-                          {/* Just add more details that would seem appropriate */}
+                        <Typography style={{ margin: 'auto' }}>
+                          {console.log("derek helping " + JSON.stringify(order))}
+                          <p>Event name : {order.eventId.name}</p>
+                          <p>Event description : {order.eventId.description}</p>
+                          <p>Ticket price : {order.eventId.price / 100} SGD</p>
+                          <p>Seller contact : {order.seller.email}</p>
+                          <p>Seller stripe ref : {order.stripeRef}</p>
+                          <p>Ticket purchase time : {(order.created_at).slice(0, 16)}</p>
                         </Typography>
                       </ExpansionPanelDetails>
                     </ExpansionPanel>
@@ -83,11 +86,14 @@ export default class LoginPage extends Component {
                         </div>
                       </ExpansionPanelSummary>
                       <ExpansionPanelDetails>
-                        <Typography>
-                          <p>{order.eventId.name}</p>
-                          <p>{order.eventId.description}</p>
-                          {/* DEREK PLEASE FINISH */}
-                          {/* Just add more details that would seem appropriate */}
+                        <Typography style={{ margin: 'auto' }}>
+                          {console.log("derek helping " + JSON.stringify(order))}
+                          <p>Event name : {order.eventId.name}</p>
+                          <p>Event description : {order.eventId.description}</p>
+                          <p>Ticket price : {order.eventId.price / 100} SGD</p>
+                          <p>Seller contact : {order.seller.email}</p>
+                          <p>Seller stripe ref : {order.stripeRef}</p>
+                          <p>Ticket purchase time : {(order.created_at).slice(0, 16)}</p>
                         </Typography>
                       </ExpansionPanelDetails>
                     </ExpansionPanel>

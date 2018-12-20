@@ -55,11 +55,13 @@ class ScrollDialog extends React.Component {
               </div>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-              <Typography>
-                <p>{order.eventId.name}</p>
-                <p>{order.eventId.description}</p>
-                {/* DEREK PLEASE FINISH */}
-                {/* Just add more details that would seem appropriate */}
+              <Typography style={{ margin: 'auto' }}>
+                {console.log("derke helping " + JSON.stringify(order))}
+                <p>Event name : {order.eventId.name}</p>
+                <p>Event description : {order.eventId.description}</p>
+                <p>Ticket price : {order.eventId.price / 100} SGD</p>
+                <p>Buyer stripe ref : {order.stripeRef}</p>
+                <p>Ticket purchase time : {(order.created_at).slice(0, 16)}</p>
               </Typography>
             </ExpansionPanelDetails>
           </ExpansionPanel>
